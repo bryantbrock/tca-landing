@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/cormorant-garamond/latin-400.css';
+import '@fontsource/cormorant-garamond/latin-600.css';
+
+interface Props {
+	title: string;
+	description: string;
+	ogImage?: string;
+	ogTitle?: string;
+	ogDescription?: string;
+	ogType?: string;
+	canonicalPath?: string;
+	noindex?: boolean;
+}
+
+const {
+	title,
+	description,
+	ogImage = '/og-image.png',
+	ogTitle,
+	ogDescription,
+	ogType = 'website',
+	canonicalPath,
+	noindex = false,
+} = Astro.props;
+
+const origin = Astro.site ?? Astro.url;
+const absolute = (path: string) => new URL(path, origin).href;
+const canonical =
+	canonicalPath !== undefined
+		? new URL(canonicalPath, origin).href
+		: new URL(Astro.url.pathname, origin).href;
+
+const resolvedOgTitle = ogTitle ?? title;
+const resolvedOgDescription = ogDescription ?? description;
+const ogImageUrl = absolute(ogImage);
+---
+
+<!doctype html>
+<html lang="en" class="bg-surface text-foreground antialiased">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:title" content={resolvedOgTitle} />
+		<meta property="og:description" content={resolvedOgDescription} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={resolvedOgTitle} />
+		<meta name="twitter:description" content={resolvedOgDescription} />
+		<meta name="twitter:image" content={ogImageUrl} />
+	</head>
+	<body class="flex min-h-screen flex-col font-sans">
+		<header class="border-b border-muted/20">
+			<nav
+				class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6"
+				aria-label="Primary"
+			>
+				<a href="/" class="font-display text-xl font-semibold tracking-wide text-foreground">
+					TCA
+				</a>
+				<ul class="flex gap-6 text-sm text-muted">
+					<li>
+						<a href="/" class="transition hover:text-foreground">Home</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<main class="flex-1">
+			<slot />
+		</main>
+		<footer class="border-t border-muted/20">
+			<div
+				class="mx-auto max-w-5xl px-4 py-8 text-center text-sm text-muted sm:px-6"
+			>
+				<p>© {new Date().getFullYear()} TCA. All rights reserved.</p>
+			</div>
+		</footer>
+	</body>
+</html>

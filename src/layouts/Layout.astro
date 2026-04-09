@@ -118,17 +118,9 @@ const structuredData = {
 		<!-- Structured data: schema.org EducationalOrganization -->
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
-		<!--
-			Cloudflare Web Analytics — privacy-friendly, no cookies required,
-			no cookie banner needed. Replace the placeholder token below with
-			the real one from the Cloudflare Web Analytics dashboard once the
-			site is deployed and the domain is attached there.
-		-->
-		<script
-			defer
-			src="https://static.cloudflareinsights.com/beacon.min.js"
-			data-cf-beacon='{"token": "PLACEHOLDER_CF_WEB_ANALYTICS_TOKEN"}'
-		></script>
+		<!-- Analytics: add a script tag here when an analytics provider is chosen.
+		     The Cloudflare Web Analytics beacon was removed pre-launch — swap in
+		     Netlify Analytics, Plausible, Umami, or similar when ready. -->
 	</head>
 	<body class="min-h-screen bg-canvas font-sans text-ink antialiased">
 		<slot />

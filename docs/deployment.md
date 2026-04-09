@@ -25,14 +25,22 @@ You'll need:
 - [ ] A Cloudflare account (free) — just to get a Web Analytics token.
       You do NOT need to move DNS to Cloudflare unless you want to.
 
-## Step 1 — Commit & push everything
+## Step 1 — Push committed work to GitHub
 
-From the repo root:
+The MVP build is already broken into 4 topical commits on `main`:
+
+```
+docs: add project documentation and archive dev-time scripts
+feat: deployment infrastructure (Netlify config + sitemap integration)
+feat: build out components, content pages, and design system
+chore: add site assets (video, favicons, fonts, images, robots.txt)
+```
+
+Verify the working tree is clean and push:
 
 ```bash
-git add -A
-git status                # review the change list
-git commit -m "Full MVP build: 10 pages, nav, SEO, analytics, form backend"
+git status                # should report "nothing to commit, working tree clean"
+git log --oneline -6      # confirm the 4 commits stack on top of "feat: more scaffolding"
 git push origin main
 ```
 
@@ -194,8 +202,9 @@ These can wait until after deployment:
 - [ ] Replace `public/og-image.png` with a branded card (current one
       is the old dark blue TCA placeholder from the Astro scaffold)
 - [ ] Per-page OG images
-- [ ] Add the Formaloo URL to `src/data/links.ts` (currently hardcoded
-      in 4 places)
+- [x] ~~Add the Formaloo URL to a shared constant.~~ **DONE.** Lives in
+      `src/lib/links.ts` as `INTERVIEW_URL`. Same file also exports
+      `GIVE_URL` for the GivingFuel donation page.
 - [ ] Build a Contact form thank-you page with the inline UX handled
       on the current contact page
 - [ ] Add photos + bios to the People page

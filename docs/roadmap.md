@@ -149,16 +149,30 @@ Small items to fix eventually that aren't urgent.
       three use `target="_blank"` already, but the Roman-numeral nav items
       in the Menu column don't. If we add dropdowns for external items, set
       a convention.
-- [ ] The `/404` page is still the Astro default. Replace with a styled 404.
-- [ ] **Scripts**: `scripts/parse-svg.mjs`, `scripts/extract-images.mjs`,
-      `scripts/optimize-images.mjs`, `scripts/render-svg.mjs`,
-      `scripts/slice-png.mjs`, `scripts/zoom.mjs`, `scripts/sample-colors.mjs`,
-      `scripts/measure-text.mjs`, `scripts/extract-images.mjs` were used
-      during the Figma port. They're not part of the runtime. Either delete
-      them or move into `scripts/.archive/`.
-- [ ] The Formaloo URL (`https://trinity-classicalalabama.formaloo.me/tqo8fo`)
-      is hardcoded in four places. If it changes, all four need updating.
-      Consider extracting to a single constant or data file.
+- [x] ~~The `/404` page is still the Astro default. Replace with a styled 404.~~
+      **DONE.** `src/pages/404.astro` now matches the editorial design.
+- [x] ~~**Scripts**: Figma-port helpers were used during the Figma port and are
+      not part of the runtime. Either delete or move into `scripts/.archive/`.~~
+      **DONE.** All 8 helpers archived under `scripts/.archive/`.
+- [x] ~~The Formaloo URL is hardcoded in four places.~~ **DONE.** Both the
+      Formaloo `INTERVIEW_URL` and the GivingFuel `GIVE_URL` are now exported
+      from `src/lib/links.ts` and imported wherever needed (8 components/pages
+      for Formaloo, 2 for Give).
+- [ ] **Pre-cutover blocker**: `/resources` links to two external URLs that
+      will 404 after DNS cutover —
+      `https://trinityclassical.academy/tuition-%26-fee-policy` and
+      `https://trinityclassical.academy/uniform-policy`. These point at the
+      old Squarespace routes which won't exist on Netlify. Either:
+      (a) get the Issuu flipbook URLs and build proper `/resources/tuition`
+      and `/resources/uniform` pages,
+      (b) add netlify.toml redirects to a still-published mirror, or
+      (c) replace the cards with "Coming soon" markers until the policy
+      pages exist. See `src/pages/resources.astro:15,23`.
+- [ ] **Nav orphans**: `/resources`, `/faq`, and `/careers` are not linked
+      from the main nav OR the footer MENU. `/faq` and `/careers` are only
+      reachable via `/resources`, which itself is only reachable via direct
+      URL or the sitemap. Decide whether to add a "Resources" link to the
+      footer (probably correct) or accept this as the design intent.
 
 ## Context notes for future sessions
 

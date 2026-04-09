@@ -1,11 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.PUBLIC_SITE_URL,
+  site: 'https://trinityclassical.academy',
+  integrations: [
+    sitemap(),
+  ],
   vite: {
     plugins: [tailwindcss()]
   }

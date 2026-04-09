@@ -1,0 +1,182 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Frequently Asked Questions — Trinity Classical Academy';
+const description =
+	'Answers to the questions we hear most about Trinity Classical Academy — location, grades, accreditation, homework, and more.';
+
+const faqs = [
+	{
+		question: 'Where is your school located?',
+		answer: 'Trinity Classical Academy will meet at 7160 Cahaba Valley Rd., Birmingham.',
+		list: null,
+	},
+	{
+		question: 'What grades will you be offering for the 2025-2026 school year?',
+		answer: 'The school will begin with grades K-8, but plans to expand to a full K-12 school in the future.',
+		list: null,
+	},
+	{
+		question: 'Do you have a uniform policy?',
+		answer: 'Yes, there is a uniform policy with the intent purpose of having a professional and unified environment.',
+		list: null,
+	},
+	{
+		question: 'What is classical education?',
+		answer: 'Classical education, also called Liberal Arts, comprises seven foundational subjects: grammar, logic, and rhetoric (the Trivium), plus arithmetic, geometry, science, and music (the Quadrivium). Mastery of words and numbers enables lifelong learning.',
+		list: null,
+	},
+	{
+		question: 'Is your school accredited?',
+		answer: 'The school is working with Concordis Education Partners on accreditation standards. Currently, transcripts meeting college entrance requirements are provided.',
+		list: null,
+	},
+	{
+		question: 'What is the expected homework load?',
+		answer: 'Homework expectations vary by grade level:',
+		list: [
+			'Lower Primary (K-3): 10-20 minutes on weeknights, 1 hour Friday',
+			'Upper Primary (4-6): 20-45 minutes on weeknights, 1-2 hours Friday',
+			'Lower Secondary (6-8): 45 minutes to 1 hour on weeknights, 2-3 hours Friday',
+			'Upper Secondary (9+): 1-2 hours on weeknights, 3-4 hours Friday',
+		],
+	},
+];
+---
+
+<Layout {title} {description}>
+	<Header />
+
+	<div class="relative mx-auto w-full max-w-canvas flow-root">
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<!-- ====== HERO ====== -->
+		<section
+			id="faq-hero"
+			aria-labelledby="faq-heading"
+			class="relative z-10 px-6 pb-0 pt-20 sm:px-10 sm:pt-28 lg:px-12 lg:pt-36"
+		>
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				FAQ
+			</p>
+
+			<h1
+				id="faq-heading"
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(72px, 12vw, 160px);"
+			>
+				Questions we hear<br />a lot.
+			</h1>
+
+			<div class="mt-12 lg:w-1/2 lg:pr-12">
+				<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+					Here are the questions families ask most often. If you don't find what you're looking for, get in touch — we're happy to talk.
+				</p>
+			</div>
+		</section>
+
+		<!-- ====== FAQ LIST ====== -->
+		<section
+			id="faq-list"
+			aria-label="Frequently asked questions"
+			class="relative z-10 px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-40 lg:pt-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+						All Questions
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<div class="flex flex-col">
+						{faqs.map((faq, index) => (
+							<details
+								class={`group border-b border-ink/10 ${index === 0 ? 'border-t' : ''}`}
+							>
+								<summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-6 [&::-webkit-details-marker]:hidden">
+									<h2 class="font-display text-[24px] leading-[1.2] text-ink sm:text-[28px]">
+										{faq.question}
+									</h2>
+									<span
+										class="shrink-0 text-ink-soft transition-transform duration-200 group-open:rotate-180"
+										aria-hidden="true"
+									>
+										<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+											<path
+												d="M3 6L8 11L13 6"
+												stroke="currentColor"
+												stroke-width="1.5"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+										</svg>
+									</span>
+								</summary>
+
+								<div class="pb-8 pr-8">
+									<p class="font-sans text-base leading-snug text-ink-soft">
+										{faq.answer}
+									</p>
+									{faq.list && (
+										<ul class="mt-4 flex flex-col gap-3">
+											{faq.list.map((item) => (
+												<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+													<span class="mt-1 shrink-0 text-brand-accent">—</span>
+													<span>{item}</span>
+												</li>
+											))}
+										</ul>
+									)}
+								</div>
+							</details>
+						))}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== STILL HAVE A QUESTION ====== -->
+		<section
+			id="faq-contact"
+			aria-labelledby="faq-contact-heading"
+			class="relative z-10 px-6 pb-32 pt-0 sm:px-10 sm:pb-40 lg:px-12 lg:pb-48"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="faq-contact-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						Still Have a Question?
+					</p>
+				</div>
+
+				<div class="flex flex-col items-start gap-6 lg:pl-8">
+					<p class="font-display text-[clamp(22px,3vw,32px)] italic leading-[1.2] text-ink">
+						We're happy to help.
+					</p>
+					<a
+						href="/contact"
+						class="rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+					>
+						Contact Us
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
+</Layout>

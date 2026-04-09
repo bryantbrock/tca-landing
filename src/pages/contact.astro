@@ -1,0 +1,401 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import emblemGreen from '../assets/images/emblem-green.png';
+import { INTERVIEW_URL } from '../lib/links';
+
+const title = 'Contact — Trinity Classical Academy';
+const description =
+	"Get in touch with Trinity Classical Academy. Request an interview, schedule a visit, or ask a question — we'd love to hear from you.";
+---
+
+<Layout {title} {description}>
+	<Header />
+
+	<!--
+		Single canvas wrapper carries the vertical divider layer across the
+		entire page. Full-bleed Footer sits outside as a sibling, matching the
+		pattern used in index.astro.
+	-->
+	<div class="relative mx-auto w-full max-w-canvas">
+		<!-- Page-wide vertical column dividers — 25 / 50 / 75% of content area.
+		     Extended up by 192px so the lines reach the very top of the viewport
+		     at scrollY=0; the transparent sticky header lets them show through,
+		     and the frosted header when scrolled naturally obscures them. -->
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<!-- ====== HERO BLOCK — editorial, Cormorant-driven ====== -->
+		<section
+			id="contact-hero"
+			aria-labelledby="contact-heading"
+			class="relative z-10 px-6 pb-0 pt-20 sm:px-10 sm:pt-28 lg:px-12 lg:pt-36"
+		>
+			<!-- Mono eyebrow — sets the editorial tone before the big headline -->
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				Admissions &amp; Inquiries
+			</p>
+
+			<!--
+				Giant italic Cormorant headline — this is the emotional hook.
+				clamp(72px, 12vw, 160px) gives generous breathing room at all
+				widths; leading-[0.95] mirrors the Hero component's tight line-height.
+			-->
+			<h1
+				id="contact-heading"
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(72px, 12vw, 160px);"
+			>
+				We'd love<br />to meet you.
+			</h1>
+
+			<!--
+				Lead + CTA: 2-column arrangement on lg+ so the body text and
+				action sit beside each other, using the 50% divider line as a
+				natural break. On mobile they stack.
+			-->
+			<div class="mt-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:gap-0">
+				<!-- Left half: body lead -->
+				<div class="lg:w-1/2 lg:pr-12">
+					<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+						Whether you're ready to request an interview, considering a
+						visit, or just curious about what we're building —
+						<strong class="font-semibold text-ink">send us a note.</strong>
+						We'll get back within a day or two.
+					</p>
+				</div>
+
+				<!-- Right half: primary CTA block -->
+				<div class="flex flex-col items-start gap-3 lg:w-1/2 lg:pl-12">
+					<a
+						href={INTERVIEW_URL}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+					>
+						Request an Interview
+					</a>
+					<p class="font-mono text-[10px] text-ink-mute">
+						or use the form below
+					</p>
+				</div>
+			</div>
+
+		</section>
+
+		<!-- ====== FORM SECTION — editorial, underline-style inputs, no card ====== -->
+		<section
+			id="contact-form-section"
+			aria-labelledby="form-heading"
+			class="relative z-10 px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-40 lg:pt-40"
+		>
+			<!--
+				Offset layout: on lg+ the eyebrow label sits in the leftmost
+				column (~25% of content area) while the form runs across the
+				remaining three quarters. On mobile everything is single-column.
+			-->
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<!-- Left column: section label (lg: ~25% width) -->
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="form-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						The Form
+					</p>
+				</div>
+
+				<!-- Right columns: form proper (lg: ~75% width).
+				     `lg:pl-8` gives a little breathing room between the form
+				     content and the 25% vertical divider line on its left. -->
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<form
+						id="contact-form"
+						name="contact"
+						method="POST"
+						data-netlify="true"
+						netlify-honeypot="bot-field"
+						data-contact-form
+						class="flex flex-col"
+					>
+						<!-- Netlify Forms: hidden inputs so the static build registers
+						     the form and its fields with Netlify's form detection. -->
+						<input type="hidden" name="form-name" value="contact" />
+						<p class="hidden">
+							<label>
+								Don't fill this out if you're human: <input name="bot-field" />
+							</label>
+						</p>
+						<!--
+							Row 1: Name | Email — two compact fields in one visual row.
+							On mobile they stack; on lg+ they sit side-by-side, each
+							spanning one quarter of the page grid (~37.5% of the form area).
+						-->
+						<div class="grid grid-cols-1 gap-x-12 sm:grid-cols-2">
+							<!-- Name -->
+							<div class="flex flex-col gap-2 pb-12 sm:pb-14">
+								<label
+									for="field-name"
+									class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-brand-accent"
+								>
+									Name
+								</label>
+								<input
+									id="field-name"
+									name="name"
+									type="text"
+									required
+									autocomplete="name"
+									placeholder="Your full name"
+									class="border-0 border-b border-ink/20 bg-transparent pb-3 font-sans text-lg text-ink placeholder:text-ink-mute/50 transition focus:border-brand-accent focus:outline-none"
+								/>
+							</div>
+
+							<!-- Email -->
+							<div class="flex flex-col gap-2 pb-12 sm:pb-14">
+								<label
+									for="field-email"
+									class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-brand-accent"
+								>
+									Email
+								</label>
+								<input
+									id="field-email"
+									name="email"
+									type="email"
+									required
+									autocomplete="email"
+									placeholder="your@email.com"
+									class="border-0 border-b border-ink/20 bg-transparent pb-3 font-sans text-lg text-ink placeholder:text-ink-mute/50 transition focus:border-brand-accent focus:outline-none"
+								/>
+							</div>
+						</div>
+
+						<!--
+							Row 2: Phone | Interest — same two-column grid.
+						-->
+						<div class="grid grid-cols-1 gap-x-12 sm:grid-cols-2">
+							<!-- Phone -->
+							<div class="flex flex-col gap-2 pb-12 sm:pb-14">
+								<label
+									for="field-phone"
+									class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-brand-accent"
+								>
+									Phone <span class="normal-case tracking-normal text-ink-mute">(optional)</span>
+								</label>
+								<input
+									id="field-phone"
+									name="phone"
+									type="tel"
+									autocomplete="tel"
+									placeholder="(205) 555-0100"
+									class="border-0 border-b border-ink/20 bg-transparent pb-3 font-sans text-lg text-ink placeholder:text-ink-mute/50 transition focus:border-brand-accent focus:outline-none"
+								/>
+							</div>
+
+							<!-- Interest (select) -->
+							<div class="flex flex-col gap-2 pb-12 sm:pb-14">
+								<label
+									for="field-interest"
+									class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-brand-accent"
+								>
+									I'm interested in
+								</label>
+								<select
+									id="field-interest"
+									name="interest"
+									required
+									class="border-0 border-b border-ink/20 bg-transparent pb-3 font-sans text-lg text-ink transition focus:border-brand-accent focus:outline-none appearance-none cursor-pointer"
+								>
+									<option value="enrolling">Enrolling my child</option>
+									<option value="learning">Learning more about the school</option>
+									<option value="visiting">Scheduling a visit</option>
+									<option value="teaching">Teaching at Trinity</option>
+									<option value="other">Something else</option>
+								</select>
+							</div>
+						</div>
+
+						<!-- Row 3: Message — full-width textarea -->
+						<div class="flex flex-col gap-2 pb-14">
+							<label
+								for="field-message"
+								class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-brand-accent"
+							>
+								Message
+							</label>
+							<textarea
+								id="field-message"
+								name="message"
+								required
+								rows="5"
+								placeholder="Tell us a little about your family and what you're looking for…"
+								class="border-0 border-b border-ink/20 bg-transparent pb-3 font-sans text-lg text-ink placeholder:text-ink-mute/50 transition focus:border-brand-accent focus:outline-none resize-none"
+							></textarea>
+						</div>
+
+						<!-- Submit -->
+						<button
+							type="submit"
+							class="self-start rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+						>
+							Send Message
+						</button>
+					</form>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== DIRECT CONTACT BLOCK ====== -->
+		<!--
+			Sits below the form as its own editorial moment. Rather than a
+			symmetric grid beside the form, it reads as a separate typographic
+			block with the emblem as a quiet anchor.
+		-->
+		<section
+			id="contact-direct"
+			aria-labelledby="direct-heading"
+			class="relative z-10 px-6 pb-32 pt-16 sm:px-10 sm:pb-40 sm:pt-20 lg:px-12 lg:pb-48 lg:pt-24"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<!-- Left column: eyebrow label -->
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="direct-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						Prefer to Reach Out Directly?
+					</p>
+				</div>
+
+				<!-- Right columns: contact info block.
+				     `lg:pl-8` matches the form column's left inset so the
+				     content sits just off the 25% vertical line. -->
+				<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-16 lg:pl-8">
+					<!-- Emblem + address + church note -->
+					<div class="flex flex-col gap-6">
+						<Image
+							src={emblemGreen}
+							alt=""
+							aria-hidden="true"
+							class="h-10 w-auto self-start"
+						/>
+
+						<!--
+							Cormorant italic treatment for the email link makes it feel
+							like a genuine invitation, not a data point.
+						-->
+						<div class="flex flex-col gap-1">
+							<a
+								href="mailto:info@trinityclassical.academy"
+								class="font-display text-[clamp(22px,3vw,32px)] italic leading-[1.1] text-ink transition hover:text-brand-accent"
+							>
+								info@trinityclassical.academy
+							</a>
+							<address class="font-display text-[clamp(22px,3vw,32px)] not-italic italic leading-[1.1] text-ink-soft">
+								7160 Cahaba Valley Rd., Birmingham, AL 35242
+							</address>
+						</div>
+
+						<!-- Small note — under the care of -->
+						<p class="font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute">
+							Under the care of Trinity Presbyterian Church
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
+</Layout>
+
+<script is:inline>
+	/*
+	 * Progressive-enhancement form submit: POSTs to the current URL as
+	 * `application/x-www-form-urlencoded`. Netlify Forms automatically
+	 * intercepts POSTs to any URL when the form has `data-netlify="true"`
+	 * and records the submission. On success we show an inline thank-you
+	 * message instead of navigating away. If JavaScript is disabled the
+	 * form submits natively, Netlify catches it, and the user lands on
+	 * Netlify's default success page.
+	 */
+	(() => {
+		const form = document.querySelector('[data-contact-form]');
+		if (!form) return;
+
+		const submitBtn = form.querySelector('button[type="submit"]');
+		const originalBtnLabel = submitBtn?.textContent ?? 'Send Message';
+
+		const setStatus = (message, tone = 'neutral') => {
+			let el = form.querySelector('[data-form-status]');
+			if (!el) {
+				el = document.createElement('p');
+				el.setAttribute('data-form-status', '');
+				el.className = 'mt-6 font-mono text-xs';
+				form.appendChild(el);
+			}
+			el.textContent = message;
+			el.style.color =
+				tone === 'success'
+					? '#276d33'
+					: tone === 'error'
+					? '#b91c1c'
+					: '#878888';
+		};
+
+		const encode = (data) =>
+			Object.keys(data)
+				.map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+				.join('&');
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			if (submitBtn) {
+				submitBtn.disabled = true;
+				submitBtn.textContent = 'Sending…';
+			}
+			setStatus('', 'neutral');
+
+			const formData = new FormData(form);
+			const payload = {};
+			for (const [key, value] of formData.entries()) {
+				payload[key] = value.toString();
+			}
+
+			try {
+				const response = await fetch('/', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: encode(payload),
+				});
+				if (!response.ok) throw new Error('Netlify returned ' + response.status);
+				form.reset();
+				setStatus(
+					"Thank you — we'll be in touch within a day or two.",
+					'success',
+				);
+			} catch (err) {
+				setStatus(
+					'Sorry, something went wrong. Please email info@trinityclassical.academy directly.',
+					'error',
+				);
+			} finally {
+				if (submitBtn) {
+					submitBtn.disabled = false;
+					submitBtn.textContent = originalBtnLabel;
+				}
+			}
+		});
+	})();
+</script>

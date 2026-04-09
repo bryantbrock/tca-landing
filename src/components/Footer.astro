@@ -1,0 +1,156 @@
+---
+import { Image } from 'astro:assets';
+import emblemCream from '../assets/images/emblem-cream.png';
+import { GIVE_URL } from '../lib/links';
+
+const navItems = [
+	{ marker: 'I.',    label: 'Our Vision',   href: '/our-vision' },
+	{ marker: 'II.',   label: 'How It Works', href: '/how-it-works' },
+	{ marker: 'III.',  label: 'People',       href: '/people' },
+	{ marker: 'IV.',   label: 'Admissions',   href: '/admissions' },
+	{ marker: 'V.',    label: 'Give',         href: GIVE_URL },
+];
+---
+
+<!-- ====== SECTION 6 — Footer ====== -->
+<footer aria-label="Site footer" class="bg-brand text-cream font-sans">
+	<div class="relative mx-auto w-full max-w-canvas px-6 pb-8 pt-20 sm:px-10 lg:px-12">
+		<!-- Page-wide vertical column dividers continuing through the footer.
+		     Same 25% / 50% / 75% positions as the main page layer in
+		     `index.astro`, but at a cream tint so they're visible on the
+		     dark green background. -->
+		<div
+			class="pointer-events-none absolute inset-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-cream/15"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-cream/15"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-cream/15"></div>
+			</div>
+		</div>
+
+		<!-- Zone A — top content row.
+		     4-column grid on lg+ aligned to the page-wide 25/50/75% divider
+		     lines. Col 1 (emblem + mission) spans cols 1-2, the address/
+		     get-in-touch stack sits in col 3, and MENU sits in col 4. On < lg
+		     everything stacks vertically in a single column. -->
+		<div class="relative z-10 grid grid-cols-1 gap-12 lg:grid-cols-4 lg:gap-0">
+
+			<!-- Col 1-2: emblem + italic mission paragraph -->
+			<div class="flex flex-col gap-8 lg:col-span-2 lg:pr-8">
+				<!-- Triquetra emblem -->
+				<a href="/" aria-label="Trinity Classical Academy" class="self-start">
+					<Image
+						src={emblemCream}
+						alt=""
+						class="h-11 w-auto"
+					/>
+				</a>
+
+				<!-- Mission paragraph: only the school name is italic -->
+				<p class="max-w-[560px] font-display text-[28px] leading-[0.95] text-cream sm:text-[40px]">
+					<em class="italic">Trinity Classical Academy</em> partners with
+					families in the joyful discipleship of students through rigorous,
+					Christ-centered classical education.
+				</p>
+			</div>
+
+			<!-- Col 3: OUR SCHOOL + GET IN TOUCH stacked -->
+			<div class="flex flex-col gap-10 lg:px-8">
+				<!-- OUR SCHOOL -->
+				<div class="flex flex-col gap-4">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-action">
+						OUR SCHOOL
+					</h2>
+					<address class="font-mono text-sm not-italic leading-snug text-cream">
+						7160 Cahaba Valley Rd.<br />
+						Birmingham, AL<br />
+						35242
+					</address>
+				</div>
+
+				<!-- GET IN TOUCH -->
+				<div class="flex flex-col gap-4">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-action">
+						GET IN TOUCH
+					</h2>
+					<ul class="flex flex-col gap-2">
+						<li>
+							<a
+								href="mailto:info@trinityclassical.academy"
+								class="font-sans text-sm text-cream transition hover:opacity-70"
+							>
+								Email
+							</a>
+						</li>
+						<li>
+							<a
+								href="/contact"
+								class="font-sans text-sm text-cream transition hover:opacity-70"
+							>
+								Contact Us
+							</a>
+						</li>
+						<li>
+							<a
+								href="https://instagram.com/trinityclassicalacademy"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="font-sans text-sm text-cream transition hover:opacity-70"
+							>
+								Follow Us
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Col 4: MENU -->
+			<div class="flex flex-col gap-4 lg:px-8">
+				<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-action">
+					MENU
+				</h2>
+				<nav aria-label="Footer">
+					<ol class="flex flex-col gap-2">
+						{navItems.map((item) => (
+							<li class="flex items-baseline gap-3">
+								<span class="w-6 font-mono text-[10px] text-action">
+									{item.marker}
+								</span>
+								<a
+									href={item.href}
+									class="font-sans text-sm text-cream transition hover:opacity-70"
+								>
+									{item.label}
+								</a>
+							</li>
+						))}
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+		<!-- Zone B — giant TRINITY wordmark -->
+		<div class="relative z-10 mt-16 overflow-hidden">
+			<p class="text-wordmark font-display uppercase text-cream whitespace-nowrap">
+				Trinity
+			</p>
+		</div>
+
+		<!-- Zone C — bottom utility row -->
+		<div class="relative z-10 mt-4 flex items-center justify-between">
+			<p class="font-mono text-xs text-cream opacity-60">
+				© 2026 TCA
+			</p>
+			<a
+				href="https://studiomightymighty.com/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="font-mono text-xs text-cream underline opacity-60 transition hover:opacity-100"
+			>
+				SITE CREDIT»
+			</a>
+		</div>
+	</div>
+</footer>

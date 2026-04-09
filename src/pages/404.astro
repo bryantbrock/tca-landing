@@ -1,23 +1,63 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
-const title = 'Page not found — TCA';
-const description = 'The page you requested does not exist.';
+const title = 'Page not found — Trinity Classical Academy';
+const description = 'The page you requested could not be found.';
 ---
 
 <Layout {title} {description} noindex>
-	<section
-		class="mx-auto flex min-h-[50vh] max-w-5xl flex-col items-center justify-center px-4 py-16 text-center sm:px-6"
-	>
-		<h1 class="font-display text-4xl font-semibold">404</h1>
-		<p class="mt-3 text-muted">This page does not exist.</p>
-		<p class="mt-8">
-			<a
-				href="/"
-				class="font-medium text-foreground underline decoration-muted underline-offset-4 transition hover:decoration-foreground"
+	<Header />
+
+	<div class="relative mx-auto w-full max-w-canvas flow-root">
+		<!-- Page-wide divider layer extended through the header area -->
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<section
+			class="relative z-10 px-6 pb-32 pt-40 sm:px-10 sm:pt-48 lg:px-12 lg:pt-56"
+		>
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				Page not found
+			</p>
+
+			<h1
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(72px, 14vw, 200px);"
 			>
-				Back to home
-			</a>
-		</p>
-	</section>
+				Lost in the<br />narthex.
+			</h1>
+
+			<p class="mt-10 max-w-[560px] font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+				The page you were looking for isn't here. It may have moved, or
+				the link you followed may be out of date.
+			</p>
+
+			<div class="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+				<a
+					href="/"
+					class="rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+				>
+					Back to home
+				</a>
+				<a
+					href="/contact"
+					class="font-mono text-xs font-medium uppercase tracking-eyebrow text-ink-soft transition hover:text-brand-accent"
+				>
+					Or contact us →
+				</a>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
 </Layout>

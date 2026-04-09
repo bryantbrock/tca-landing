@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import creationImg from '../assets/images/creation.jpg';
+import { INTERVIEW_URL } from '../lib/links';
+---
+
+<!-- ====== SECTION 5 — Join the Mission / Feature CTA ====== -->
+<section
+	id="admissions"
+	aria-labelledby="admissions-heading"
+	class="px-6 py-20 sm:px-10 lg:px-12"
+>
+	<div class="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-12">
+		<!-- Left: Creation of Adam image. Width caps at 677px (design value)
+		     on xl+ but shrinks to 50% of the content area at narrower lg
+		     widths so the heading column always has room to breathe. -->
+		<figure class="shrink-0 lg:w-1/2 xl:w-[677px]">
+			<Image
+				src={creationImg}
+				alt="Michelangelo's Creation of Adam — two hands reaching toward one another"
+				class="h-[340px] w-full rounded-card object-cover lg:h-[460px] xl:h-[536px]"
+			/>
+		</figure>
+
+		<!-- Right: eyebrow + heading + body + CTA -->
+		<div class="flex min-w-0 flex-col gap-8">
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				JOIN THE MISSION
+			</p>
+			<h2
+				id="admissions-heading"
+				class="font-display text-[clamp(40px,5vw,72px)] leading-[1.05] text-ink"
+			>
+				We're not filling seats. We're building a community.
+			</h2>
+			<p class="max-w-[480px] font-sans text-base leading-snug text-ink-soft">
+				We want to meet your family, hear your story, and make sure we're the right fit for one another. Enrollment begins with a conversation.
+			</p>
+			<div class="flex flex-col items-start gap-3">
+				<a
+					href={INTERVIEW_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="rounded-pill bg-action px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+				>
+					Request an Interview
+				</a>
+				<a
+					href="/contact"
+					class="font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute transition hover:text-brand-accent"
+				>
+					Have a different question? Contact us →
+				</a>
+			</div>
+		</div>
+	</div>
+</section>

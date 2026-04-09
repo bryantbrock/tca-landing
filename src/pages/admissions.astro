@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { INTERVIEW_URL } from '../lib/links';
+
+const title = 'Admissions — Trinity Classical Academy';
+const description =
+	'The three-step admissions process at Trinity Classical Academy — request an interview, meet with us, and receive your invitation to apply.';
+
+const steps = [
+	{
+		number: 'ONE',
+		heading: 'Request an Interview',
+		body: 'The first step is to request an interview through the form. Tell us a bit about your family and what you\'re looking for. We\'ll get back to you within a day or two to schedule a conversation.',
+	},
+	{
+		number: 'TWO',
+		heading: 'Admissions Interview',
+		body: 'We meet with your family in person (or by video if needed) to get to know you and to share more about what Trinity offers. The interview is a two-way conversation — we want to ensure that a healthy partnership will exist between families and the school.',
+	},
+	{
+		number: 'THREE',
+		heading: 'Invitation to Apply',
+		body: 'If the interview confirms mutual fit, we extend an invitation to complete the formal application and enroll your student. We look forward to extending families enrollment if we believe Trinity Classical Academy will be the best fit for their student.',
+	},
+];
+---
+
+<Layout {title} {description}>
+	<Header />
+
+	<div class="relative mx-auto w-full max-w-canvas flow-root">
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<!-- ====== HERO ====== -->
+		<section
+			id="admissions-hero"
+			aria-labelledby="admissions-heading"
+			class="relative z-10 px-6 pb-0 pt-20 sm:px-10 sm:pt-28 lg:px-12 lg:pt-36"
+		>
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				Admissions
+			</p>
+
+			<h1
+				id="admissions-heading"
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(72px, 12vw, 160px);"
+			>
+				How to join Trinity.
+			</h1>
+
+			<div class="mt-12 lg:w-1/2 lg:pr-12">
+				<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+					Enrollment at Trinity Classical Academy is a process of mutual discernment. We take admissions seriously because we're inviting families into a partnership that will shape children for years. Here's how it works.
+				</p>
+			</div>
+		</section>
+
+		<!-- ====== THREE STEPS ====== -->
+		{steps.map((step) => (
+			<section
+				id={`admissions-step-${step.number.toLowerCase()}`}
+				aria-labelledby={`step-${step.number.toLowerCase()}-heading`}
+				class="relative z-10 px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-40 lg:pt-40"
+			>
+				<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+					<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+						<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+							{step.number}
+						</p>
+					</div>
+
+					<div class="min-w-0 flex-1 lg:pl-8">
+						<h2
+							id={`step-${step.number.toLowerCase()}-heading`}
+							class="font-display italic leading-[1.1] text-ink"
+							style="font-size: clamp(36px, 5vw, 56px);"
+						>
+							{step.heading}
+						</h2>
+						<p class="mt-6 font-sans text-base leading-snug text-ink-soft">
+							{step.body}
+						</p>
+					</div>
+				</div>
+			</section>
+		))}
+
+		<!-- ====== CTA BLOCK ====== -->
+		<section
+			class="relative z-10 px-6 pb-32 pt-0 sm:px-10 sm:pb-40 lg:px-12 lg:pb-48"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8"></div>
+				<div class="flex flex-col items-start gap-4 lg:pl-8">
+					<a
+						href={INTERVIEW_URL}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+					>
+						Request an Interview
+					</a>
+					<a
+						href="/contact"
+						class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-soft transition hover:text-brand-accent"
+					>
+						Contact us with questions →
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
+</Layout>

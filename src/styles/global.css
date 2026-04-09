@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @config "../../tailwind.config.mjs";
+
+/* Disable scroll anchoring so the sticky header's height transition
+   (192px <-> 60px) doesn't fight with the browser's automatic scroll
+   adjustment. Without this, the compact-on-scroll FLIP transition
+   oscillates near the scroll threshold because each height change
+   causes the browser to shift scrollY to keep anchored content stable. */
+html {
+	overflow-anchor: none;
+}
+

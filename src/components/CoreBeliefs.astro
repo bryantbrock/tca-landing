@@ -1,0 +1,79 @@
+---
+const coreBeliefs = [
+	{
+		number: 'ONE',
+		title: 'No Neutrality',
+		body: 'Every school teaches a worldview. Every curriculum shapes what a child loves and what he dismisses. We have simply decided to be honest about ours. At Trinity, all learning begins with the fear of the Lord — because that is where wisdom begins.',
+	},
+	{
+		number: 'TWO',
+		title: 'Classically Rooted',
+		body: 'We teach the great tradition — the books, the languages, the ideas that shaped Western civilization and were themselves shaped by the Gospel. Not because the past was perfect, but because it is ours, and we will not abandon it.',
+	},
+	{
+		number: 'THREE',
+		title: 'Unapologetically Christian',
+		body: 'Chapel is not an add-on. Scripture is not an elective. Christ is Lord of mathematics, literature, history, and science — and we teach accordingly. We want disciples who know the Lord, not pagans who know Latin.',
+	},
+	{
+		number: 'FOUR',
+		title: 'Mastery, Not Promotion',
+		body: 'Your child will not be pushed forward because the calendar turned. Our cohort model means students advance when they have truly learned — when the material has moved from their head to their bones. No child left behind. No child held back.',
+	},
+	{
+		number: 'FIVE',
+		title: 'Four Days Here',
+		body: 'We believe you are the primary educator of your children. Four days a week, we come alongside you with rigorous classical instruction. The fifth day belongs to your family.',
+	},
+	{
+		number: 'SIX',
+		title: 'Covenantal Community',
+		body: 'This school is a ministry of Trinity Presbyterian Church — not a vendor you hire, but a community you join. We are building something together, and we intend for it to outlast all of us.',
+	},
+];
+---
+
+<!-- ====== SECTION 3 — Core Beliefs / Values grid ======
+     The vertical column dividers visible here come from the page-wide
+     divider layer in src/pages/index.astro. The grid below uses a fixed
+     4-column structure (heading + 3 card cols) with NO horizontal gap so
+     column boundaries land exactly at 25 / 50 / 75 % of the content area
+     where the page lines are. Each cell uses internal padding to keep its
+     text away from the lines. -->
+<section
+	id="our-vision"
+	aria-label="Core Beliefs"
+	class="px-6 pb-24 pt-24 sm:px-10 sm:pt-28 lg:px-12"
+>
+	<div
+		class="flex flex-col gap-16 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-20"
+	>
+		<!-- Left column: eyebrow + section heading -->
+		<div class="sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:pr-8">
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				CORE BELIEFS
+			</p>
+			<h2
+				class="mt-8 font-display text-[44px] leading-[1.1] text-ink sm:text-[52px] lg:text-[44px]"
+			>
+				We teach the whole child, because Christ is Lord of the whole life.
+			</h2>
+		</div>
+
+		{coreBeliefs.map((belief, i) => (
+			<article class={`lg:px-8 ${i % 3 === 2 ? 'lg:pr-0' : ''}`}>
+				<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+					{belief.number}
+				</p>
+				<h3
+					class="mt-6 font-display text-4xl italic leading-tight text-ink lg:text-[40px]"
+				>
+					{belief.title}
+				</h3>
+				<p class="mt-20 font-sans text-sm leading-snug text-ink-soft">
+					{belief.body}
+				</p>
+			</article>
+		))}
+	</div>
+</section>

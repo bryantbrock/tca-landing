@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Join Our Faculty — Trinity Classical Academy';
+const description =
+	'Trinity Classical Academy is hiring teachers who are mature in the Christian faith, gifted at teaching children, and enthusiastic for classical education.';
+
+const requirements = [
+	'Mature in the Christian faith',
+	'Gifted in teaching children',
+	'Enthusiastic for classical education',
+];
+
+const steps = [
+	{
+		number: '1.',
+		title: 'Initial Inquiry',
+		body: 'Complete our contact form to introduce yourself.',
+	},
+	{
+		number: '2.',
+		title: 'Formal Application',
+		body: 'If there\'s mutual interest, we\'ll send you the full application.',
+	},
+	{
+		number: '3.',
+		title: 'Teaching Audition',
+		body: 'Candidates are invited to present a short sample lesson.',
+	},
+	{
+		number: '4.',
+		title: 'Interviews',
+		body: 'Multiple conversations with school leadership to discern fit.',
+	},
+];
+---
+
+<Layout {title} {description}>
+	<Header />
+
+	<div class="relative mx-auto w-full max-w-canvas flow-root">
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<!-- ====== HERO ====== -->
+		<section
+			id="careers-hero"
+			aria-labelledby="careers-heading"
+			class="relative z-10 px-6 pb-0 pt-20 sm:px-10 sm:pt-28 lg:px-12 lg:pt-36"
+		>
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				Join Our Faculty
+			</p>
+
+			<h1
+				id="careers-heading"
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(72px, 12vw, 160px);"
+			>
+				We're hiring<br />teachers.
+			</h1>
+
+			<div class="mt-12 lg:w-1/2 lg:pr-12">
+				<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+					Trinity Classical Academy is actively hiring teachers for our founding faculty. We're looking for educators who share our commitment to classical Christian education and want to help build something that will outlast all of us.
+				</p>
+			</div>
+		</section>
+
+		<!-- ====== WHO WE'RE LOOKING FOR ====== -->
+		<section
+			id="who-were-looking-for"
+			aria-labelledby="looking-for-heading"
+			class="relative z-10 px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-40 lg:pt-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="looking-for-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						Who We're Looking For
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<h2
+						class="font-display italic leading-[1.1] text-ink"
+						style="font-size: clamp(36px, 5vw, 56px);"
+					>
+						Teachers who are:
+					</h2>
+					<ul class="mt-8 flex flex-col gap-4">
+						{requirements.map((req) => (
+							<li class="flex gap-4 font-sans text-base leading-snug text-ink-soft">
+								<span class="mt-1 shrink-0 font-mono text-xs font-medium text-brand-accent">—</span>
+								<span>{req}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== APPLICATION PROCESS ====== -->
+		<section
+			id="application-process"
+			aria-labelledby="process-heading"
+			class="relative z-10 px-6 pb-24 pt-0 sm:px-10 sm:pb-32 lg:px-12 lg:pb-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="process-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						Application Process
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<h2
+						class="font-display italic leading-[1.1] text-ink"
+						style="font-size: clamp(36px, 5vw, 56px);"
+					>
+						How to apply.
+					</h2>
+					<ol class="mt-8 flex flex-col gap-8">
+						{steps.map((step) => (
+							<li class="flex gap-6">
+								<span class="shrink-0 font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent pt-1">
+									{step.number}
+								</span>
+								<div class="flex flex-col gap-1">
+									<h3 class="font-display text-[22px] italic leading-[1.2] text-ink">
+										{step.title}
+									</h3>
+									<p class="font-sans text-base leading-snug text-ink-soft">
+										{step.body}
+									</p>
+								</div>
+							</li>
+						))}
+					</ol>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== CTA BLOCK ====== -->
+		<section
+			class="relative z-10 px-6 pb-32 pt-0 sm:px-10 sm:pb-40 lg:px-12 lg:pb-48"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8"></div>
+				<div class="flex flex-col items-start gap-4 lg:pl-8">
+					<a
+						href="/contact"
+						class="rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+					>
+						Apply to Teach
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
+</Layout>

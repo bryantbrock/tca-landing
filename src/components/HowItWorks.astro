@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import cohortImg from '../assets/images/cohort.jpg';
+import weekImg from '../assets/images/week.jpg';
+import foundationImg from '../assets/images/foundation.jpg';
+
+const programs = [
+	{
+		number: 'ONE',
+		title: 'The Cohort',
+		image: cohortImg,
+		body: 'Small groups of 12 or fewer, led by a teacher who knows your child by name. Students advance when they\'ve mastered the material — not when the year ends.',
+	},
+	{
+		number: 'TWO',
+		title: 'The Week',
+		image: weekImg,
+		body: 'Four days of rigorous classical instruction at school. One day at home with your family. We call it partnership because that\'s what it is.',
+	},
+	{
+		number: 'THREE',
+		title: 'The Foundation',
+		image: foundationImg,
+		body: 'Every subject is taught through the lens of Scripture. Chapel is daily. Latin is required. Beauty is not optional.',
+	},
+];
+---
+
+<!-- horizontal padding standardized to match other sections -->
+<!-- ====== SECTION 4 — How it works / Programs card ====== -->
+<div class="px-6 sm:px-10 lg:px-12">
+<section
+	id="how-it-works"
+	aria-labelledby="how-it-works-heading"
+	class="mb-20 mt-20 w-full rounded-card bg-cream p-6 lg:p-8"
+>
+	<!-- Header row -->
+	<div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-12">
+		<!-- Left: serif italic eyebrow -->
+		<h2
+			id="how-it-works-heading"
+			class="shrink-0 font-display text-[28px] italic text-ink"
+		>
+			How it works
+		</h2>
+
+		<!-- Right: lead paragraph + LEARN MORE pill -->
+		<div class="flex flex-1 flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+			<p class="max-w-[480px] font-sans text-base leading-snug text-ink-soft">
+				Trinity Classical Academy is built on a model that takes seriously both the rigor of classical education and the primacy of the family. A few things set us apart.
+			</p>
+			<a
+				href="/how-it-works"
+				class="self-start rounded-pill bg-pill px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90 lg:shrink-0"
+			>
+				Learn More
+			</a>
+		</div>
+	</div>
+
+	<!-- Program cards grid -->
+	<div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:mt-12 lg:gap-8">
+		{programs.map((program) => (
+			<article class="flex flex-col overflow-hidden rounded-card bg-white">
+				<!-- Photo with overlaid title -->
+				<div class="relative h-[292px] w-full shrink-0">
+					<Image
+						src={program.image}
+						alt=""
+						class="h-full w-full object-cover"
+					/>
+					<div class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/80 via-black/30 to-transparent"></div>
+					<!-- Overlay title -->
+					<div class="absolute left-4 top-[26px] flex items-center">
+						<span class="mr-2 inline-block size-2 rounded-full bg-brand-accent"></span>
+						<h3 class="font-display text-[24px] italic text-white drop-shadow-sm">
+							{program.title}
+						</h3>
+					</div>
+				</div>
+
+				<!-- Card body -->
+				<div class="p-6">
+					<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+						{program.number}
+					</p>
+					<p class="mt-4 font-sans text-sm leading-snug text-ink-soft">
+						{program.body}
+					</p>
+				</div>
+			</article>
+		))}
+	</div>
+</section>
+</div>

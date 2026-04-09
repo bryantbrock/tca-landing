@@ -1,0 +1,181 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import emblemGreen from '../assets/images/emblem-green.png';
+import { INTERVIEW_URL } from '../lib/links';
+
+const title = 'Our People — Trinity Classical Academy';
+const description =
+	'The board of directors and leadership of Trinity Classical Academy, a ministry of Trinity Presbyterian Church in Birmingham, Alabama.';
+
+const boardMembers = [
+	{ name: 'Karl Petersen',     title: 'Chair' },
+	{ name: 'Grady Maddox',      title: 'Vice-Chair' },
+	{ name: 'David Woods',       title: 'Secretary' },
+	{ name: 'Harrison Hunter',   title: 'Treasurer' },
+	{ name: 'Bryant Brock',      title: 'Board Member' },
+	{ name: 'Jonathan Griffith', title: 'Board Member' },
+];
+
+// Derive initials (first letter of each word)
+const initials = (name: string) =>
+	name
+		.split(' ')
+		.map((w) => w[0])
+		.join('');
+---
+
+<Layout {title} {description}>
+	<Header />
+
+	<div class="relative mx-auto w-full max-w-canvas flow-root">
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<!-- ====== HERO ====== -->
+		<section
+			id="people-hero"
+			aria-labelledby="people-heading"
+			class="relative z-10 px-6 pb-0 pt-20 sm:px-10 sm:pt-28 lg:px-12 lg:pt-36"
+		>
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				Our People
+			</p>
+
+			<h1
+				id="people-heading"
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(72px, 12vw, 160px);"
+			>
+				Built by families,<br />for families.
+			</h1>
+
+			<div class="mt-12 lg:w-1/2 lg:pr-12">
+				<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+					Trinity Classical Academy operates as a ministry of Trinity Presbyterian Church and under the authority of its Session. These are the people — families, church members, and friends — who are building the school alongside you.
+				</p>
+			</div>
+		</section>
+
+		<!-- ====== BOARD OF DIRECTORS ====== -->
+		<section
+			id="board-of-directors"
+			aria-labelledby="board-heading"
+			class="relative z-10 px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-40 lg:pt-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="board-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						Board of Directors
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+						{boardMembers.map((member) => (
+							<article class="flex flex-col gap-4">
+								<!-- Photo placeholder -->
+								<div class="relative aspect-[4/5] overflow-hidden rounded-card border border-ink/10 bg-ink/5">
+									<div class="absolute inset-0 flex items-center justify-center">
+										<span class="font-display text-[64px] leading-none text-ink-mute opacity-40">
+											{initials(member.name)}
+										</span>
+									</div>
+								</div>
+								<!-- Name + title -->
+								<div class="flex flex-col gap-1">
+									<h2 class="font-display text-[28px] leading-[1.1] text-ink">
+										{member.name}
+									</h2>
+									<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+										{member.title}
+									</p>
+								</div>
+							</article>
+						))}
+					</div>
+
+					<p class="mt-12 font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute">
+						Photos and Bios Coming Soon
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== UNDER THE CARE OF ====== -->
+		<section
+			id="under-the-care-of"
+			aria-labelledby="church-heading"
+			class="relative z-10 px-6 pb-32 pt-0 sm:px-10 sm:pb-40 lg:px-12 lg:pb-48"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="church-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						Under the Care Of
+					</p>
+				</div>
+
+				<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-16 lg:pl-8">
+					<div class="flex flex-col gap-6">
+						<Image
+							src={emblemGreen}
+							alt=""
+							aria-hidden="true"
+							class="h-10 w-auto self-start"
+						/>
+
+						<div class="flex flex-col gap-1">
+							<p class="font-display text-[clamp(22px,3vw,32px)] italic leading-[1.1] text-ink">
+								Trinity Presbyterian Church
+							</p>
+							<address class="font-display text-[clamp(22px,3vw,32px)] not-italic italic leading-[1.1] text-ink-soft">
+								7160 Cahaba Valley Rd., Birmingham, AL 35242
+							</address>
+						</div>
+
+						<p class="font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute">
+							Trinity Classical Academy is a ministry of Trinity Presbyterian Church
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== CTA BLOCK ====== -->
+		<section
+			class="relative z-10 px-6 pb-32 pt-0 sm:px-10 sm:pb-40 lg:px-12 lg:pb-48"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8"></div>
+				<div class="flex flex-col items-start gap-4 lg:pl-8">
+					<a
+						href={INTERVIEW_URL}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+					>
+						Request an Interview
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
+</Layout>

@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { INTERVIEW_URL } from '../lib/links';
+
+const title = 'How It Works — Trinity Classical Academy';
+const description =
+	'Small cohorts, mastery-based progression, four days of classical instruction — built around the rhythms of family life.';
+---
+
+<Layout {title} {description}>
+	<Header />
+
+	<div class="relative mx-auto w-full max-w-canvas flow-root">
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<!-- ====== HERO ====== -->
+		<section
+			id="how-it-works-hero"
+			aria-labelledby="how-it-works-heading"
+			class="relative z-10 px-6 pb-0 pt-20 sm:px-10 sm:pt-28 lg:px-12 lg:pt-36"
+		>
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				How It Works
+			</p>
+
+			<h1
+				id="how-it-works-heading"
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(72px, 12vw, 160px);"
+			>
+				The shape of a day at Trinity.
+			</h1>
+
+			<div class="mt-12 lg:w-1/2 lg:pr-12">
+				<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+					Trinity Classical Academy is built on a model that takes seriously both the rigor of classical education and the primacy of the family. Small cohorts, mastery-based progression, a four-day week with one day at home, and an integrated curriculum that sees every subject as part of God's unified story.
+				</p>
+			</div>
+		</section>
+
+		<!-- ====== ONE — THE COHORT ====== -->
+		<section
+			id="the-cohort"
+			aria-labelledby="cohort-heading"
+			class="relative z-10 px-6 pb-24 pt-24 sm:px-10 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-40 lg:pt-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+						One
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<h2
+						id="cohort-heading"
+						class="font-display italic leading-[1.1] text-ink"
+						style="font-size: clamp(36px, 5vw, 56px);"
+					>
+						The Cohort
+					</h2>
+					<div class="mt-8 flex flex-col gap-5">
+						<p class="font-sans text-base leading-snug text-ink-soft">
+							Trinity Classical Academy uses a multi-age, mastery-based learning model rather than traditional grade levels. Students progress in small groups called "learning cohorts" based on skill, mastery, and developmental readiness. Cohorts are intentionally small — with a 1-to-12 ratio across the school — so teachers can individualize instruction. Sizes are capped based on age and subject. The exact configuration (e.g., half-day vs. full-day in the youngest years) may vary as enrollment and program needs develop. We'll publish the current structure each year.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== TWO — LEARNING LEVELS ====== -->
+		<section
+			id="learning-levels"
+			aria-labelledby="levels-heading"
+			class="relative z-10 px-6 pb-24 pt-0 sm:px-10 sm:pb-32 lg:px-12 lg:pb-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+						Two
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<h2
+						id="levels-heading"
+						class="font-display italic leading-[1.1] text-ink"
+						style="font-size: clamp(36px, 5vw, 56px);"
+					>
+						Learning Levels
+					</h2>
+					<div class="mt-8 flex flex-col gap-5">
+						<p class="font-sans text-base leading-snug text-ink-soft">
+							Trinity Classical Academy assesses each student individually in math, reading, and writing rather than assigning grades based solely on age. Students are placed in learning levels matching their abilities. Since all learning levels study the same historical era simultaneously, students progress at their own pace, accommodating advanced learners, typical students, and those needing additional support without compromising content quality.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== THREE — THE WEEK ====== -->
+		<section
+			id="the-week"
+			aria-labelledby="week-heading"
+			class="relative z-10 px-6 pb-24 pt-0 sm:px-10 sm:pb-32 lg:px-12 lg:pb-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+						Three
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<h2
+						id="week-heading"
+						class="font-display italic leading-[1.1] text-ink"
+						style="font-size: clamp(36px, 5vw, 56px);"
+					>
+						The Week
+					</h2>
+					<div class="mt-8 flex flex-col gap-5">
+						<p class="font-sans text-base leading-snug text-ink-soft">
+							The academy operates on a parental partnership model, with four days of on-campus, teacher-led instruction Mondays through Thursdays, and one independent home study day on Fridays.
+						</p>
+
+						<div class="mt-4">
+							<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+								The Weekly Rhythm
+							</p>
+							<ul class="mt-4 flex flex-col gap-3">
+								<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+									<span class="mt-1 shrink-0 text-brand-accent">—</span>
+									<span>All cohorts meet Monday through Thursday</span>
+								</li>
+								<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+									<span class="mt-1 shrink-0 text-brand-accent">—</span>
+									<span>Lower Primary (traditionally Pre-K through 4th grade): half days</span>
+								</li>
+								<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+									<span class="mt-1 shrink-0 text-brand-accent">—</span>
+									<span>Upper Primary and Secondary Prep (traditionally 5th through 8th grade): full days</span>
+								</li>
+								<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+									<span class="mt-1 shrink-0 text-brand-accent">—</span>
+									<span>High school expansion planned year-by-year</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== FOUR — INTEGRATED LEARNING ====== -->
+		<section
+			id="integrated-learning"
+			aria-labelledby="integrated-heading"
+			class="relative z-10 px-6 pb-24 pt-0 sm:px-10 sm:pb-32 lg:px-12 lg:pb-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+						Four
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<h2
+						id="integrated-heading"
+						class="font-display italic leading-[1.1] text-ink"
+						style="font-size: clamp(36px, 5vw, 56px);"
+					>
+						Integrated Learning
+					</h2>
+					<div class="mt-8 flex flex-col gap-5">
+						<p class="font-sans text-base leading-snug text-ink-soft">
+							We live in an age of specialization, but God is writing a masterful story that is all connected. The school integrates Bible, History, and Literature so students naturally observe thematic connections unfolding throughout their education.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== CTA BLOCK ====== -->
+		<section
+			class="relative z-10 px-6 pb-32 pt-0 sm:px-10 sm:pb-40 lg:px-12 lg:pb-48"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8"></div>
+				<div class="flex flex-col items-start gap-4 lg:pl-8">
+					<a
+						href={INTERVIEW_URL}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="rounded-pill bg-action px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+					>
+						Request an Interview
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
+</Layout>

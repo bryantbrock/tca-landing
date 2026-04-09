@@ -1,9 +1,29 @@
 ---
 import '../styles/global.css';
-import '@fontsource/inter/latin-400.css';
-import '@fontsource/inter/latin-500.css';
+import '@fontsource/geist-sans/latin-400.css';
+import '@fontsource/geist-sans/latin-500.css';
+import '@fontsource/geist-sans/latin-600.css';
+import '@fontsource/geist-sans/latin-700.css';
 import '@fontsource/cormorant-garamond/latin-400.css';
+import '@fontsource/cormorant-garamond/latin-400-italic.css';
+import '@fontsource/cormorant-garamond/latin-500.css';
+import '@fontsource/cormorant-garamond/latin-500-italic.css';
 import '@fontsource/cormorant-garamond/latin-600.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+
+// Preload critical fonts to eliminate the FOUT (Flash of Unstyled Text)
+// on first paint. These 4 weights are the ones used above the fold on
+// the home page — Geist regular + semibold for body copy, Cormorant
+// regular + italic for the display headlines and mission paragraphs.
+// Vite's `?url` transform bundles them into /_astro/*.woff2 with hashed
+// filenames, and the preload <link> tags in the head below start the
+// download as soon as the HTML is parsed (in parallel with the CSS),
+// so the fonts arrive before the browser starts painting text.
+import geistRegular from '@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2?url';
+import geistSemibold from '@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff2?url';
+import cormorantRegular from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2?url';
+import cormorantItalic from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-italic.woff2?url';
 
 interface Props {
 	title: string;
@@ -37,14 +57,47 @@ const canonical =
 const resolvedOgTitle = ogTitle ?? title;
 const resolvedOgDescription = ogDescription ?? description;
 const ogImageUrl = absolute(ogImage);
+
+// Structured data: schema.org EducationalOrganization
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'EducationalOrganization',
+	name: 'Trinity Classical Academy',
+	description:
+		'Trinity Classical Academy partners with families in the joyful discipleship of students through rigorous, Christ-centered classical education.',
+	url: 'https://trinityclassical.academy',
+	logo: 'https://trinityclassical.academy/favicon-192.png',
+	email: 'info@trinityclassical.academy',
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: '7160 Cahaba Valley Rd.',
+		addressLocality: 'Birmingham',
+		addressRegion: 'AL',
+		postalCode: '35242',
+		addressCountry: 'US',
+	},
+	parentOrganization: {
+		'@type': 'Church',
+		name: 'Trinity Presbyterian Church',
+	},
+	sameAs: [
+		'https://instagram.com/trinityclassicalacademy',
+	],
+};
 ---
 
 <!doctype html>
-<html lang="en" class="bg-surface text-foreground antialiased">
+<html lang="en" class="bg-canvas text-ink antialiased">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- Preload above-the-fold fonts to eliminate FOUT on first paint -->
+		<link rel="preload" href={geistRegular} as="font" type="font/woff2" crossorigin="anonymous" />
+		<link rel="preload" href={geistSemibold} as="font" type="font/woff2" crossorigin="anonymous" />
+		<link rel="preload" href={cormorantRegular} as="font" type="font/woff2" crossorigin="anonymous" />
+		<link rel="preload" href={cormorantItalic} as="font" type="font/woff2" crossorigin="anonymous" />
 		<meta name="generator" content={Astro.generator} />
 		{noindex && <meta name="robots" content="noindex, nofollow" />}
 		<title>{title}</title>
@@ -61,32 +114,23 @@ const ogImageUrl = absolute(ogImage);
 		<meta name="twitter:title" content={resolvedOgTitle} />
 		<meta name="twitter:description" content={resolvedOgDescription} />
 		<meta name="twitter:image" content={ogImageUrl} />
+
+		<!-- Structured data: schema.org EducationalOrganization -->
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+		<!--
+			Cloudflare Web Analytics — privacy-friendly, no cookies required,
+			no cookie banner needed. Replace the placeholder token below with
+			the real one from the Cloudflare Web Analytics dashboard once the
+			site is deployed and the domain is attached there.
+		-->
+		<script
+			defer
+			src="https://static.cloudflareinsights.com/beacon.min.js"
+			data-cf-beacon='{"token": "PLACEHOLDER_CF_WEB_ANALYTICS_TOKEN"}'
+		></script>
 	</head>
-	<body class="flex min-h-screen flex-col font-sans">
-		<header class="border-b border-muted/20">
-			<nav
-				class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6"
-				aria-label="Primary"
-			>
-				<a href="/" class="font-display text-xl font-semibold tracking-wide text-foreground">
-					TCA
-				</a>
-				<ul class="flex gap-6 text-sm text-muted">
-					<li>
-						<a href="/" class="transition hover:text-foreground">Home</a>
-					</li>
-				</ul>
-			</nav>
-		</header>
-		<main class="flex-1">
-			<slot />
-		</main>
-		<footer class="border-t border-muted/20">
-			<div
-				class="mx-auto max-w-5xl px-4 py-8 text-center text-sm text-muted sm:px-6"
-			>
-				<p>© {new Date().getFullYear()} TCA. All rights reserved.</p>
-			</div>
-		</footer>
+	<body class="min-h-screen bg-canvas font-sans text-ink antialiased">
+		<slot />
 	</body>
 </html>

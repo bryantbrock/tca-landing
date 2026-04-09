@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = 'Uniform Policy — Trinity Classical Academy';
+const description =
+	'Details on the required uniform for all students at Trinity Classical Academy, including approved vendors and dress code guidelines.';
+
+// Issuu flipbook published by concordiseducationpartners.
+//
+// IMPORTANT: must use the `e.issuu.com` subdomain — the bare
+// `issuu.com/embed.html` endpoint sends `X-Frame-Options: SAMEORIGIN`
+// which blocks third-party iframe embedding entirely. `e.issuu.com` is
+// Issuu's dedicated embed subdomain that omits that header (this is
+// the same approach Squarespace uses).
+//
+// The fullscreen URL is the canonical user-facing document on
+// `issuu.com` (which works fine for top-level navigation; X-Frame-Options
+// only blocks framing).
+const issuuEmbedUrl =
+	'https://e.issuu.com/embed.html?backgroundColor=%23e5e5e5&backgroundColorFullscreen=%23e5e5e5&d=trinity_classical_academy_alabama_-_uniform_policy&themeMainColor=%231a1a1a&themeSecondaryColor=%23ffffff&u=concordiseducationpartners';
+const issuuFullscreenUrl =
+	'https://issuu.com/concordiseducationpartners/docs/trinity_classical_academy_alabama_-_uniform_policy';
+---
+
+<Layout {title} {description}>
+	<Header />
+
+	<div class="relative mx-auto w-full max-w-canvas flow-root">
+		<!-- Page-wide vertical column dividers, matching every other inner page. -->
+		<div
+			class="pointer-events-none absolute -top-[192px] bottom-0 left-0 right-0 z-0 hidden lg:block lg:px-12"
+			aria-hidden="true"
+		>
+			<div class="relative h-full">
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+			</div>
+		</div>
+
+		<!-- ====== HERO ====== -->
+		<section
+			id="uniform-hero"
+			aria-labelledby="uniform-heading"
+			class="relative z-10 px-6 pb-0 pt-20 sm:px-10 sm:pt-28 lg:px-12 lg:pt-36"
+		>
+			<!-- Editorial breadcrumb back to the parent index. -->
+			<a
+				href="/resources"
+				class="inline-flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-mute transition hover:text-brand-accent"
+			>
+				<span aria-hidden="true">←</span>
+				<span>Resources</span>
+			</a>
+
+			<p class="mt-8 font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+				Policy Document
+			</p>
+
+			<h1
+				id="uniform-heading"
+				class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink"
+				style="font-size: clamp(60px, 10vw, 140px);"
+			>
+				Uniform<br />policy.
+			</h1>
+
+			<div class="mt-12 max-w-[640px]">
+				<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+					Details on the required uniform for all students, including
+					approved vendors and dress code guidelines. Flip through below
+					or open the full document on Issuu.
+				</p>
+			</div>
+		</section>
+
+		<!-- ====== FLIPBOOK ====== -->
+		<section
+			aria-labelledby="uniform-flipbook-heading"
+			class="relative z-10 px-6 pb-24 pt-16 sm:px-10 sm:pb-32 sm:pt-20 lg:px-12 lg:pb-40 lg:pt-24"
+		>
+			<h2 id="uniform-flipbook-heading" class="sr-only">Flipbook viewer</h2>
+
+			<!-- Iframe frame.
+			     Aspect ratios shift across breakpoints because Issuu's embed
+			     renders a single portrait page on narrow viewports and a
+			     two-page landscape spread on wide ones. The max-w cap keeps
+			     the spread from getting absurdly tall at xl+. -->
+			<div class="mx-auto max-w-[1120px]">
+				<div
+					class="relative aspect-[3/4] w-full overflow-hidden rounded-card border border-ink/10 bg-cream shadow-2xl sm:aspect-[4/3] lg:aspect-[16/10]"
+				>
+					<iframe
+						src={issuuEmbedUrl}
+						title="Trinity Classical Academy — Uniform Policy"
+						loading="lazy"
+						allow="clipboard-write; fullscreen"
+						allowfullscreen
+						sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-modals allow-downloads allow-top-navigation-by-user-activation"
+						class="absolute inset-0 h-full w-full border-0"
+					></iframe>
+				</div>
+
+				<!-- Action row: primary fullscreen CTA + tertiary back link. -->
+				<div class="mt-10 flex flex-col items-center gap-4">
+					<a
+						href={issuuFullscreenUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="rounded-pill bg-action px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+					>
+						View on Issuu ↗
+					</a>
+					<a
+						href="/resources"
+						class="font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute transition hover:text-brand-accent"
+					>
+						← Back to all resources
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Footer />
+</Layout>

@@ -4,268 +4,111 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const out       = join(__dirname, '..', 'public', 'og-image.png');
-const emblemPath = join(__dirname, '..', 'src', 'assets', 'images', 'emblem-cream.png');
+const out = join(__dirname, '..', 'public', 'og-image.png');
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
-const brand       = '#003622';  // deep green
-const cream       = '#fbf5e3';  // warm off-white
-const action      = '#64ff5f';  // lime CTA
-const brandAccent = '#276d33';  // mid green (used subtly)
+const bg      = '#003622';  // dark green — brand background
+const cream   = '#fbf5e3';  // cream — primary text
+const lime    = '#64ff5f';  // lime green — tagline accent
+const divider = cream;      // column dividers (cream at low opacity, handled via opacity attr)
 
-// ─── Grid ─────────────────────────────────────────────────────────────────────
-// 1200 × 630 canvas.
-// 4-col grid matching the site's 25/50/75% layout:
-//   Col dividers: x=300, x=600, x=900
-//   Left margin: x=72  (≈ lg:px-12 scaled from 1440→1200)
-//   Right margin: x=1128
-//
+// ─── Canvas: 1200 × 630 ───────────────────────────────────────────────────────
 // Layout:
-//   Headline zone:   x=72 … x=900  (cols 1-3, left 75%)
-//   Right panel:     x=916 … x=1128  (col 4, right 25%)
-//   TRINITY wm:      full-bleed bottom, bleeds off canvas
+//   • Dark green background
+//   • Three vertical column dividers at x=300, x=600, x=900 (25/50/75%), cream ~13% opacity
+//   • Triquetra emblem watermark — right side, ~275px tall, cream ~9% opacity
+//   • LEFT-aligned text block starting at x=72:
+//       1. School name — Georgia italic, ~65px, cream
+//       2. Short lime rule (~40px)
+//       3. Tagline — Courier New, ~15px, lime, letter-spaced
+//       4. Location — Georgia, ~19px, cream 60% opacity
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Headline: 3 stacked lines of italic uppercase serif.
-// We use 155px — at that size "BEAUTY." comfortably fits in ~700px,
-// and all three lines fit vertically with tight 0.95 leading.
-//
-// Vertical math (y = baseline):
-//   top pad 78px + font-size 155 = line1Y 233
-//   line2Y = 233 + 155×0.95    = 380
-//   line3Y = 380 + 155×0.95    = 527
-//
-// All three baselines are inside the 630px canvas (527 + descenders ≈ 570 < 630).
+const lx = 72;  // left margin
 
-const hs = 155;                     // hero font-size
-const hx = 72;                      // hero left x
-const l1 = 78 + hs;                 // 233
-const l2 = l1 + Math.round(hs * 0.95); // 380
-const l3 = l2 + Math.round(hs * 0.95); // 527
+// Vertical positions (spec-driven)
+const nameY     = 270;   // school name baseline (~above center)
+const ruleY     = nameY + 30;  // lime rule top edge (20px below name baseline)
+const taglineY  = ruleY + 44;  // tagline baseline (below rule + gap)
+const locationY = taglineY + 48; // location baseline
 
-// Right panel x — start 16px past the 75% divider
-const rx = 916;
-const rw = 1128 - rx;               // ≈ 212px
+// ─── Emblem placement ─────────────────────────────────────────────────────────
+// Original viewBox: 0 0 56 55 → target ~275px tall
+// scale = 275 / 55 = 5
+const EMBLEM_SCALE  = 275 / 55;
+const EMBLEM_W      = Math.round(56 * EMBLEM_SCALE);   // ~280px
+const EMBLEM_H      = 275;
+// Position: right side, centered vertically
+const EMBLEM_TX     = 1200 - EMBLEM_W - 60;  // right edge with 60px margin
+const EMBLEM_TY     = Math.round((630 - EMBLEM_H) / 2);  // vertically centered
 
-// TRINITY watermark: giant text bleeding off bottom edge, anchored left.
-// At 330px tall it spans roughly the lower half of the card.
-const ts = 330;
+// ─── Emblem paths (from src/assets/images/emblem-green.svg) ──────────────────
+// Fill changed from #276D33 → cream color; opacity handled by group opacity
+const emblemPaths = `
+  <path d="M27.7979 18.3418C20.2082 18.3418 14.041 24.5173 14.041 32.0986C14.041 39.68 20.2165 45.8638 27.7979 45.8638C35.3792 45.8638 41.5547 39.6883 41.5547 32.0986C41.5547 24.5089 35.3792 18.3418 27.7979 18.3418ZM40.266 32.107C40.266 38.9854 34.6763 44.5752 27.7979 44.5752C20.9194 44.5752 15.3297 38.9854 15.3297 32.107C15.3297 25.2286 20.9194 19.6388 27.7979 19.6388C34.6763 19.6388 40.266 25.2286 40.266 32.107Z" fill="${cream}"/>
+  <path d="M55.5957 48.1483C55.2024 42.6005 53.1774 37.3706 49.8135 33.0445C49.8303 32.7349 49.8386 32.4169 49.8386 32.0989C49.8386 25.6055 47.0187 19.7648 42.5419 15.7315C41.1529 14.4763 39.6216 13.4136 37.9898 12.5601C35.9397 7.53102 32.4336 3.13793 27.7979 0C23.1621 3.13793 19.656 7.53102 17.6059 12.5684C10.5769 16.2503 5.76542 23.6223 5.76542 32.0989C5.76542 32.2746 5.76542 32.4503 5.76542 32.6261C5.76542 32.6846 5.76542 32.7516 5.76542 32.8102C5.76542 32.8855 5.76542 32.9608 5.76542 33.0445C2.4183 37.3706 0.393287 42.6005 0 48.1483C3.77388 49.9809 7.98289 50.9516 12.1752 50.9516C13.4638 50.9516 14.7357 50.8595 15.9825 50.6922C19.3966 52.8678 23.455 54.1313 27.7979 54.1313C30.7015 54.1313 33.4712 53.5707 36.0067 52.5414C36.0569 52.5247 36.0987 52.4996 36.1489 52.4829C36.3079 52.4159 36.4585 52.349 36.6175 52.282C36.6928 52.2486 36.7681 52.2151 36.8434 52.1816C36.9857 52.1231 37.1196 52.0561 37.2535 51.9892C37.4376 51.9055 37.6133 51.8134 37.789 51.7214C37.8057 51.713 37.8225 51.7047 37.8392 51.6963C38.4501 51.3867 39.0442 51.0436 39.6216 50.6754C40.86 50.8428 42.1319 50.9348 43.4205 50.9348C47.6128 50.9348 51.8218 49.9642 55.5957 48.1316V48.1483ZM42.1403 17.2544C45.8723 20.8693 48.2571 25.8649 48.4412 31.4044C47.9224 30.827 47.3701 30.2747 46.8011 29.7392C46.3158 29.2873 45.8137 28.8522 45.2949 28.4422C44.5084 24.6683 42.5168 21.3295 39.7554 18.8359C37.1028 16.4344 33.8394 14.9114 30.2915 14.4177C29.4798 14.3006 28.6514 14.242 27.8062 14.242C26.0071 14.242 24.2666 14.5098 22.6265 15.0118C23.0617 13.8906 23.5805 12.8195 24.1913 11.7819C25.3628 11.5727 26.5761 11.4639 27.8062 11.4639C28.7852 11.4639 29.7392 11.5308 30.6764 11.6647C30.9107 11.6982 31.1533 11.7317 31.3876 11.7735C35.4544 12.4931 39.1613 14.3759 42.1403 17.2544ZM25.1871 10.2255C25.9569 9.12928 26.8356 8.10004 27.7979 7.15447C28.7685 8.10004 29.6388 9.12928 30.4086 10.2255C29.5551 10.125 28.6765 10.0665 27.7979 10.0665C26.9192 10.0665 26.0406 10.1167 25.1871 10.2255ZM7.60634 27.8146C8.7862 22.2584 12.2086 17.5222 16.8779 14.6018C16.4427 15.9741 16.108 17.3799 15.8821 18.8192C13.263 21.1705 11.3467 24.275 10.4681 27.7895C10.1167 29.2036 9.94095 30.6596 9.94095 32.1156C9.94095 34.2662 10.3259 36.3748 11.079 38.3831C11.0873 38.4082 11.0957 38.4333 11.1041 38.4584C11.1459 38.5588 11.1794 38.6593 11.2212 38.7597C12.2003 41.2031 13.7065 43.3703 15.5976 45.1443C14.4847 45.3117 13.3466 45.4037 12.1919 45.4037C12.1333 45.4037 12.0831 45.4037 12.0245 45.4037C10.6355 43.7552 9.48909 41.8809 8.66905 39.8475C8.66905 39.8475 8.65231 39.814 8.65231 39.7973C8.6021 39.6801 8.5519 39.5546 8.51006 39.4291C8.50169 39.404 8.49332 39.3789 8.48495 39.3538C8.45985 39.2952 8.43475 39.2366 8.41801 39.1697C7.5896 36.902 7.17121 34.5339 7.17121 32.1073C7.17121 30.668 7.32183 29.2287 7.62307 27.8146H7.60634ZM10.1669 45.3033C8.82803 45.1778 7.48919 44.9351 6.19218 44.5753C6.52689 43.2699 6.97875 41.998 7.54776 40.7763C8.24229 42.3913 9.12091 43.9142 10.1669 45.3033ZM34.1741 51.7381C32.1658 52.3908 30.0237 52.7506 27.7979 52.7506C24.2917 52.7506 20.9865 51.872 18.0912 50.324C19.5137 50.0144 20.8944 49.596 22.2249 49.0855C23.9821 49.6629 25.8482 49.9725 27.7979 49.9725C29.5049 49.9725 31.1617 49.7299 32.7265 49.278C36.174 48.2906 39.1948 46.3242 41.4876 43.5879C43.2616 41.4708 44.5586 38.9438 45.2029 36.174C45.956 37.1112 46.6254 38.107 47.2112 39.1446C46.4581 41.2114 45.3953 43.1193 44.0649 44.818C41.5127 48.0898 38.107 50.4746 34.1741 51.7465V51.7381ZM48.0563 40.7763C48.617 41.998 49.0772 43.2699 49.4119 44.5753C48.1149 44.9351 46.776 45.1778 45.4372 45.3033C46.4832 43.9142 47.3618 42.3913 48.0563 40.7763ZM54.123 47.3032C50.7256 48.801 47.1275 49.5625 43.4122 49.5625C42.7176 49.5625 42.0231 49.5374 41.337 49.4788C42.3746 48.6672 43.3452 47.7634 44.2322 46.7677C46.5668 46.6924 48.8429 46.274 51.0352 45.5209C50.0813 40.6843 47.6881 36.4251 44.341 33.1616C43.931 39.5295 39.8977 44.9016 34.2662 47.2614C34.2243 47.2781 34.1741 47.2948 34.1323 47.3199C33.7306 47.4873 33.329 47.6295 32.9106 47.7634C32.7516 47.8136 32.5926 47.8638 32.442 47.9057C32.1407 47.9894 31.8395 48.0647 31.5383 48.14C31.304 48.1986 31.0613 48.2488 30.827 48.2906C30.7601 48.299 30.6931 48.3241 30.6262 48.3324C30.4504 48.3659 30.2664 48.391 30.0823 48.4161C29.9818 48.4329 29.8731 48.4412 29.7727 48.4496C29.622 48.4663 29.4798 48.4831 29.3292 48.4998C29.3041 48.4998 29.2706 48.4998 29.2455 48.5082C28.8187 48.5416 28.392 48.5667 27.9652 48.5751C27.9317 48.5751 27.9066 48.5751 27.8732 48.5751C27.8648 48.5751 27.8564 48.5751 27.8481 48.5751C27.8313 48.5751 27.823 48.5751 27.8062 48.5751C27.2623 48.5751 26.7268 48.5416 26.1996 48.4914C26.1578 48.4914 26.1159 48.4914 26.0741 48.4831C25.5971 48.4329 25.1369 48.3575 24.6767 48.2739C24.5679 48.2571 24.4591 48.232 24.3503 48.2069C24.3252 48.2069 24.3001 48.1986 24.275 48.1902C23.5637 48.0312 22.8692 47.822 22.1914 47.5793C19.1037 48.8429 15.7231 49.5625 12.1835 49.5625C8.64394 49.5625 4.87006 48.801 1.47273 47.3032C1.95807 42.7846 3.55632 38.6425 5.97461 35.128C6.1587 36.4418 6.45995 37.7304 6.86997 39.0023C5.79889 41.019 5.00395 43.2113 4.55209 45.5376C7.00385 46.3744 9.5644 46.8011 12.1835 46.8011C14.4512 46.8011 16.6352 46.4748 18.7188 45.8807C14.2336 42.9352 11.2631 37.8727 11.2631 32.1156C11.2631 27.0364 13.5726 22.4927 17.2042 19.4719C18.1916 12.4262 21.9906 5.96625 27.7979 1.72377C31.3709 4.33452 34.1909 7.79043 36.0569 11.6982C34.8352 11.2045 33.5633 10.8196 32.2663 10.5518C31.0529 8.6021 29.5467 6.81976 27.7979 5.28845C24.1579 8.48495 21.5973 12.7358 20.4342 17.3883C20.9614 17.1289 21.4969 16.8946 22.0492 16.6938C22.0994 16.677 22.1579 16.6603 22.2082 16.6436C23.957 16.016 25.8314 15.6562 27.7979 15.6562C27.8146 15.6562 27.8313 15.6562 27.8481 15.6562C27.8481 15.6562 27.8564 15.6562 27.8648 15.6562C27.9903 15.6562 28.1075 15.6729 28.233 15.6729C28.6012 15.6813 28.9693 15.698 29.3292 15.7315H29.3459C29.5802 15.7566 29.8145 15.79 30.0488 15.8235C30.1827 15.8403 30.3249 15.857 30.4588 15.8821C30.5258 15.8905 30.5843 15.8988 30.6513 15.9072C30.6513 15.9072 30.6847 15.9156 30.7015 15.9156C30.7433 15.9156 30.7935 15.9323 30.8354 15.9407C31.078 15.9825 31.3123 16.0411 31.5466 16.0913C31.8395 16.1582 32.1324 16.2335 32.4169 16.3172C32.5759 16.3591 32.7349 16.4093 32.8938 16.4595C38.6927 18.3004 43.1026 23.2374 44.1485 29.3292C49.5876 33.5967 53.328 39.9646 54.123 47.3283V47.3032Z" fill="${cream}"/>
+  <path d="M33.3942 28.534V31.3958H28.5073V26.509H31.3692V25.0864H24.223V26.509H27.0848V31.3958H22.1979V28.534H20.7754V35.6718H22.1979V32.8184H27.0848V37.6969H24.223V39.1194H31.3692V37.6969H28.5073V32.8184H33.3942V35.6718H34.8167V28.534H33.3942Z" fill="${cream}"/>
+`;
 
-// ─── SVG ──────────────────────────────────────────────────────────────────────
+// ─── Main SVG ─────────────────────────────────────────────────────────────────
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 
-  <!-- ═══ 0. BACKGROUND ═══ -->
-  <rect width="1200" height="630" fill="${brand}"/>
+  <!-- 0. BACKGROUND — dark green brand color -->
+  <rect width="1200" height="630" fill="${bg}"/>
 
-  <!-- ═══ 1. TRINITY WATERMARK ═══
-       Giant italic serif spanning the lower ~60% of the canvas, bleeding off
-       the bottom edge. This mirrors the footer's massive "TRINITY" wordmark.
-       The text is cream at very low opacity so it reads as structural texture —
-       it shouldn't compete with the headline. We use overflow visible (default
-       for SVG text) so it bleeds naturally past the viewport. -->
+  <!-- 1. COLUMN DIVIDERS — 25/50/75%, cream at ~13% opacity -->
+  <line x1="300" y1="0" x2="300" y2="630" stroke="${divider}" stroke-width="1" opacity="0.13"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="${divider}" stroke-width="1" opacity="0.13"/>
+  <line x1="900" y1="0" x2="900" y2="630" stroke="${divider}" stroke-width="1" opacity="0.13"/>
+
+  <!-- 2. EMBLEM WATERMARK — triquetra, cream, ~9% opacity, right side, vertically centered -->
+  <g transform="translate(${EMBLEM_TX}, ${EMBLEM_TY}) scale(${EMBLEM_SCALE.toFixed(6)})" opacity="0.09">
+    ${emblemPaths}
+  </g>
+
+  <!-- 3. SCHOOL NAME — large italic serif, cream -->
   <text
-    x="${hx - 6}"
-    y="700"
+    x="${lx}" y="${nameY}"
     font-family="Georgia, 'Times New Roman', serif"
     font-style="italic"
-    font-size="${ts}"
+    font-size="65"
     font-weight="400"
     fill="${cream}"
-    opacity="0.085"
-    letter-spacing="-10"
-  >TRINITY</text>
+    text-anchor="start"
+    letter-spacing="-1"
+  >Trinity Classical Academy</text>
 
-  <!-- ═══ 2. COLUMN DIVIDERS ═══
-       Vertical hairlines at 25/50/75% of canvas width, cream/15 on brand green,
-       matching the footer's cream dividers (bg-cream/15). -->
-  <line x1="300" y1="0" x2="300" y2="630" stroke="${cream}" stroke-opacity="0.15" stroke-width="1"/>
-  <line x1="600" y1="0" x2="600" y2="630" stroke="${cream}" stroke-opacity="0.15" stroke-width="1"/>
-  <line x1="900" y1="0" x2="900" y2="630" stroke="${cream}" stroke-opacity="0.15" stroke-width="1"/>
+  <!-- 4. LIME RULE — short horizontal divider, lime green -->
+  <rect x="${lx}" y="${ruleY}" width="40" height="2" fill="${lime}"/>
 
-  <!-- ═══ 3. EYEBROW ═══
-       Short lime rule + mono uppercase eyebrow above the headline.
-       Matches: font-mono text-xs tracking-eyebrow text-action (footer headers). -->
-  <line
-    x1="${hx}" y1="46"
-    x2="${hx + 36}" y2="46"
-    stroke="${action}" stroke-width="2"
-  />
+  <!-- 5. TAGLINE — monospace uppercase, lime green, wide letter-spacing -->
   <text
-    x="${hx}" y="62"
+    x="${lx}" y="${taglineY}"
     font-family="'Courier New', Courier, monospace"
-    font-size="11" font-weight="600"
-    fill="${action}" letter-spacing="2.5"
-  >TRINITY CLASSICAL ACADEMY</text>
+    font-size="15"
+    font-weight="400"
+    fill="${lime}"
+    text-anchor="start"
+    letter-spacing="4"
+  >CLASSICAL · CHRISTIAN · COVENANTAL</text>
 
-  <!-- ═══ 4. HEADLINE — TRUTH. / GOODNESS. / BEAUTY. ═══
-       Three stacked lines, uppercase italic serif, left-aligned.
-       Matches the Hero component: font-display italic uppercase leading-[0.95] tracking-tight. -->
+  <!-- 6. LOCATION — small serif, cream at 60% opacity -->
   <text
-    x="${hx}" y="${l1}"
+    x="${lx}" y="${locationY}"
     font-family="Georgia, 'Times New Roman', serif"
-    font-style="italic" font-size="${hs}" font-weight="400"
-    fill="${cream}" letter-spacing="-4" text-anchor="start"
-  >TRUTH.</text>
-
-  <text
-    x="${hx}" y="${l2}"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-style="italic" font-size="${hs}" font-weight="400"
-    fill="${cream}" letter-spacing="-4" text-anchor="start"
-  >GOODNESS.</text>
-
-  <text
-    x="${hx}" y="${l3}"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-style="italic" font-size="${hs}" font-weight="400"
-    fill="${cream}" letter-spacing="-4" text-anchor="start"
-  >BEAUTY.</text>
-
-  <!-- ═══ 5. RIGHT PANEL ═══
-       Narrow column in the 4th grid slot (x=916–1128).
-       Sits aligned with the 75% column divider — like the footer's col 4
-       (GET IN TOUCH / FOR FAMILIES). This is the right detail column.
-
-       Panel structure (top-to-bottom):
-         46px  — lime rule
-         62px  — "CLASSICAL CHRISTIAN" eyebrow label
-         82px  — separator rule
-         96px  — "EST. 2026" + address block
-         274px — separator rule
-         292px — "LEARN MORE" lime pill
-         —     — (emblem composited at bottom via sharp)
-  -->
-
-  <!-- Short lime rule at same vertical position as left eyebrow rule -->
-  <line
-    x1="${rx}" y1="46"
-    x2="${rx + 24}" y2="46"
-    stroke="${action}" stroke-width="2"
-  />
-
-  <!-- Italic display serif headline — "Classical / Christian / Education" -->
-  <text
-    x="${rx}" y="70"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-style="italic" font-size="20" font-weight="400"
-    fill="${cream}" opacity="0.90" text-anchor="start"
-  >
-    <tspan x="${rx}" dy="0">Classical</tspan>
-    <tspan x="${rx}" dy="26">Christian</tspan>
-    <tspan x="${rx}" dy="26">Education</tspan>
-  </text>
-
-  <!-- Upright serif body detail -->
-  <text
-    x="${rx}" y="170"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-style="normal" font-size="15" font-weight="400"
-    fill="${cream}" opacity="0.55" text-anchor="start"
-  >
-    <tspan x="${rx}" dy="0">Birmingham,</tspan>
-    <tspan x="${rx}" dy="22">Alabama.</tspan>
-  </text>
-
-  <!-- Separator rule -->
-  <line
-    x1="${rx}" y1="222"
-    x2="${rx + rw}" y2="222"
-    stroke="${cream}" stroke-opacity="0.18" stroke-width="1"
-  />
-
-  <!-- EST. label — lime mono eyebrow -->
-  <text
-    x="${rx}" y="240"
-    font-family="'Courier New', Courier, monospace"
-    font-size="9" font-weight="600"
-    fill="${action}" letter-spacing="2" opacity="1"
-  >EST. 2026</text>
-
-  <!-- Address block in mono -->
-  <text
-    x="${rx}" y="260"
-    font-family="'Courier New', Courier, monospace"
-    font-size="9" font-weight="400"
-    fill="${cream}" opacity="0.45" letter-spacing="0.3"
-  >
-    <tspan x="${rx}" dy="0">7160 Cahaba Valley Rd</tspan>
-    <tspan x="${rx}" dy="15">Birmingham, AL 35242</tspan>
-  </text>
-
-  <!-- Separator rule -->
-  <line
-    x1="${rx}" y1="302"
-    x2="${rx + rw}" y2="302"
-    stroke="${cream}" stroke-opacity="0.18" stroke-width="1"
-  />
-
-  <!-- "LEARN MORE" lime pill CTA -->
-  <rect
-    x="${rx}" y="318"
-    width="${rw}" height="34"
-    rx="8"
-    fill="${action}" opacity="0.95"
-  />
-  <text
-    x="${rx + rw / 2}" y="340"
-    font-family="'Courier New', Courier, monospace"
-    font-size="9" font-weight="600"
-    fill="#1e1e1e" letter-spacing="2.5"
-    text-anchor="middle"
-  >LEARN MORE</text>
-
-  <!-- Separator rule above URL -->
-  <line
-    x1="${rx}" y1="370"
-    x2="${rx + rw}" y2="370"
-    stroke="${cream}" stroke-opacity="0.18" stroke-width="1"
-  />
-
-  <!-- URL — tiny mono, very muted -->
-  <text
-    x="${rx}" y="388"
-    font-family="'Courier New', Courier, monospace"
-    font-size="8" font-weight="400"
-    fill="${cream}" opacity="0.30" letter-spacing="0.5"
-  >
-    <tspan x="${rx}" dy="0">TRINITYCLASSICAL</tspan>
-    <tspan x="${rx}" dy="13">.ACADEMY</tspan>
-  </text>
+    font-size="19"
+    font-weight="400"
+    fill="${cream}"
+    opacity="0.6"
+    text-anchor="start"
+  >Birmingham, Alabama</text>
 
 </svg>`;
 
-// ─── Render pipeline ──────────────────────────────────────────────────────────
-
-// 1. SVG → PNG buffer
-const cardBuf = await sharp(Buffer.from(svg)).png().toBuffer();
-
-// 2. Composite cream emblem — in the right panel below the URL block.
-//    Resize to 56px tall for good visual weight in the lower panel zone.
-try {
-  const emblemResized = await sharp(emblemPath)
-    .resize({ height: 56, withoutEnlargement: true })
-    .toBuffer();
-
-  const { width: emblemW = 56 } = await sharp(emblemPath)
-    .resize({ height: 56, withoutEnlargement: true })
-    .metadata();
-
-  // Place emblem in the right panel below the URL label (~y=415)
-  // so it occupies the remaining vertical space in the panel.
-  // Centered horizontally within the right panel (rx … rx+rw).
-  const emblemLeft = Math.round(rx + (rw - emblemW) / 2);
-  const emblemTop  = 440;
-
-  const final = await sharp(cardBuf)
-    .composite([{ input: emblemResized, left: emblemLeft, top: emblemTop }])
-    .png()
-    .toBuffer();
-
-  writeFileSync(out, final);
-} catch (err) {
-  console.warn('Emblem compositing skipped:', err.message);
-  writeFileSync(out, cardBuf);
-}
-
-console.log('Wrote', out);
+// ─── Render: single SVG → PNG ─────────────────────────────────────────────────
+const buf = await sharp(Buffer.from(svg)).png().toBuffer();
+writeFileSync(out, buf);
+console.log(`Wrote ${out}`);
+console.log(`Emblem: scale=${EMBLEM_SCALE.toFixed(4)}, translate=(${EMBLEM_TX}, ${EMBLEM_TY}), ~${EMBLEM_W}×${EMBLEM_H}px`);
+console.log(`Text layout: name@y=${nameY}, rule@y=${ruleY}, tagline@y=${taglineY}, location@y=${locationY}`);

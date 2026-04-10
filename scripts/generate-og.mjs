@@ -17,20 +17,20 @@ const divider = cream;      // column dividers (cream at low opacity, handled vi
 //   • Dark green background
 //   • Three vertical column dividers at x=300, x=600, x=900 (25/50/75%), cream ~13% opacity
 //   • Triquetra emblem watermark — right side, ~275px tall, cream ~9% opacity
-//   • LEFT-aligned text block starting at x=72:
-//       1. School name — Georgia italic, ~65px, cream
-//       2. Short lime rule (~40px)
-//       3. Tagline — Courier New, ~15px, lime, letter-spaced
-//       4. Location — Georgia, ~19px, cream 60% opacity
+//   • LEFT-aligned text block starting at x=80:
+//       1. School name — Georgia italic, ~88px, cream
+//       2. Lime rule (~70px wide, 3px tall)
+//       3. Tagline — Courier New, ~21px, lime, letter-spaced (6px)
+//       4. Location — Georgia, ~25px, cream 60% opacity
 // ─────────────────────────────────────────────────────────────────────────────
 
-const lx = 72;  // left margin
+const lx = 80;  // left margin
 
-// Vertical positions (spec-driven)
-const nameY     = 270;   // school name baseline (~above center)
-const ruleY     = nameY + 30;  // lime rule top edge (20px below name baseline)
-const taglineY  = ruleY + 44;  // tagline baseline (below rule + gap)
-const locationY = taglineY + 48; // location baseline
+// Vertical positions (spec-driven, adjusted for larger font sizes)
+const nameY     = 258;   // school name baseline (~above center)
+const ruleY     = nameY + 36;  // lime rule top edge (36px below name baseline)
+const taglineY  = ruleY + 50;  // tagline baseline (below rule + gap)
+const locationY = taglineY + 52; // location baseline
 
 // ─── Emblem placement ─────────────────────────────────────────────────────────
 // Original viewBox: 0 0 56 55 → target ~275px tall
@@ -72,7 +72,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
     x="${lx}" y="${nameY}"
     font-family="Georgia, 'Times New Roman', serif"
     font-style="italic"
-    font-size="65"
+    font-size="88"
     font-weight="400"
     fill="${cream}"
     text-anchor="start"
@@ -80,24 +80,24 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   >Trinity Classical Academy</text>
 
   <!-- 4. LIME RULE — short horizontal divider, lime green -->
-  <rect x="${lx}" y="${ruleY}" width="40" height="2" fill="${lime}"/>
+  <rect x="${lx}" y="${ruleY}" width="70" height="3" fill="${lime}"/>
 
   <!-- 5. TAGLINE — monospace uppercase, lime green, wide letter-spacing -->
   <text
     x="${lx}" y="${taglineY}"
     font-family="'Courier New', Courier, monospace"
-    font-size="15"
+    font-size="21"
     font-weight="400"
     fill="${lime}"
     text-anchor="start"
-    letter-spacing="4"
+    letter-spacing="6"
   >CLASSICAL · CHRISTIAN · COVENANTAL</text>
 
   <!-- 6. LOCATION — small serif, cream at 60% opacity -->
   <text
     x="${lx}" y="${locationY}"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="19"
+    font-size="25"
     font-weight="400"
     fill="${cream}"
     opacity="0.6"

@@ -9,10 +9,11 @@
      even at full screen, while still capping at the design's 200px on
      very wide canvases.
 
-     Hero parent height tracks the headline at exactly 2.85× the font-size
-     (3 lines × leading-0.95) so the next section's photo lands flush against
-     BEAUTY's baseline at every lg+ width with no white gap. -->
-<div class="relative mt-12 sm:mt-16 lg:mt-20 lg:h-[clamp(128px,28.5vw,570px)]">
+     Hero parent height uses 28.5vw (≈ 2.85× the 10vw font-size) with a
+     330px floor so the right column's CTA and contact link don't get
+     clipped at narrow lg widths. Above ~1158px the 28.5vw value takes
+     over and the section photo lands flush against BEAUTY's baseline. -->
+<div class="relative mt-12 sm:mt-16 lg:mt-20 lg:h-[clamp(330px,28.5vw,570px)]">
 	<h1
 		class="px-6 font-display uppercase leading-[0.95] tracking-tight text-ink sm:px-10 lg:px-12"
 	>
@@ -21,19 +22,20 @@
 		<span class="block text-[clamp(45px,10vw,200px)]">Beauty.</span>
 	</h1>
 
-	<!-- Right column: sits beside GOODNESS, positioned so the column's
-	     bottom (body lead + LEARN MORE button, ~180px tall) always stays
-	     inside the Hero parent at every lg+ width. At 1024 this puts
-	     the column top at ~92px (~20px clearance above the parent bottom). -->
+	<!-- Right column: anchored to the 75% vertical divider at all lg+
+	     widths. Uses left + right positioning so the column width scales
+	     automatically (~216px at 1024 → ~320px at 1440). Text steps
+	     down to 16px at lg to fit the narrower column, then back to 18px
+	     at xl where there's more room. -->
 	<div
-		class="mt-10 px-6 sm:px-10 lg:absolute lg:right-12 lg:top-[clamp(60px,9vw,200px)] lg:mt-0 lg:w-[280px] lg:px-0 xl:right-[calc(25%-272px)]"
+		class="mt-10 px-6 sm:px-10 lg:absolute lg:left-[calc(75%-8px)] lg:right-12 lg:top-[clamp(60px,9vw,200px)] lg:mt-0 lg:px-0"
 	>
-		<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+		<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft lg:text-base xl:text-[18px]">
 			<strong class="font-semibold text-ink">Trinity Classical Academy</strong>
 			is partnering with families in the joyful discipleship of
 			students through rigorous, Christ-centered classical education.
 		</p>
-		<div class="mt-6 flex flex-col items-start gap-3">
+		<div class="mt-6 flex flex-col items-start gap-3 lg:mt-4 lg:gap-2 xl:mt-6 xl:gap-3">
 			<a
 				href="/our-vision"
 				class="rounded-pill bg-action px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"

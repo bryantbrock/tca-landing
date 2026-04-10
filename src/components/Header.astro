@@ -208,7 +208,7 @@ const isHomePage = currentPath === '/';
 	}
 
 	/* ===== Anchor the expanded nav to the 75% vertical divider =====
-	   At xl+ when the header is NOT scrolled, lock the right block
+	   At lg+ when the header is NOT scrolled, lock the right block
 	   (nav + emblem) to exactly 25% of the site-header-inner content
 	   box. Because the vertical dividers live inside the same
 	   `lg:px-12` content area, a 25%-wide right block aligned to the
@@ -216,7 +216,7 @@ const isHomePage = currentPath === '/';
 	   exactly on the 75% divider line. The 16px padding-left then
 	   pushes the Roman numerals 16px inward from the line, matching
 	   the padding the hero body column uses below. */
-	@media (min-width: 1280px) {
+	@media (min-width: 1024px) {
 		:global(html:not(.is-scrolled)) .site-header-inner > div:last-child {
 			width: 25%;
 			justify-content: space-between;

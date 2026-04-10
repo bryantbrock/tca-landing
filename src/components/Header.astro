@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import emblemGreen from '../assets/images/emblem-green.svg';
+import emblemInk from '../assets/images/emblem-ink.svg';
 import { GIVE_URL } from '../lib/links';
 
 const navItems = [
@@ -41,7 +41,7 @@ const isHomePage = currentPath === '/';
 	`z-40` keeps it above page content but below any future modal layer.
 -->
 <header class="site-header sticky top-0 z-40 bg-transparent transition-[background-color,backdrop-filter] duration-200 ease-out">
-	<div class="site-header-inner mx-auto flex w-full max-w-canvas items-start justify-between px-6 pb-7 pt-7 sm:px-10 sm:pb-8 sm:pt-8 lg:px-12 lg:pb-9 lg:pt-9">
+	<div class="site-header-inner mx-auto flex w-full max-w-canvas items-center justify-between px-6 pb-7 pt-7 sm:px-10 sm:pb-8 sm:pt-8 lg:items-start lg:px-12 lg:pb-9 lg:pt-9">
 	<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
 		<a
 			href="/"
@@ -126,7 +126,7 @@ const isHomePage = currentPath === '/';
 			class="text-ink"
 		>
 			<Image
-				src={emblemGreen}
+				src={emblemInk}
 				alt=""
 				class="h-9 w-auto"
 			/>

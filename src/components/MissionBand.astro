@@ -33,6 +33,7 @@ import { INTERVIEW_URL } from '../lib/links';
 		class="relative mt-10 h-[60vw] w-full overflow-hidden sm:mt-12 lg:mt-[calc(-1*clamp(49.5px,11vw,220px)-16px)] lg:h-[620px]"
 	>
 		<video
+			id="mission-video"
 			autoplay
 			muted
 			loop
@@ -45,6 +46,35 @@ import { INTERVIEW_URL } from '../lib/links';
 			<source src="/videos/header.webm" type="video/webm" />
 			<source src="/videos/header.mp4" type="video/mp4" />
 		</video>
+
+		<!-- Programmatic play() ensures autoplay works on desktop browsers that
+		     silently ignore the `autoplay` attribute but permit play() on muted
+		     videos. IntersectionObserver defers the call until the element is
+		     visible so it is not blocked as a background-tab request. -->
+		<script>
+			const video = document.getElementById('mission-video') as HTMLVideoElement | null;
+			if (video) {
+				const tryPlay = () => {
+					video.play().catch(() => {
+						// Autoplay still blocked — poster image will show instead.
+					});
+				};
+				if ('IntersectionObserver' in window) {
+					const obs = new IntersectionObserver(
+						(entries) => {
+							if (entries[0].isIntersecting) {
+								tryPlay();
+								obs.disconnect();
+							}
+						},
+						{ threshold: 0.1 },
+					);
+					obs.observe(video);
+				} else {
+					document.addEventListener('DOMContentLoaded', tryPlay, { once: true });
+				}
+			}
+		</script>
 
 		<!-- Dark overlay for TRINITY legibility -->
 		<div class="pointer-events-none absolute inset-0 bg-ink/40"></div>
@@ -60,7 +90,7 @@ import { INTERVIEW_URL } from '../lib/links';
 				>
 					<!-- Mission paragraph: first sentence italic, remainder upright.
 					     Tight leading + max-width so it wraps ~75% across the card. -->
-					<p class="max-w-[500px] font-display text-[26px] font-medium leading-[0.95] text-ink">
+					<p class="max-w-[500px] font-display text-[26px] font-light leading-[0.95] text-ink">
 						<em class="italic">We believe education is an act of worship.</em>
 						Every subject from mathematics and literature, to Latin and music
 						is an opportunity to know the Triune God more clearly and love
@@ -109,7 +139,7 @@ import { INTERVIEW_URL } from '../lib/links';
 		class="mx-auto w-full max-w-canvas bg-cream px-6 py-10 sm:px-10 lg:px-12 lg:hidden"
 	>
 		<div class="flex flex-col gap-20">
-			<p class="font-display text-[24px] font-medium leading-[1.35] text-ink">
+			<p class="font-display text-[24px] font-light leading-[1.35] text-ink">
 				<em class="italic">We believe education is an act of worship.</em>
 				Every subject from mathematics and literature, to Latin and music
 				is an opportunity to know the Triune God more clearly and love
@@ -122,13 +152,13 @@ import { INTERVIEW_URL } from '../lib/links';
 					alt=""
 					class="h-12 w-auto self-start"
 				/>
-				<div class="flex items-end justify-between gap-12">
+				<div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
 					<p class="max-w-[360px] font-display text-base leading-[0.95] text-ink">
 						We are a classical Christian school launching in Birmingham
 						this August, under the care of Trinity Presbyterian Church.
 						We'd love to meet your family.
 					</p>
-					<div class="flex shrink-0 flex-col items-end gap-3">
+					<div class="flex shrink-0 flex-row items-center gap-4">
 						<a
 							href={INTERVIEW_URL}
 							target="_blank"

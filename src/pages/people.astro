@@ -4,6 +4,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
 import emblemGreen from '../assets/images/emblem-green.svg';
+import ashtonImg from '../assets/images/ashton-moats.png';
+import julieImg from '../assets/images/julie-mcdonald.png';
 import { INTERVIEW_URL } from '../lib/links';
 
 const title = 'Our People — Trinity Classical Academy';
@@ -17,6 +19,19 @@ const boardMembers = [
 	{ name: 'Harrison Hunter',   title: 'Treasurer' },
 	{ name: 'Bryant Brock',      title: 'Board Member' },
 	{ name: 'Jonathan Griffith', title: 'Board Member' },
+];
+
+const faculty = [
+	{
+		name: 'Ashton Moats',
+		role: 'Secondary Prep — Humanities',
+		image: ashtonImg,
+	},
+	{
+		name: 'Julie McDonald',
+		role: 'Kindergarten',
+		image: julieImg,
+	},
 ];
 
 // Derive initials (first letter of each word)
@@ -36,9 +51,9 @@ const initials = (name: string) =>
 			aria-hidden="true"
 		>
 			<div class="relative h-full">
-				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
-				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
-				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/[0.04]"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/[0.04]"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/[0.04]"></div>
 			</div>
 		</div>
 
@@ -111,6 +126,48 @@ const initials = (name: string) =>
 					<p class="mt-12 font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute">
 						Photos and Bios Coming Soon
 					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== FOUNDING FACULTY ====== -->
+		<section
+			id="founding-faculty"
+			aria-labelledby="faculty-heading"
+			class="relative z-10 px-6 pb-24 pt-0 sm:px-10 sm:pb-32 lg:px-12 lg:pb-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="faculty-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent"
+					>
+						Founding Faculty
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+						{faculty.map((member) => (
+							<article class="flex flex-col gap-4">
+								<div class="relative aspect-[4/5] overflow-hidden rounded-card">
+									<Image
+										src={member.image}
+										alt={member.name}
+										class="h-full w-full object-cover"
+									/>
+								</div>
+								<div class="flex flex-col gap-1">
+									<h2 class="font-display text-[28px] leading-[1.1] text-ink">
+										{member.name}
+									</h2>
+									<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+										{member.role}
+									</p>
+								</div>
+							</article>
+						))}
+					</div>
 				</div>
 			</div>
 		</section>

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { CLASSREACH_URL } from '../lib/links';
 
 const title = 'Resources — Trinity Classical Academy';
 const description =
@@ -9,12 +10,28 @@ const description =
 
 const resources = [
 	{
+		label: 'PARENT PORTAL',
+		title: 'ClassReach Login',
+		description: 'Access the parent and student portal to view grades, attendance, announcements, and account information.',
+		href: CLASSREACH_URL,
+		external: true,
+		cta: 'Log in to ClassReach',
+	},
+	{
 		label: 'POLICY DOCUMENT',
 		title: 'Tuition & Fee Policy',
 		description: 'A complete overview of tuition, enrollment fees, and payment schedules for the upcoming school year.',
 		href: '/resources/tuition',
 		external: false,
 		cta: 'Read the policy',
+	},
+	{
+		label: 'CALENDAR',
+		title: 'School Calendar 2026–2027',
+		description: 'The academic calendar for the upcoming school year, including key dates, breaks, and start/end dates.',
+		href: '/TCA-Calendar-2026-2027.pdf',
+		external: true,
+		cta: 'Download the calendar',
 	},
 	{
 		label: 'POLICY DOCUMENT',
@@ -52,9 +69,9 @@ const resources = [
 			aria-hidden="true"
 		>
 			<div class="relative h-full">
-				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
-				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
-				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/[0.04]"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/[0.04]"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/[0.04]"></div>
 			</div>
 		</div>
 
@@ -105,13 +122,7 @@ const resources = [
 							<a
 								href={resource.href}
 								{...(resource.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-								class={`group flex flex-col gap-3 py-10 pr-8 transition ${
-									index % 2 === 0 && index + 1 < resources.length
-										? 'sm:border-r sm:border-ink/10'
-										: ''
-								} ${index < resources.length - 2 ? 'border-b border-ink/10' : ''} ${
-									index < 2 ? 'sm:border-b sm:border-ink/10' : ''
-								}`}
+								class="group flex flex-col gap-3 py-10 pr-8 transition"
 							>
 								<div class="flex items-center gap-3">
 									<p class="font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute">

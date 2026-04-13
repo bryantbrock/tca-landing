@@ -22,7 +22,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ['"Geist Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-				display: ['"Cormorant Garamond"', 'ui-serif', 'Georgia', 'serif'],
+				display: ['"Martina Plantijn"', 'ui-serif', 'Georgia', 'serif'],
 				mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 			},
 			fontSize: {

@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import emblemCream from '../assets/images/emblem-cream.svg';
-import { GIVE_URL } from '../lib/links';
+import { GIVE_URL, CLASSREACH_URL } from '../lib/links';
 
 const navItems = [
 	{ marker: 'I.',    label: 'Our Vision',   href: '/our-vision' },
@@ -34,9 +34,9 @@ const familyItems = [
 			aria-hidden="true"
 		>
 			<div class="relative h-full">
-				<div class="absolute inset-y-0 left-1/4 w-px bg-cream/15"></div>
-				<div class="absolute inset-y-0 left-1/2 w-px bg-cream/15"></div>
-				<div class="absolute inset-y-0 left-3/4 w-px bg-cream/15"></div>
+				<div class="absolute inset-y-0 left-1/4 w-px bg-cream/[0.06]"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-cream/[0.06]"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-cream/[0.06]"></div>
 			</div>
 		</div>
 
@@ -47,14 +47,13 @@ const familyItems = [
 		     everything stacks vertically in a single column. -->
 		<div class="relative z-10 grid grid-cols-1 gap-12 lg:grid-cols-4 lg:gap-0">
 
-			<!-- Col 1-2: emblem + italic mission paragraph -->
+			<!-- Col 1-2: TRINITY logotype + italic mission paragraph -->
 			<div class="flex flex-col gap-8 lg:col-span-2 lg:pr-8">
-				<!-- Triquetra emblem -->
 				<a href="/" aria-label="Trinity Classical Academy" class="self-start">
 					<Image
 						src={emblemCream}
 						alt=""
-						class="h-11 w-auto"
+						class="h-12 w-auto"
 					/>
 				</a>
 
@@ -164,6 +163,16 @@ const familyItems = [
 									</a>
 								</li>
 							))}
+								<li>
+									<a
+										href={CLASSREACH_URL}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="font-sans text-sm text-cream transition hover:opacity-70"
+									>
+										Parent Login ↗
+									</a>
+								</li>
 						</ul>
 					</nav>
 				</div>

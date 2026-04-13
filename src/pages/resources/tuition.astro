@@ -34,9 +34,9 @@ const issuuFullscreenUrl = issuuEmbedUrl;
 			aria-hidden="true"
 		>
 			<div class="relative h-full">
-				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/10"></div>
-				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/10"></div>
-				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/10"></div>
+				<div class="absolute inset-y-0 left-1/4 w-px bg-ink/[0.04]"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-ink/[0.04]"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-ink/[0.04]"></div>
 			</div>
 		</div>
 
@@ -74,6 +74,36 @@ const issuuFullscreenUrl = issuuEmbedUrl;
 					schedules for the upcoming school year. Flip through below or
 					open the full document on Issuu.
 				</p>
+			</div>
+		</section>
+
+		<!-- ====== PAYMENT SUMMARY ====== -->
+		<section
+			aria-label="Payment summary"
+			class="relative z-10 px-6 pb-0 pt-12 sm:px-10 sm:pt-16 lg:px-12 lg:pt-20"
+		>
+			<div class="max-w-[640px]">
+				<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-brand-accent">
+					Key dates &amp; options
+				</p>
+				<p class="mt-6 font-sans text-base leading-snug text-ink-soft">
+					Families may pay tuition in full, biannually, or monthly. Here are the
+					essential details for the upcoming school year:
+				</p>
+				<ul class="mt-4 flex flex-col gap-3">
+					<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+						<span class="mt-1 shrink-0 text-brand-accent">—</span>
+						<span><strong class="font-semibold text-ink">First payment due May 1.</strong> This applies to all payment plans.</span>
+					</li>
+					<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+						<span class="mt-1 shrink-0 text-brand-accent">—</span>
+						<span><strong class="font-semibold text-ink">$200 discount for payment in full by May 1.</strong> Pay the full year's tuition by that date and the discount is automatically applied.</span>
+					</li>
+					<li class="flex gap-3 font-sans text-base leading-snug text-ink-soft">
+						<span class="mt-1 shrink-0 text-brand-accent">—</span>
+						<span><strong class="font-semibold text-ink">Payment options:</strong> full pay (by May 1), biannual (two installments), or monthly. Details for each plan are in the policy document below.</span>
+					</li>
+				</ul>
 			</div>
 		</section>
 

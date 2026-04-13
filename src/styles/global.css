@@ -1,6 +1,22 @@
 @import "tailwindcss";
 @config "../../tailwind.config.mjs";
 
+@font-face {
+	font-family: "Martina Plantijn";
+	src: url("../assets/fonts/MartinaPlantijn-Light.woff2") format("woff2");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Martina Plantijn";
+	src: url("../assets/fonts/MartinaPlantijn-LightItalic.woff2") format("woff2");
+	font-weight: 300;
+	font-style: italic;
+	font-display: swap;
+}
+
 /* Disable scroll anchoring so the sticky header's height transition
    (192px <-> 60px) doesn't fight with the browser's automatic scroll
    adjustment. Without this, the compact-on-scroll FLIP transition

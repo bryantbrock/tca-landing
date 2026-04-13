@@ -8,3 +8,7 @@ export const INTERVIEW_URL =
 /** GivingFuel donation page. Used by the nav and footer "Give" links. */
 export const GIVE_URL =
 	'https://trinityclassical.givingfuel.com/trinity-classical-academy-general-giving';
+
+/** ClassReach parent/student portal. */
+export const CLASSREACH_URL =
+	'https://trinityclassicalacademy.classreach.com/Login';

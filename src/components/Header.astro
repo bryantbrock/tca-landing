@@ -34,7 +34,7 @@ const isHomePage = currentPath === '/';
 	At scrollY=0 the header is fully transparent so the page-wide vertical
 	column lines remain visible all the way to the top edge. As soon as the
 	user scrolls (handled by the inline script below toggling
-	`html.is-scrolled`), the header gains a frosted `bg-canvas/75 backdrop-blur-md`
+	`html.is-scrolled`), the header gains a frosted `bg-white/75 backdrop-blur-md`
 	treatment so content sliding underneath stays legible behind it. The
 	transition is short and eased.
 
@@ -54,7 +54,7 @@ const isHomePage = currentPath === '/';
 		{!isHomePage && (
 			<a
 				href="/"
-				class="group inline-flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-soft transition-colors hover:text-brand-accent"
+				class="group inline-flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-soft transition-colors hover:text-forest"
 				aria-label="Back to home"
 			>
 				<span aria-hidden="true" class="transition-transform group-hover:-translate-x-0.5">←</span>
@@ -74,7 +74,7 @@ const isHomePage = currentPath === '/';
 			type="button"
 			aria-expanded="false"
 			aria-controls="primary-nav"
-			class="flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:text-brand-accent lg:hidden"
+			class="flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:text-forest lg:hidden"
 			data-nav-toggle
 		>
 			<span data-nav-label>Menu</span>
@@ -102,7 +102,7 @@ const isHomePage = currentPath === '/';
 			aria-label="Primary"
 			data-nav-panel
 			data-state="closed"
-			class="absolute right-0 top-full mt-3 min-w-[180px] rounded-card border border-ink/10 bg-canvas/95 p-5 shadow-lg backdrop-blur-md lg:relative lg:right-auto lg:top-auto lg:mt-0 lg:min-w-0 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
+			class="absolute right-0 top-full mt-3 min-w-[180px] rounded-card border border-ink/10 bg-white/95 p-5 shadow-lg backdrop-blur-md lg:relative lg:right-auto lg:top-auto lg:mt-0 lg:min-w-0 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
 		>
 			<ol class="flex flex-col gap-1.5">
 				{navItems.map((item) => (
@@ -112,7 +112,7 @@ const isHomePage = currentPath === '/';
 						</span>
 						<a
 							href={item.href}
-							class="font-sans text-sm leading-none text-ink transition hover:text-brand-accent"
+							class="font-sans text-sm leading-none text-ink transition hover:text-forest"
 						>
 							{item.label}
 						</a>

@@ -4,18 +4,23 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				// Surfaces
-				canvas: '#ffffff',
-				cream: '#fbf5e3',
-				brand: '#003622',       // deep green — footer + display wordmark
-				'brand-accent': '#276d33', // mid green — small caps eyebrows, emblem on light, list markers
-				action: '#64ff5f',      // primary CTA pill (lime) — single source of truth, swap here
-				pill: '#e0ddd2',        // secondary pill button background
+				// Surfaces — dark
+				racing: '#002A1A',            // deepest anchor — footer, mobile nav overlay
+				'racing-mid': '#003622',     // standard dark bg — hero, dark bands, quote bars
+				forest: '#276D33',           // primary brand green — CTA sections, nav active, buttons on light
+
+				// Accent
+				gold: '#D4AF37',             // primary accent — labels on dark, rules, CTA fills on dark/forest
+				'gold-hover': '#DFC04E',     // interactive state for gold elements
+
+				// Surfaces — light
+				cream: '#F0E9D0',            // warm secondary surface — cards, alternating sections
+				white: '#FAFAF7',            // primary page background
 
 				// Text
-				ink: '#1e1e1e',         // headline text on light
-				'ink-soft': '#5b5b5b',  // body text gray
-				'ink-mute': '#878888',  // muted captions
+				ink: '#1A1A18',              // body text on light backgrounds
+				'ink-soft': '#5b5b5b',       // secondary body text
+				'ink-mute': '#878888',       // muted captions
 
 				// Lines
 				rule: '#bdc1cb',

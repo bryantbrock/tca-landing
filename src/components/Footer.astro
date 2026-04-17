@@ -23,7 +23,7 @@ const familyItems = [
 ---
 
 <!-- ====== SECTION 6 — Footer ====== -->
-<footer aria-label="Site footer" class="bg-brand text-cream font-sans">
+<footer aria-label="Site footer" class="bg-racing text-white font-sans">
 	<div class="relative mx-auto w-full max-w-canvas px-6 pb-8 pt-20 sm:px-10 lg:px-12">
 		<!-- Page-wide vertical column dividers continuing through the footer.
 		     Same 25% / 50% / 75% positions as the main page layer in
@@ -34,9 +34,9 @@ const familyItems = [
 			aria-hidden="true"
 		>
 			<div class="relative h-full">
-				<div class="absolute inset-y-0 left-1/4 w-px bg-cream/[0.06]"></div>
-				<div class="absolute inset-y-0 left-1/2 w-px bg-cream/[0.06]"></div>
-				<div class="absolute inset-y-0 left-3/4 w-px bg-cream/[0.06]"></div>
+				<div class="absolute inset-y-0 left-1/4 w-px bg-white/[0.06]"></div>
+				<div class="absolute inset-y-0 left-1/2 w-px bg-white/[0.06]"></div>
+				<div class="absolute inset-y-0 left-3/4 w-px bg-white/[0.06]"></div>
 			</div>
 		</div>
 
@@ -58,7 +58,7 @@ const familyItems = [
 				</a>
 
 				<!-- Mission paragraph: only the school name is italic -->
-				<p class="max-w-[560px] font-display text-[28px] leading-[0.95] text-cream sm:text-[40px]">
+				<p class="max-w-[560px] font-display text-[28px] leading-[0.95] text-white sm:text-[40px]">
 					<em class="italic">Trinity Classical Academy</em> partners with
 					families in the joyful discipleship of students through rigorous,
 					Christ-centered classical education.
@@ -71,10 +71,10 @@ const familyItems = [
 			<div class="flex flex-col gap-10 lg:px-8">
 				<!-- OUR SCHOOL -->
 				<div class="flex flex-col gap-4">
-					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-action">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
 						OUR SCHOOL
 					</h2>
-					<address class="font-mono text-sm not-italic leading-snug text-cream">
+					<address class="font-mono text-sm not-italic leading-snug text-white">
 						7160 Cahaba Valley Rd.<br />
 						Birmingham, AL<br />
 						35242
@@ -83,19 +83,19 @@ const familyItems = [
 
 				<!-- MENU -->
 				<div class="flex flex-col gap-4">
-					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-action">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
 						MENU
 					</h2>
 					<nav aria-label="Footer">
 						<ol class="flex flex-col gap-2">
 							{navItems.map((item) => (
 								<li class="flex items-baseline gap-3">
-									<span class="w-6 font-mono text-[10px] text-action">
+									<span class="w-6 font-mono text-[10px] text-gold">
 										{item.marker}
 									</span>
 									<a
 										href={item.href}
-										class="font-sans text-sm text-cream transition hover:opacity-70"
+										class="font-sans text-sm text-white transition hover:opacity-70"
 									>
 										{item.label}
 									</a>
@@ -113,14 +113,14 @@ const familyItems = [
 			<div class="flex flex-col gap-10 lg:px-8">
 				<!-- GET IN TOUCH -->
 				<div class="flex flex-col gap-4">
-					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-action">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
 						GET IN TOUCH
 					</h2>
 					<ul class="flex flex-col gap-2">
 						<li>
 							<a
 								href="mailto:info@trinityclassical.academy"
-								class="font-sans text-sm text-cream transition hover:opacity-70"
+								class="font-sans text-sm text-white transition hover:opacity-70"
 							>
 								Email
 							</a>
@@ -128,7 +128,7 @@ const familyItems = [
 						<li>
 							<a
 								href="/contact"
-								class="font-sans text-sm text-cream transition hover:opacity-70"
+								class="font-sans text-sm text-white transition hover:opacity-70"
 							>
 								Contact Us
 							</a>
@@ -138,7 +138,7 @@ const familyItems = [
 								href="https://instagram.com/trinityclassicalacademy"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="font-sans text-sm text-cream transition hover:opacity-70"
+								class="font-sans text-sm text-white transition hover:opacity-70"
 							>
 								Follow Us
 							</a>
@@ -148,7 +148,7 @@ const familyItems = [
 
 				<!-- FOR FAMILIES -->
 				<div class="flex flex-col gap-4">
-					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-action">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
 						FOR FAMILIES
 					</h2>
 					<nav aria-label="For families">
@@ -157,7 +157,7 @@ const familyItems = [
 								<li>
 									<a
 										href={item.href}
-										class="font-sans text-sm text-cream transition hover:opacity-70"
+										class="font-sans text-sm text-white transition hover:opacity-70"
 									>
 										{item.label}
 									</a>
@@ -168,7 +168,7 @@ const familyItems = [
 										href={CLASSREACH_URL}
 										target="_blank"
 										rel="noopener noreferrer"
-										class="font-sans text-sm text-cream transition hover:opacity-70"
+										class="font-sans text-sm text-white transition hover:opacity-70"
 									>
 										Parent Login ↗
 									</a>
@@ -181,21 +181,21 @@ const familyItems = [
 
 		<!-- Zone B — giant TRINITY wordmark -->
 		<div class="relative z-10 mt-16 overflow-hidden">
-			<p class="text-wordmark font-display uppercase text-cream whitespace-nowrap">
+			<p class="text-wordmark font-display uppercase text-white whitespace-nowrap">
 				Trinity
 			</p>
 		</div>
 
 		<!-- Zone C — bottom utility row -->
 		<div class="relative z-10 mt-4 flex items-center justify-between">
-			<p class="font-mono text-xs text-cream opacity-60">
+			<p class="font-mono text-xs text-white opacity-60">
 				© 2026 TCA
 			</p>
 			<a
 				href="https://studiomightymighty.com/"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="font-mono text-xs text-cream underline opacity-60 transition hover:opacity-100"
+				class="font-mono text-xs text-white underline opacity-60 transition hover:opacity-100"
 			>
 				SITE CREDIT»
 			</a>

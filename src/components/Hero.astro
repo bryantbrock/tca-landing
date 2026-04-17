@@ -2,24 +2,22 @@
 ---
 
 <!-- Hero content.
-     Headline uses clamp(45px, 10vw, 200px) so GOODNESS has comfortable
-     breathing room from the right-column body lead at every viewport.
-     The 10vw multiplier was tuned to keep at least ~80px of clearance
-     between the period of GOODNESS and the left edge of the right column
-     even at full screen, while still capping at the design's 200px on
-     very wide canvases.
+     Headline uses clamp(45px, 10vw, 150px) so type growth tracks the
+     viewport up to ~1500px and then locks at 150px — just past the
+     1440px canvas max. Beyond that, the canvas is centered and the
+     headline stays proportional instead of ballooning on ultrawide
+     monitors.
 
      Hero parent height uses 28.5vw (≈ 2.85× the 10vw font-size) with a
-     330px floor so the right column's CTA and contact link don't get
-     clipped at narrow lg widths. Above ~1158px the 28.5vw value takes
-     over and the section photo lands flush against BEAUTY's baseline. -->
-<div class="relative mt-12 sm:mt-16 lg:mt-20 lg:h-[clamp(330px,28.5vw,570px)]">
+     330px floor and a cap of 428px (2.85 × 150) so height locks in
+     lockstep with the headline when the viewport exceeds ~1500px. -->
+<div class="relative mt-12 sm:mt-16 lg:mt-20 lg:h-[clamp(330px,28.5vw,428px)]">
 	<h1
 		class="px-6 font-display uppercase leading-[0.95] tracking-tight text-ink sm:px-10 lg:px-12"
 	>
-		<span class="block text-[clamp(45px,10vw,200px)]">Truth.</span>
-		<span class="block text-[clamp(45px,10vw,200px)]">Goodness.</span>
-		<span class="block text-[clamp(45px,10vw,200px)]">Beauty.</span>
+		<span class="block text-[clamp(45px,10vw,150px)]">Truth.</span>
+		<span class="block text-[clamp(45px,10vw,150px)]">Goodness.</span>
+		<span class="block text-[clamp(45px,10vw,150px)]">Beauty.</span>
 	</h1>
 
 	<!-- Right column: anchored to the 75% vertical divider at all lg+
@@ -28,7 +26,7 @@
 	     down to 16px at lg to fit the narrower column, then back to 18px
 	     at xl where there's more room. -->
 	<div
-		class="mt-10 px-6 sm:px-10 lg:absolute lg:left-[calc(75%-8px)] lg:right-12 lg:top-[clamp(60px,9vw,200px)] lg:mt-0 lg:px-0"
+		class="mt-10 px-6 sm:px-10 lg:absolute lg:left-[calc(75%-8px)] lg:right-12 lg:top-[clamp(60px,9vw,135px)] lg:mt-0 lg:px-0"
 	>
 		<p class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft lg:text-base xl:text-[18px]">
 			<strong class="font-semibold text-ink">Trinity Classical Academy</strong>

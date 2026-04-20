@@ -12,3 +12,7 @@ export const GIVE_URL =
 /** ClassReach parent/student portal. */
 export const CLASSREACH_URL =
 	'https://trinityclassicalacademy.classreach.com/Login';
+
+/** Formaloo teacher application form. Used by Careers and Hero CTAs. */
+export const TEACHER_APP_URL =
+	'https://trinity-classicalalabama.formaloo.me/8tozru';

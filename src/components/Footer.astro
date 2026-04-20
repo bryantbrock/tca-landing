@@ -1,25 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import emblemCream from '../assets/images/emblem-cream.svg';
-import { GIVE_URL, CLASSREACH_URL } from '../lib/links';
-
-const navItems = [
-	{ marker: 'I.',    label: 'Our Vision',   href: '/our-vision' },
-	{ marker: 'II.',   label: 'How It Works', href: '/how-it-works' },
-	{ marker: 'III.',  label: 'People',       href: '/people' },
-	{ marker: 'IV.',   label: 'Admissions',   href: '/admissions' },
-	{ marker: 'V.',    label: 'Give',         href: GIVE_URL },
-	{ marker: 'VI.',   label: 'Resources',   href: '/resources' },
-];
-
-// Secondary destinations for current and prospective families. Lives
-// under MENU in the footer's column 4 so it doesn't compete with the
-// primary 5-item Roman-numeral nav. Add future items (e.g. Parent Portal,
-// Calendar, Newsletter Archive) here as the school's needs grow.
-const familyItems = [
-	{ label: 'FAQ',       href: '/faq' },
-	{ label: 'Careers',   href: '/careers' },
-];
+import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 ---
 
 <!-- ====== SECTION 6 — Footer ====== -->
@@ -65,9 +47,7 @@ const familyItems = [
 				</p>
 			</div>
 
-			<!-- Col 3: OUR SCHOOL + MENU stacked.
-			     Left side groups static facts about the school — the physical
-			     address and the primary 5-item Roman-numeral nav recap. -->
+			<!-- Col 3: OUR SCHOOL + ABOUT + ADMISSIONS stacked. -->
 			<div class="flex flex-col gap-10 lg:px-8">
 				<!-- OUR SCHOOL -->
 				<div class="flex flex-col gap-4">
@@ -89,35 +69,60 @@ const familyItems = [
 					</a>
 				</div>
 
-				<!-- MENU -->
+				<!-- ABOUT -->
 				<div class="flex flex-col gap-4">
 					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						MENU
+						ABOUT
 					</h2>
-					<nav aria-label="Footer">
-						<ol class="flex flex-col gap-2">
-							{navItems.map((item) => (
-								<li class="flex items-baseline gap-3">
-									<span class="w-6 font-mono text-[10px] text-gold">
-										{item.marker}
-									</span>
-									<a
-										href={item.href}
-										class="font-sans text-sm text-white transition hover:opacity-70"
-									>
-										{item.label}
-									</a>
-								</li>
-							))}
-						</ol>
+					<nav aria-label="About">
+						<ul class="flex flex-col gap-2">
+							<li>
+								<a href="/our-vision" class="font-sans text-sm text-white transition hover:opacity-70">
+									Our Vision
+								</a>
+							</li>
+							<li>
+								<a href="/how-it-works" class="font-sans text-sm text-white transition hover:opacity-70">
+									How It Works
+								</a>
+							</li>
+							<li>
+								<a href="/people" class="font-sans text-sm text-white transition hover:opacity-70">
+									People
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+
+				<!-- ADMISSIONS -->
+				<div class="flex flex-col gap-4">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
+						ADMISSIONS
+					</h2>
+					<nav aria-label="Admissions">
+						<ul class="flex flex-col gap-2">
+							<li>
+								<a href="/admissions" class="font-sans text-sm text-white transition hover:opacity-70">
+									Admissions Process
+								</a>
+							</li>
+							<li>
+								<a
+									href={INTERVIEW_URL}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="font-sans text-sm text-white transition hover:opacity-70"
+								>
+									Request an Interview ↗
+								</a>
+							</li>
+						</ul>
 					</nav>
 				</div>
 			</div>
 
-			<!-- Col 4: GET IN TOUCH + FOR FAMILIES stacked.
-			     Right side groups actionable destinations — the contact
-			     channels and the secondary family-resource links. Both are
-			     things visitors might do, as opposed to facts to know. -->
+			<!-- Col 4: GET IN TOUCH + FAMILIES + GET INVOLVED stacked. -->
 			<div class="flex flex-col gap-10 lg:px-8">
 				<!-- GET IN TOUCH -->
 				<div class="flex flex-col gap-4">
@@ -154,33 +159,74 @@ const familyItems = [
 					</ul>
 				</div>
 
-				<!-- FOR FAMILIES -->
+				<!-- FAMILIES -->
 				<div class="flex flex-col gap-4">
 					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						FOR FAMILIES
+						FAMILIES
 					</h2>
-					<nav aria-label="For families">
+					<nav aria-label="Families">
 						<ul class="flex flex-col gap-2">
-							{familyItems.map((item) => (
-								<li>
-									<a
-										href={item.href}
-										class="font-sans text-sm text-white transition hover:opacity-70"
-									>
-										{item.label}
-									</a>
-								</li>
-							))}
-								<li>
-									<a
-										href={CLASSREACH_URL}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="font-sans text-sm text-white transition hover:opacity-70"
-									>
-										Parent Login ↗
-									</a>
-								</li>
+							<li>
+								<a href="/resources" class="font-sans text-sm text-white transition hover:opacity-70">
+									Resources
+								</a>
+							</li>
+							<li>
+								<a href="/faq" class="font-sans text-sm text-white transition hover:opacity-70">
+									FAQ
+								</a>
+							</li>
+							<li>
+								<a href="/resources/tuition" class="font-sans text-sm text-white transition hover:opacity-70">
+									Tuition Policy
+								</a>
+							</li>
+							<li>
+								<a href="/resources/uniform" class="font-sans text-sm text-white transition hover:opacity-70">
+									Uniform Policy
+								</a>
+							</li>
+							<li>
+								<a
+									href={CLASSREACH_URL}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="font-sans text-sm text-white transition hover:opacity-70"
+								>
+									Parent Login ↗
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+
+				<!-- GET INVOLVED -->
+				<div class="flex flex-col gap-4">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
+						GET INVOLVED
+					</h2>
+					<nav aria-label="Get involved">
+						<ul class="flex flex-col gap-2">
+							<li>
+								<a
+									href={GIVE_URL}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="font-sans text-sm text-white transition hover:opacity-70"
+								>
+									Give ↗
+								</a>
+							</li>
+							<li>
+								<a href="/careers" class="font-sans text-sm text-white transition hover:opacity-70">
+									Careers
+								</a>
+							</li>
+							<li>
+								<a href="/contact" class="font-sans text-sm text-white transition hover:opacity-70">
+									Contact
+								</a>
+							</li>
 						</ul>
 					</nav>
 				</div>

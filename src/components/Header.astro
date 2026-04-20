@@ -1,156 +1,258 @@
 ---
 import { Image } from 'astro:assets';
 import emblemInk from '../assets/images/emblem-ink.svg';
-import { GIVE_URL } from '../lib/links';
+import { GIVE_URL, INTERVIEW_URL, CLASSREACH_URL } from '../lib/links';
 
-const navItems = [
-	{ marker: 'I.',    label: 'Our Vision',   href: '/our-vision' },
-	{ marker: 'II.',   label: 'How It Works', href: '/how-it-works' },
-	{ marker: 'III.',  label: 'People',       href: '/people' },
-	{ marker: 'IV.',   label: 'Admissions',   href: '/admissions' },
-	{ marker: 'V.',    label: 'Give',         href: GIVE_URL },
-	{ marker: 'VI.',   label: 'Resources',   href: '/resources' },
+const navCategories = [
+	{
+		label: 'About',
+		id: 'about',
+		items: [
+			{ label: 'Our Vision',   href: '/our-vision' },
+			{ label: 'How It Works', href: '/how-it-works' },
+			{ label: 'People',       href: '/people' },
+		],
+	},
+	{
+		label: 'Admissions',
+		id: 'admissions',
+		items: [
+			{ label: 'Admissions Process',    href: '/admissions' },
+			{ label: 'Request an Interview',  href: INTERVIEW_URL, external: true },
+		],
+	},
+	{
+		label: 'Families',
+		id: 'families',
+		items: [
+			{ label: 'Resources',       href: '/resources' },
+			{ label: 'FAQ',             href: '/faq' },
+			{ label: 'Tuition Policy',  href: '/resources/tuition' },
+			{ label: 'Uniform Policy',  href: '/resources/uniform' },
+			{ label: 'Parent Login',    href: CLASSREACH_URL, external: true },
+		],
+	},
+	{
+		label: 'Get Involved',
+		id: 'get-involved',
+		items: [
+			{ label: 'Give',     href: GIVE_URL,   external: true },
+			{ label: 'Careers',  href: '/careers' },
+			{ label: 'Contact',  href: '/contact' },
+		],
+	},
 ];
 
-// Show a dedicated "← Home" link on every page except the home page.
-// The wordmark and emblem both link to `/` but the convention isn't
-// obvious enough for every visitor — this gives them an unmistakable
-// back-to-home button.
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isHomePage = currentPath === '/';
 ---
 
-<!--
-	Top header bar.
-	`sticky top-0` keeps it pinned to the top of the viewport while the user
-	scrolls. Placed at the Layout root (sibling of all canvas wrappers and
-	full-bleed sections), so it stays pinned across every section and only
-	un-sticks at the very bottom of the document.
-
-	The outer `<header>` spans the viewport width so the frosted background
-	can bleed full-width; the inner `<div class="site-header-inner">` is
-	constrained to `max-w-canvas` so the wordmark/nav/emblem stay aligned
-	with the rest of the page grid.
-
-	At scrollY=0 the header is fully transparent so the page-wide vertical
-	column lines remain visible all the way to the top edge. As soon as the
-	user scrolls (handled by the inline script below toggling
-	`html.is-scrolled`), the header gains a frosted `bg-white/75 backdrop-blur-md`
-	treatment so content sliding underneath stays legible behind it. The
-	transition is short and eased.
-
-	`z-40` keeps it above page content but below any future modal layer.
--->
 <header class="site-header sticky top-0 z-40 bg-transparent transition-[background-color,backdrop-filter] duration-200 ease-out">
-	<div class="site-header-inner mx-auto flex w-full max-w-canvas items-center justify-between px-6 pb-7 pt-7 sm:px-10 sm:pb-8 sm:pt-8 lg:items-start lg:px-12 lg:pb-9 lg:pt-9">
-	<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
-		<a
-			href="/"
-			aria-label="Trinity Classical Academy"
-			class="font-sans text-[12px] font-medium uppercase tracking-eyebrow text-ink"
-		>
-			Trinity Classical Academy
-		</a>
+	<div class="site-header-inner mx-auto flex w-full max-w-canvas items-center justify-between px-6 pb-7 pt-7 sm:px-10 sm:pb-8 sm:pt-8 lg:px-12 lg:pb-9 lg:pt-9">
 
-		{!isHomePage && (
+		<!-- Left: wordmark + optional ← Home -->
+		<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
 			<a
 				href="/"
-				class="group inline-flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-soft transition-colors hover:text-forest"
-				aria-label="Back to home"
+				aria-label="Trinity Classical Academy"
+				class="font-sans text-[12px] font-medium uppercase tracking-eyebrow text-ink"
 			>
-				<span aria-hidden="true" class="transition-transform group-hover:-translate-x-0.5">←</span>
-				<span>Home</span>
+				Trinity Classical Academy
 			</a>
-		)}
-	</div>
 
-	<div class="relative flex items-center gap-4 sm:gap-6 lg:items-start lg:gap-12">
-		<!--
-			Mobile-only disclosure button.
-			On < lg the primary nav is collapsed by default; this button
-			expands it into a frosted dropdown anchored below the header.
-			Hidden on lg+, where the nav is always visible inline.
-		-->
-		<button
-			type="button"
-			aria-expanded="false"
-			aria-controls="primary-nav"
-			class="flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:text-forest lg:hidden"
-			data-nav-toggle
-		>
-			<span data-nav-label>Menu</span>
-			<svg
-				width="10"
-				height="10"
-				viewBox="0 0 10 10"
-				class="transition-transform duration-150 ease-out"
-				data-nav-icon
-				aria-hidden="true"
+			{!isHomePage && (
+				<a
+					href="/"
+					class="group inline-flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-soft transition-colors hover:text-forest"
+					aria-label="Back to home"
+				>
+					<span aria-hidden="true" class="transition-transform group-hover:-translate-x-0.5">←</span>
+					<span>Home</span>
+				</a>
+			)}
+		</div>
+
+		<!-- Right: mobile toggle + nav + emblem -->
+		<div class="relative flex items-center gap-4 sm:gap-6">
+
+			<!-- Mobile menu toggle (hidden lg+) -->
+			<button
+				type="button"
+				aria-expanded="false"
+				aria-controls="primary-nav"
+				class="flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:text-forest lg:hidden"
+				data-nav-toggle
 			>
-				<path
-					d="M2 3.5 L5 6.5 L8 3.5"
-					stroke="currentColor"
-					stroke-width="1.5"
-					fill="none"
-					stroke-linecap="round"
-					stroke-linejoin="round"
+				<span data-nav-label>Menu</span>
+				<svg
+					width="10"
+					height="10"
+					viewBox="0 0 10 10"
+					class="transition-transform duration-150 ease-out"
+					data-nav-icon
+					aria-hidden="true"
+				>
+					<path
+						d="M2 3.5 L5 6.5 L8 3.5"
+						stroke="currentColor"
+						stroke-width="1.5"
+						fill="none"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</button>
+
+			<!-- Primary nav -->
+			<nav
+				id="primary-nav"
+				aria-label="Primary"
+				data-nav-panel
+				data-state="closed"
+				class="absolute right-0 top-full mt-3 min-w-[240px] rounded-card border border-ink/10 bg-white/95 shadow-lg backdrop-blur-md lg:relative lg:right-auto lg:top-auto lg:mt-0 lg:min-w-0 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
+			>
+				<!-- Desktop: horizontal category row -->
+				<ul class="hidden lg:flex lg:flex-row lg:items-center lg:gap-6" data-desktop-nav>
+					{navCategories.map((cat) => (
+						<li class="relative" data-desktop-category data-category-id={cat.id}>
+							<button
+								type="button"
+								aria-expanded="false"
+								aria-controls={`dropdown-${cat.id}`}
+								aria-haspopup="true"
+								class="flex items-center gap-1 font-sans text-sm font-medium text-ink transition-colors hover:text-forest"
+								data-category-trigger
+							>
+								<span>{cat.label}</span>
+								<svg
+									width="10"
+									height="10"
+									viewBox="0 0 10 10"
+									class="transition-transform duration-150 ease-out"
+									data-category-icon
+									aria-hidden="true"
+								>
+									<path
+										d="M2 3.5 L5 6.5 L8 3.5"
+										stroke="currentColor"
+										stroke-width="1.5"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							</button>
+							<div
+								id={`dropdown-${cat.id}`}
+								role="region"
+								data-dropdown
+								class="absolute right-0 top-full mt-2 min-w-[180px] rounded-card border border-ink/10 bg-white/95 p-5 shadow-lg backdrop-blur-md"
+							>
+								<ul class="flex flex-col gap-2">
+									{cat.items.map((item) => (
+										<li>
+											<a
+												href={item.href}
+												class="flex items-center gap-1.5 font-sans text-sm text-ink transition-colors hover:text-forest"
+												{...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+											>
+												{item.label}
+												{item.external && (
+													<span aria-hidden="true" class="text-ink-mute">↗</span>
+												)}
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+						</li>
+					))}
+				</ul>
+
+				<!-- Mobile: accordion category list -->
+				<div class="flex flex-col lg:hidden" data-mobile-nav>
+					{navCategories.map((cat) => (
+						<div class="border-b border-ink/10 last:border-0" data-mobile-category>
+							<button
+								type="button"
+								aria-expanded="false"
+								aria-controls={`mobile-${cat.id}`}
+								class="flex w-full items-center justify-between px-5 py-3 font-sans text-sm font-medium text-ink transition-colors hover:text-forest"
+								data-mobile-trigger
+							>
+								<span>{cat.label}</span>
+								<svg
+									width="10"
+									height="10"
+									viewBox="0 0 10 10"
+									class="transition-transform duration-150 ease-out"
+									data-mobile-icon
+									aria-hidden="true"
+								>
+									<path
+										d="M2 3.5 L5 6.5 L8 3.5"
+										stroke="currentColor"
+										stroke-width="1.5"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							</button>
+							<div
+								id={`mobile-${cat.id}`}
+								data-mobile-panel
+								class="overflow-hidden"
+								style="max-height: 0; transition: max-height 250ms ease-out;"
+							>
+								<ul class="flex flex-col gap-1 px-5 pb-3 pt-1">
+									{cat.items.map((item) => (
+										<li>
+											<a
+												href={item.href}
+												class="flex items-center gap-1.5 font-sans text-sm text-ink-soft transition-colors hover:text-forest"
+												{...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+												data-nav-link
+											>
+												{item.label}
+												{item.external && (
+													<span aria-hidden="true" class="text-ink-mute">↗</span>
+												)}
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+						</div>
+					))}
+				</div>
+			</nav>
+
+			<!-- Emblem -->
+			<a
+				href="/"
+				aria-label="Trinity Classical Academy"
+				class="text-ink"
+			>
+				<Image
+					src={emblemInk}
+					alt=""
+					class="h-9 w-auto"
 				/>
-			</svg>
-		</button>
-
-		<nav
-			id="primary-nav"
-			aria-label="Primary"
-			data-nav-panel
-			data-state="closed"
-			class="absolute right-0 top-full mt-3 min-w-[180px] rounded-card border border-ink/10 bg-white/95 p-5 shadow-lg backdrop-blur-md lg:relative lg:right-auto lg:top-auto lg:mt-0 lg:min-w-0 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
-		>
-			<ol class="flex flex-col gap-1.5">
-				{navItems.map((item) => (
-					<li class="flex h-5 items-center gap-3">
-						<span class="w-6 font-mono text-[10px] leading-none text-ink-mute">
-							{item.marker}
-						</span>
-						<a
-							href={item.href}
-							class="font-sans text-sm leading-none text-ink transition hover:text-forest"
-						>
-							{item.label}
-						</a>
-					</li>
-				))}
-			</ol>
-		</nav>
-
-		<a
-			href="/"
-			aria-label="Trinity Classical Academy"
-			class="text-ink"
-		>
-			<Image
-				src={emblemInk}
-				alt=""
-				class="h-9 w-auto"
-			/>
-		</a>
-	</div>
+			</a>
+		</div>
 	</div>
 </header>
 
 <style>
-	/* Frosted backdrop activates only when the page has been scrolled.
-	   At scrollY=0 the header is fully transparent so the page-wide column
-	   lines remain visible all the way to the top of the viewport. */
+	/* Frosted backdrop on scroll */
 	:global(html.is-scrolled) .site-header {
 		background-color: rgb(255 255 255 / 0.75);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
 	}
 
-	/* Mobile primary-nav disclosure: collapsed by default, expanded on
-	   data-state="open". On lg+ the panel is always visible inline.
-	   `:global()` is required so Astro's scoped-style hashing doesn't
-	   prevent the attribute selector from matching the live nav element. */
+	/* Mobile panel: hidden until open */
 	:global([data-nav-panel]) {
 		display: none;
 	}
@@ -163,26 +265,33 @@ const isHomePage = currentPath === '/';
 		}
 	}
 
-	/* ===== Compact-on-scroll header (lg+) =====
-	   When the page is scrolled (`html.is-scrolled`), shrink the header
-	   padding and collapse the vertical Roman-numeral nav into a single
-	   horizontal row. The smooth slide-into-place animation is handled
-	   in JS by the FLIP technique with staggered transition delays.
+	/* Desktop dropdown: hidden by default, shown when open */
+	:global([data-dropdown]) {
+		display: none;
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+	:global([data-dropdown][data-open]) {
+		display: block;
+		opacity: 1;
+		transform: translateY(0);
+		transition: opacity 150ms ease-out, transform 150ms ease-out;
+	}
 
-	   Height lives on the outer `.site-header`; padding + alignment live
-	   on the canvas-constrained `.site-header-inner` so the header bleeds
-	   full-width visually but the content stays on the canvas grid.
-
-	   `overflow: hidden` on the outer prevents items from visually escaping
-	   during the height interpolation. */
+	/* Compact-on-scroll (lg+): CSS transition only — no FLIP */
 	@media (min-width: 1024px) {
 		:global(.site-header) {
 			height: 192px;
-			overflow: hidden;
+			overflow: visible;
 			transition:
 				height 450ms cubic-bezier(0.22, 1, 0.36, 1),
 				background-color 200ms ease-out,
 				backdrop-filter 200ms ease-out;
+		}
+		/* Clip overflow only during the height animation to prevent items
+		   from escaping, but restore it so dropdowns can overflow the header. */
+		:global(.site-header.is-animating) {
+			overflow: hidden;
 		}
 		:global(html.is-scrolled) .site-header {
 			height: 60px;
@@ -195,29 +304,9 @@ const isHomePage = currentPath === '/';
 			padding-bottom: 1rem;
 			align-items: center;
 		}
-		:global(html.is-scrolled) .site-header-inner > div:last-of-type {
-			align-items: center;
-		}
-		:global(html.is-scrolled) .site-header-inner [data-nav-panel] ol {
-			flex-direction: row;
-			align-items: center;
-			gap: 1.75rem;
-		}
-		/* Hide Roman-numeral markers in compact mode */
-		:global(html.is-scrolled) .site-header-inner [data-nav-panel] ol > li > span:first-child {
-			display: none;
-		}
 	}
 
-	/* ===== Anchor the expanded nav to the 75% vertical divider =====
-	   At lg+ when the header is NOT scrolled, lock the right block
-	   (nav + emblem) to exactly 25% of the site-header-inner content
-	   box. Because the vertical dividers live inside the same
-	   `lg:px-12` content area, a 25%-wide right block aligned to the
-	   right edge of that content area places its own left edge
-	   exactly on the 75% divider line. The 16px padding-left then
-	   pushes the Roman numerals 16px inward from the line, matching
-	   the padding the hero body column uses below. */
+	/* Expanded state: right block width anchored to 75% column divider */
 	@media (min-width: 1024px) {
 		:global(html:not(.is-scrolled)) .site-header-inner > div:last-child {
 			width: 25%;
@@ -230,119 +319,223 @@ const isHomePage = currentPath === '/';
 <script is:inline>
 	(() => {
 		const root = document.documentElement;
-		const panel = document.querySelector('[data-nav-panel]');
-		const navItems = panel ? Array.from(panel.querySelectorAll('li')) : [];
 		const headerEl = document.querySelector('.site-header');
 
-		// Track current compact state so we only run FLIP on actual transitions
+		// ── Scroll compact ──────────────────────────────────────────────────
 		let isCompact = false;
-		// Guard that ignores state changes while the CSS height transition
-		// is in flight (450ms). Without this, a reflow-triggered scroll
-		// adjustment mid-transition can flip us back to the previous state
-		// and the two states oscillate indefinitely.
 		let transitionLock = false;
 		const TRANSITION_MS = 460;
 
-		// FLIP transition: capture old layout positions, snap to the new
-		// layout via class change, then animate each item from its old
-		// position back to its new position with a staggered delay so the
-		// items appear to slide one after another into the compact row.
 		const setCompact = (next) => {
 			if (next === isCompact || transitionLock) return;
 			transitionLock = true;
 			setTimeout(() => { transitionLock = false; }, TRANSITION_MS);
-			// FLIP only on lg+; on mobile the layout is the disclosure
-			// dropdown and there's nothing to animate.
-			if (window.innerWidth < 1024 || navItems.length === 0) {
-				isCompact = next;
-				root.classList.toggle('is-scrolled', next);
-				return;
-			}
 
-			// First — read positions BEFORE the layout change.
-			const firstItem = navItems.map((el) => el.getBoundingClientRect());
-			const firstHeader = headerEl?.getBoundingClientRect();
-
-			// Last — apply the new layout.
 			isCompact = next;
 			root.classList.toggle('is-scrolled', next);
 
-			// Force the browser to lay out the new state synchronously.
-			void document.body.offsetHeight;
-
-			const lastItem = navItems.map((el) => el.getBoundingClientRect());
-			const lastHeader = headerEl?.getBoundingClientRect();
-
-			// Account for the fact that the header itself moves (its padding
-			// shrinks). The container shift would otherwise double-count when
-			// we compute item deltas.
-			const headerDx = firstHeader && lastHeader ? firstHeader.left - lastHeader.left : 0;
-			const headerDy = firstHeader && lastHeader ? firstHeader.top - lastHeader.top : 0;
-
-			// Invert + Play, with a stagger so items move sequentially.
-			navItems.forEach((el, i) => {
-				const dx = firstItem[i].left - lastItem[i].left - headerDx;
-				const dy = firstItem[i].top - lastItem[i].top - headerDy;
-				if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
-
-				// Order the stagger so item closest to the destination
-				// (top of the row) moves first when expanding/collapsing.
-				const delay = next ? i * 60 : (navItems.length - 1 - i) * 60;
-
-				el.style.transition = 'none';
-				el.style.transform = `translate(${dx}px, ${dy}px)`;
-				// Force reflow so the inverse transform is committed before
-				// the easing transition is applied.
-				void el.offsetHeight;
-				el.style.transition = `transform 450ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`;
-				el.style.transform = '';
-
-				// Scrub any leftover inline styles after the transition
-				// settles so no sub-pixel residue remains to misalign
-				// items in the final layout.
-				const cleanup = () => {
-					el.style.transition = '';
-					el.style.transform = '';
-					el.removeEventListener('transitionend', cleanup);
-				};
-				el.addEventListener('transitionend', cleanup);
-			});
+			// Temporarily add is-animating so overflow:hidden clips during
+			// the height transition, then remove it so dropdowns can overflow.
+			if (window.innerWidth >= 1024 && headerEl) {
+				headerEl.classList.add('is-animating');
+				setTimeout(() => headerEl.classList.remove('is-animating'), TRANSITION_MS);
+			}
 		};
 
 		const updateScroll = () => setCompact(window.scrollY > 8);
 		updateScroll();
 		window.addEventListener('scroll', updateScroll, { passive: true });
-		// Resync if the viewport crosses the lg breakpoint
 		window.addEventListener('resize', updateScroll, { passive: true });
 
-		// Mobile nav disclosure
+		// ── Desktop dropdown nav ─────────────────────────────────────────────
+		let openCategoryId = null;
+		let closeTimer = null;
+
+		const getCategories = () =>
+			Array.from(document.querySelectorAll('[data-desktop-category]'));
+
+		const openDropdown = (catEl) => {
+			if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+			const id = catEl.dataset.categoryId;
+			if (openCategoryId === id) return;
+
+			// Close existing
+			if (openCategoryId) {
+				const prev = document.querySelector(`[data-category-id="${openCategoryId}"]`);
+				if (prev) _closeDropdown(prev);
+			}
+
+			openCategoryId = id;
+			const trigger = catEl.querySelector('[data-category-trigger]');
+			const dropdown = catEl.querySelector('[data-dropdown]');
+			const icon = catEl.querySelector('[data-category-icon]');
+			if (trigger) trigger.setAttribute('aria-expanded', 'true');
+			if (icon) icon.classList.add('rotate-180');
+			if (dropdown) dropdown.dataset.open = '';
+		};
+
+		const _closeDropdown = (catEl) => {
+			const trigger = catEl.querySelector('[data-category-trigger]');
+			const dropdown = catEl.querySelector('[data-dropdown]');
+			const icon = catEl.querySelector('[data-category-icon]');
+			if (trigger) trigger.setAttribute('aria-expanded', 'false');
+			if (icon) icon.classList.remove('rotate-180');
+			if (dropdown) delete dropdown.dataset.open;
+		};
+
+		const scheduleClose = (catEl) => {
+			closeTimer = setTimeout(() => {
+				const id = catEl.dataset.categoryId;
+				if (openCategoryId === id) {
+					_closeDropdown(catEl);
+					openCategoryId = null;
+				}
+				closeTimer = null;
+			}, 100);
+		};
+
+		const closeAll = () => {
+			if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+			getCategories().forEach(_closeDropdown);
+			openCategoryId = null;
+		};
+
+		getCategories().forEach((catEl) => {
+			const trigger = catEl.querySelector('[data-category-trigger]');
+			const dropdown = catEl.querySelector('[data-dropdown]');
+
+			// Hover: open on mouseenter, schedule close on mouseleave
+			catEl.addEventListener('mouseenter', () => openDropdown(catEl));
+			catEl.addEventListener('mouseleave', () => scheduleClose(catEl));
+
+			// Keep open if mouse re-enters dropdown
+			if (dropdown) {
+				dropdown.addEventListener('mouseenter', () => {
+					if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+				});
+				dropdown.addEventListener('mouseleave', () => scheduleClose(catEl));
+			}
+
+			// Click: toggle
+			if (trigger) {
+				trigger.addEventListener('click', (e) => {
+					e.stopPropagation();
+					const id = catEl.dataset.categoryId;
+					if (openCategoryId === id) {
+						closeAll();
+					} else {
+						openDropdown(catEl);
+					}
+				});
+			}
+		});
+
+		// Close on click outside
+		document.addEventListener('click', (e) => {
+			if (!openCategoryId) return;
+			const openCat = document.querySelector(`[data-category-id="${openCategoryId}"]`);
+			if (openCat && openCat.contains(e.target)) return;
+			closeAll();
+		});
+
+		// Close on Escape
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && openCategoryId) {
+				const openCat = document.querySelector(`[data-category-id="${openCategoryId}"]`);
+				const trigger = openCat && openCat.querySelector('[data-category-trigger]');
+				closeAll();
+				if (trigger) trigger.focus();
+			}
+		});
+
+		// ── Mobile nav ────────────────────────────────────────────────────────
+		const panel = document.querySelector('[data-nav-panel]');
 		const toggle = document.querySelector('[data-nav-toggle]');
-		const icon = document.querySelector('[data-nav-icon]');
-		const label = document.querySelector('[data-nav-label]');
+		const navIcon = document.querySelector('[data-nav-icon]');
+		const navLabel = document.querySelector('[data-nav-label]');
+
 		if (toggle && panel) {
 			const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
+
 			const setOpen = (open) => {
 				toggle.setAttribute('aria-expanded', String(open));
 				panel.dataset.state = open ? 'open' : 'closed';
-				if (icon) icon.classList.toggle('rotate-180', open);
-				if (label) label.textContent = open ? 'Close' : 'Menu';
+				if (navIcon) navIcon.classList.toggle('rotate-180', open);
+				if (navLabel) navLabel.textContent = open ? 'Close' : 'Menu';
+				// Collapse all accordion sections when menu closes
+				if (!open) collapseAllMobile();
 			};
+
 			toggle.addEventListener('click', () => setOpen(!isOpen()));
-			// Close after a nav link is followed
-			panel.querySelectorAll('a').forEach((a) => {
+
+			// Close menu when a nav link is tapped
+			panel.querySelectorAll('[data-nav-link]').forEach((a) => {
 				a.addEventListener('click', () => setOpen(false));
 			});
-			// Close on click outside the panel/toggle
+
+			// Close on click outside
 			document.addEventListener('click', (e) => {
 				if (!isOpen()) return;
-				const target = e.target;
-				if (panel.contains(target) || toggle.contains(target)) return;
+				if (panel.contains(e.target) || toggle.contains(e.target)) return;
 				setOpen(false);
 			});
+
 			// Close on Escape
 			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && isOpen()) setOpen(false);
+				if (e.key === 'Escape' && isOpen()) {
+					setOpen(false);
+					toggle.focus();
+				}
 			});
 		}
+
+		// ── Mobile accordion ─────────────────────────────────────────────────
+		const getMobileCategories = () =>
+			Array.from(document.querySelectorAll('[data-mobile-category]'));
+
+		const collapseAllMobile = () => {
+			getMobileCategories().forEach((catEl) => {
+				const mPanel = catEl.querySelector('[data-mobile-panel]');
+				const mTrigger = catEl.querySelector('[data-mobile-trigger]');
+				const mIcon = catEl.querySelector('[data-mobile-icon]');
+				if (mPanel) mPanel.style.maxHeight = '0';
+				if (mTrigger) mTrigger.setAttribute('aria-expanded', 'false');
+				if (mIcon) mIcon.classList.remove('rotate-180');
+			});
+		};
+
+		getMobileCategories().forEach((catEl) => {
+			const mTrigger = catEl.querySelector('[data-mobile-trigger]');
+			const mPanel = catEl.querySelector('[data-mobile-panel]');
+			const mIcon = catEl.querySelector('[data-mobile-icon]');
+
+			if (!mTrigger || !mPanel) return;
+
+			mTrigger.addEventListener('click', () => {
+				const isExpanded = mTrigger.getAttribute('aria-expanded') === 'true';
+
+				if (isExpanded) {
+					// Collapse this section
+					mPanel.style.maxHeight = '0';
+					mTrigger.setAttribute('aria-expanded', 'false');
+					if (mIcon) mIcon.classList.remove('rotate-180');
+				} else {
+					// Collapse siblings, expand this one
+					getMobileCategories().forEach((sibling) => {
+						if (sibling === catEl) return;
+						const sibPanel = sibling.querySelector('[data-mobile-panel]');
+						const sibTrigger = sibling.querySelector('[data-mobile-trigger]');
+						const sibIcon = sibling.querySelector('[data-mobile-icon]');
+						if (sibPanel) sibPanel.style.maxHeight = '0';
+						if (sibTrigger) sibTrigger.setAttribute('aria-expanded', 'false');
+						if (sibIcon) sibIcon.classList.remove('rotate-180');
+					});
+
+					mPanel.style.maxHeight = mPanel.scrollHeight + 'px';
+					mTrigger.setAttribute('aria-expanded', 'true');
+					if (mIcon) mIcon.classList.add('rotate-180');
+				}
+			});
+		});
 	})();
 </script>

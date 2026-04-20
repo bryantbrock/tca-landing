@@ -1,4 +1,5 @@
 ---
+import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 ---
 
 <!-- Hero content.
@@ -34,17 +35,29 @@
 			students through rigorous, Christ-centered classical education.
 		</p>
 		<div class="mt-6 flex flex-col items-start gap-3 lg:mt-4 lg:gap-2 xl:mt-6 xl:gap-3">
+			<div class="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap">
+				<a
+					href={INTERVIEW_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="rounded-pill bg-gold px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
+				>
+					Request an Interview
+				</a>
+				<a
+					href={TEACHER_APP_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="rounded-pill border border-forest bg-transparent px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-forest transition hover:bg-forest hover:text-white"
+				>
+					Apply to Teach
+				</a>
+			</div>
 			<a
 				href="/our-vision"
-				class="rounded-pill bg-gold px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:opacity-90"
-			>
-				Learn More
-			</a>
-			<a
-				href="/contact"
 				class="font-mono text-[10px] font-medium uppercase tracking-eyebrow text-ink-mute transition hover:text-forest"
 			>
-				or contact us →
+				Learn More →
 			</a>
 		</div>
 	</div>

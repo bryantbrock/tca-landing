@@ -7,18 +7,19 @@ import emblemGreen from '../assets/images/emblem-green.svg';
 import ashtonImg from '../assets/images/ashton-moats.png';
 import julieImg from '../assets/images/julie-mcdonald.png';
 import { INTERVIEW_URL } from '../lib/links';
+// import bryantImg from '../assets/images/bryant-brock.jpeg';
 
 const title = 'Our People — Trinity Classical Academy';
 const description =
 	'The board of directors and leadership of Trinity Classical Academy, a ministry of Trinity Presbyterian Church in Birmingham, Alabama.';
 
 const boardMembers = [
-	{ name: 'Karl Petersen',     title: 'Chair' },
-	{ name: 'Grady Maddox',      title: 'Vice-Chair' },
-	{ name: 'David Woods',       title: 'Secretary' },
-	{ name: 'Harrison Hunter',   title: 'Treasurer' },
-	{ name: 'Bryant Brock',      title: 'Board Member' },
-	{ name: 'Jonathan Griffith', title: 'Board Member' },
+	{ name: 'Karl Petersen',     title: 'Chair',         image: null as ImageMetadata | null },
+	{ name: 'Grady Maddox',      title: 'Vice-Chair',   image: null as ImageMetadata | null },
+	{ name: 'David Woods',       title: 'Secretary',     image: null as ImageMetadata | null },
+	{ name: 'Harrison Hunter',   title: 'Treasurer',     image: null as ImageMetadata | null },
+	{ name: 'Bryant Brock',      title: 'Board Member',  image: null as ImageMetadata | null },
+	{ name: 'Jonathan Griffith', title: 'Board Member',  image: null as ImageMetadata | null },
 ];
 
 const faculty = [
@@ -102,13 +103,20 @@ const initials = (name: string) =>
 					<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
 						{boardMembers.map((member) => (
 							<article class="flex flex-col gap-4">
-								<!-- Photo placeholder -->
 								<div class="relative aspect-[4/5] overflow-hidden rounded-card border border-ink/10 bg-ink/5">
-									<div class="absolute inset-0 flex items-center justify-center">
-										<span class="font-display text-[64px] leading-none text-ink-mute opacity-40">
-											{initials(member.name)}
-										</span>
-									</div>
+									{member.image ? (
+										<Image
+											src={member.image}
+											alt={member.name}
+											class="h-full w-full object-cover"
+										/>
+									) : (
+										<div class="absolute inset-0 flex items-center justify-center">
+											<span class="font-display text-[64px] leading-none text-ink-mute opacity-40">
+												{initials(member.name)}
+											</span>
+										</div>
+									)}
 								</div>
 								<!-- Name + title -->
 								<div class="flex flex-col gap-1">

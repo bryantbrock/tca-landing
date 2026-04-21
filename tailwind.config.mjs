@@ -10,8 +10,8 @@ export default {
 				forest: '#276D33',           // primary brand green — CTA sections, nav active, buttons on light
 
 				// Accent
-				gold: '#D4AF37',             // primary accent — labels on dark, rules, CTA fills on dark/forest
-				'gold-hover': '#DFC04E',     // interactive state for gold elements
+				gold: '#DEA06D',             // primary accent — labels on dark, rules, CTA fills on dark/forest
+				'gold-hover': '#E8B483',     // interactive state for gold elements
 
 				// Surfaces — light
 				cream: '#F0E9D0',            // warm secondary surface — cards, alternating sections

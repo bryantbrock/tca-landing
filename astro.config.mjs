@@ -8,7 +8,9 @@ export default defineConfig({
   // TODO: change back to 'https://trinityclassical.academy' after DNS cutover
   site: 'https://tcabham.netlify.app',
   integrations: [
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/brand-guide'),
+    }),
   ],
   vite: {
     plugins: [tailwindcss()]

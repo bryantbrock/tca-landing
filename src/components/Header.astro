@@ -5,6 +5,7 @@ import { GIVE_URL, INTERVIEW_URL, CLASSREACH_URL } from '../lib/links';
 
 const navCategories = [
 	{
+		marker: 'I.',
 		label: 'About',
 		id: 'about',
 		items: [
@@ -14,6 +15,7 @@ const navCategories = [
 		],
 	},
 	{
+		marker: 'II.',
 		label: 'Admissions',
 		id: 'admissions',
 		items: [
@@ -22,6 +24,7 @@ const navCategories = [
 		],
 	},
 	{
+		marker: 'III.',
 		label: 'Families',
 		id: 'families',
 		items: [
@@ -33,6 +36,7 @@ const navCategories = [
 		],
 	},
 	{
+		marker: 'IV.',
 		label: 'Get Involved',
 		id: 'get-involved',
 		items: [
@@ -47,212 +51,224 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isHomePage = currentPath === '/';
 ---
 
-<header class="site-header sticky top-0 z-40 bg-transparent transition-[background-color,backdrop-filter] duration-200 ease-out">
-	<div class="site-header-inner mx-auto flex w-full max-w-canvas items-center justify-between px-6 pb-7 pt-7 sm:px-10 sm:pb-8 sm:pt-8 lg:px-12 lg:pb-9 lg:pt-9">
+<header
+	class="site-header sticky top-0 z-40 bg-transparent transition-[background-color,backdrop-filter] duration-200 ease-out"
+	data-home={isHomePage ? 'true' : undefined}
+>
+	<div class="site-header-inner mx-auto flex w-full max-w-canvas items-center justify-between px-6 pb-7 pt-7 sm:px-10 sm:pb-8 sm:pt-8 lg:items-start lg:px-12 lg:pb-9 lg:pt-9">
+	<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
+		<a
+			href="/"
+			aria-label="Trinity Classical Academy"
+			class="font-sans text-[13px] font-medium uppercase tracking-eyebrow text-ink sm:text-[14px]"
+		>
+			Trinity Classical Academy
+		</a>
 
-		<!-- Left: wordmark + optional ← Home -->
-		<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
+		{!isHomePage && (
 			<a
 				href="/"
-				aria-label="Trinity Classical Academy"
-				class="font-sans text-[12px] font-medium uppercase tracking-eyebrow text-ink"
+				class="group inline-flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-soft transition-colors hover:text-forest"
+				aria-label="Back to home"
 			>
-				Trinity Classical Academy
+				<span aria-hidden="true" class="transition-transform group-hover:-translate-x-0.5">←</span>
+				<span>Home</span>
 			</a>
+		)}
+	</div>
 
-			{!isHomePage && (
-				<a
-					href="/"
-					class="group inline-flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-soft transition-colors hover:text-forest"
-					aria-label="Back to home"
-				>
-					<span aria-hidden="true" class="transition-transform group-hover:-translate-x-0.5">←</span>
-					<span>Home</span>
-				</a>
-			)}
-		</div>
-
-		<!-- Right: mobile toggle + nav + emblem -->
-		<div class="relative flex items-center gap-4 sm:gap-6">
-
-			<!-- Mobile menu toggle (hidden lg+) -->
-			<button
-				type="button"
-				aria-expanded="false"
-				aria-controls="primary-nav"
-				class="flex items-center gap-1.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:text-forest lg:hidden"
-				data-nav-toggle
+	<div class="relative flex items-center gap-4 sm:gap-6 lg:items-start lg:gap-12">
+		<!-- Mobile menu toggle (hidden lg+) -->
+		<button
+			type="button"
+			aria-expanded="false"
+			aria-controls="primary-nav"
+			class="flex items-center gap-1.5 font-mono text-[12px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:text-forest lg:hidden"
+			data-nav-toggle
+		>
+			<span data-nav-label>Menu</span>
+			<svg
+				width="10"
+				height="10"
+				viewBox="0 0 10 10"
+				class="transition-transform duration-150 ease-out"
+				data-nav-icon
+				aria-hidden="true"
 			>
-				<span data-nav-label>Menu</span>
-				<svg
-					width="10"
-					height="10"
-					viewBox="0 0 10 10"
-					class="transition-transform duration-150 ease-out"
-					data-nav-icon
-					aria-hidden="true"
-				>
-					<path
-						d="M2 3.5 L5 6.5 L8 3.5"
-						stroke="currentColor"
-						stroke-width="1.5"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</button>
-
-			<!-- Primary nav -->
-			<nav
-				id="primary-nav"
-				aria-label="Primary"
-				data-nav-panel
-				data-state="closed"
-				class="absolute right-0 top-full mt-3 min-w-[240px] rounded-card border border-ink/10 bg-white/95 shadow-lg backdrop-blur-md lg:relative lg:right-auto lg:top-auto lg:mt-0 lg:min-w-0 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
-			>
-				<!-- Desktop: horizontal category row -->
-				<ul class="hidden lg:flex lg:flex-row lg:items-center lg:gap-6" data-desktop-nav>
-					{navCategories.map((cat) => (
-						<li class="relative" data-desktop-category data-category-id={cat.id}>
-							<button
-								type="button"
-								aria-expanded="false"
-								aria-controls={`dropdown-${cat.id}`}
-								aria-haspopup="true"
-								class="flex items-center gap-1 font-sans text-sm font-medium text-ink transition-colors hover:text-forest"
-								data-category-trigger
-							>
-								<span>{cat.label}</span>
-								<svg
-									width="10"
-									height="10"
-									viewBox="0 0 10 10"
-									class="transition-transform duration-150 ease-out"
-									data-category-icon
-									aria-hidden="true"
-								>
-									<path
-										d="M2 3.5 L5 6.5 L8 3.5"
-										stroke="currentColor"
-										stroke-width="1.5"
-										fill="none"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
-							</button>
-							<div
-								id={`dropdown-${cat.id}`}
-								role="region"
-								data-dropdown
-								class="absolute right-0 top-full mt-2 min-w-[180px] rounded-card border border-ink/10 bg-white/95 p-5 shadow-lg backdrop-blur-md"
-							>
-								<ul class="flex flex-col gap-2">
-									{cat.items.map((item) => (
-										<li>
-											<a
-												href={item.href}
-												class="flex items-center gap-1.5 font-sans text-sm text-ink transition-colors hover:text-forest"
-												{...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-											>
-												{item.label}
-												{item.external && (
-													<span aria-hidden="true" class="text-ink-mute">↗</span>
-												)}
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
-						</li>
-					))}
-				</ul>
-
-				<!-- Mobile: accordion category list -->
-				<div class="flex flex-col lg:hidden" data-mobile-nav>
-					{navCategories.map((cat) => (
-						<div class="border-b border-ink/10 last:border-0" data-mobile-category>
-							<button
-								type="button"
-								aria-expanded="false"
-								aria-controls={`mobile-${cat.id}`}
-								class="flex w-full items-center justify-between px-5 py-3 font-sans text-sm font-medium text-ink transition-colors hover:text-forest"
-								data-mobile-trigger
-							>
-								<span>{cat.label}</span>
-								<svg
-									width="10"
-									height="10"
-									viewBox="0 0 10 10"
-									class="transition-transform duration-150 ease-out"
-									data-mobile-icon
-									aria-hidden="true"
-								>
-									<path
-										d="M2 3.5 L5 6.5 L8 3.5"
-										stroke="currentColor"
-										stroke-width="1.5"
-										fill="none"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
-							</button>
-							<div
-								id={`mobile-${cat.id}`}
-								data-mobile-panel
-								class="overflow-hidden"
-								style="max-height: 0; transition: max-height 250ms ease-out;"
-							>
-								<ul class="flex flex-col gap-1 px-5 pb-3 pt-1">
-									{cat.items.map((item) => (
-										<li>
-											<a
-												href={item.href}
-												class="flex items-center gap-1.5 font-sans text-sm text-ink-soft transition-colors hover:text-forest"
-												{...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-												data-nav-link
-											>
-												{item.label}
-												{item.external && (
-													<span aria-hidden="true" class="text-ink-mute">↗</span>
-												)}
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
-						</div>
-					))}
-				</div>
-			</nav>
-
-			<!-- Emblem -->
-			<a
-				href="/"
-				aria-label="Trinity Classical Academy"
-				class="text-ink"
-			>
-				<Image
-					src={emblemInk}
-					alt=""
-					class="h-9 w-auto"
+				<path
+					d="M2 3.5 L5 6.5 L8 3.5"
+					stroke="currentColor"
+					stroke-width="1.5"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
 				/>
-			</a>
-		</div>
+			</svg>
+		</button>
+
+		<nav
+			id="primary-nav"
+			aria-label="Primary"
+			data-nav-panel
+			data-state="closed"
+			class="absolute right-0 top-full mt-3 min-w-[240px] rounded-card border border-ink/10 bg-white/95 shadow-lg backdrop-blur-md lg:relative lg:right-auto lg:top-auto lg:mt-0 lg:min-w-0 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
+		>
+			<!-- Desktop: vertical list with Roman numerals (same structure as original) -->
+			<ol class="nav-categories hidden lg:flex">
+				{navCategories.map((cat) => (
+					<li
+						class="relative flex h-5 items-center gap-3"
+						data-desktop-category
+						data-category-id={cat.id}
+					>
+						<span class="w-6 font-mono text-[10px] leading-none text-ink-mute">
+							{cat.marker}
+						</span>
+						<button
+							type="button"
+							aria-expanded="false"
+							aria-controls={`dropdown-${cat.id}`}
+							aria-haspopup="true"
+							class="font-sans text-base leading-none text-ink transition hover:text-forest"
+							data-category-trigger
+						>
+							{cat.label}
+						</button>
+						<!-- Dropdown: opens to the left -->
+						<div
+							id={`dropdown-${cat.id}`}
+							role="region"
+							data-dropdown
+							class="absolute right-full top-0 mr-3 min-w-[180px] rounded-card border border-ink/10 bg-white/95 p-5 shadow-lg backdrop-blur-md"
+						>
+							<ul class="flex flex-col gap-2">
+								{cat.items.map((item) => (
+									<li>
+										<a
+											href={item.href}
+											class="flex items-center gap-1.5 whitespace-nowrap font-sans text-sm text-ink transition-colors hover:text-forest"
+											{...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+										>
+											{item.label}
+											{item.external && (
+												<span aria-hidden="true" class="text-ink-mute">↗</span>
+											)}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					</li>
+				))}
+			</ol>
+
+			<!-- Mobile: accordion category list -->
+			<div class="flex flex-col lg:hidden" data-mobile-nav>
+				{navCategories.map((cat) => (
+					<div class="border-b border-ink/10 last:border-0" data-mobile-category>
+						<button
+							type="button"
+							aria-expanded="false"
+							aria-controls={`mobile-${cat.id}`}
+							class="flex w-full items-center justify-between px-5 py-3 font-sans text-sm font-medium text-ink transition-colors hover:text-forest"
+							data-mobile-trigger
+						>
+							<span>{cat.label}</span>
+							<svg
+								width="10"
+								height="10"
+								viewBox="0 0 10 10"
+								class="transition-transform duration-150 ease-out"
+								data-mobile-icon
+								aria-hidden="true"
+							>
+								<path
+									d="M2 3.5 L5 6.5 L8 3.5"
+									stroke="currentColor"
+									stroke-width="1.5"
+									fill="none"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</button>
+						<div
+							id={`mobile-${cat.id}`}
+							data-mobile-panel
+							class="overflow-hidden"
+							style="max-height: 0; transition: max-height 250ms ease-out;"
+						>
+							<ul class="flex flex-col gap-1 px-5 pb-3 pt-1">
+								{cat.items.map((item) => (
+									<li>
+										<a
+											href={item.href}
+											class="flex items-center gap-1.5 font-sans text-sm text-ink-soft transition-colors hover:text-forest"
+											{...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+											data-nav-link
+										>
+											{item.label}
+											{item.external && (
+												<span aria-hidden="true" class="text-ink-mute">↗</span>
+											)}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				))}
+			</div>
+		</nav>
+
+		<a
+			href="/"
+			aria-label="Trinity Classical Academy"
+			class="header-emblem-link text-ink"
+		>
+			<Image
+				src={emblemInk}
+				alt=""
+				class="header-emblem h-9 w-auto"
+			/>
+		</a>
+	</div>
 	</div>
 </header>
 
 <style>
-	/* Frosted backdrop on scroll */
+	/* Frosted backdrop activates only when the page has been scrolled. */
 	:global(html.is-scrolled) .site-header {
 		background-color: rgb(255 255 255 / 0.75);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
 	}
 
-	/* Mobile panel: hidden until open */
+	/* Home page: before scroll, the hero video sits behind a transparent
+	   header. Top-level header elements (wordmark, emblem, menu button,
+	   nav triggers, Roman numerals) flip to white so they remain legible
+	   over the dark overlay. They revert to ink once the page scrolls
+	   and the frosted white bar engages. */
+	:global(.site-header) .site-header-inner > div > a,
+	:global(.site-header) [data-nav-toggle],
+	:global(.site-header) .nav-categories > li > button,
+	:global(.site-header) .nav-categories > li > span:first-child,
+	:global(.site-header) .header-emblem {
+		transition: color 200ms ease-out, filter 200ms ease-out;
+	}
+	:global(html:not(.is-scrolled)) .site-header[data-home='true'] .site-header-inner > div > a,
+	:global(html:not(.is-scrolled)) .site-header[data-home='true'] [data-nav-toggle],
+	:global(html:not(.is-scrolled)) .site-header[data-home='true'] .nav-categories > li > button {
+		color: white;
+	}
+	:global(html:not(.is-scrolled)) .site-header[data-home='true'] .nav-categories > li > span:first-child {
+		color: rgb(255 255 255 / 0.6);
+	}
+	:global(html:not(.is-scrolled)) .site-header[data-home='true'] .header-emblem {
+		filter: brightness(0) invert(1);
+	}
+
+	/* Mobile primary-nav disclosure */
 	:global([data-nav-panel]) {
 		display: none;
 	}
@@ -269,32 +285,33 @@ const isHomePage = currentPath === '/';
 	:global([data-dropdown]) {
 		display: none;
 		opacity: 0;
-		transform: translateY(-4px);
+		transform: translateX(4px);
 	}
 	:global([data-dropdown][data-open]) {
 		display: block;
 		opacity: 1;
-		transform: translateY(0);
+		transform: translateX(0);
 		transition: opacity 150ms ease-out, transform 150ms ease-out;
 	}
 
-	/* Compact-on-scroll (lg+): CSS transition only — no FLIP */
+	/* ===== Compact-on-scroll header (lg+) =====
+	   Identical to the original: height transition + overflow:hidden
+	   during animation, overflow:visible at rest for dropdowns. */
 	@media (min-width: 1024px) {
 		:global(.site-header) {
 			height: 192px;
-			overflow: visible;
+			overflow: hidden;
 			transition:
 				height 450ms cubic-bezier(0.22, 1, 0.36, 1),
 				background-color 200ms ease-out,
 				backdrop-filter 200ms ease-out;
 		}
-		/* Clip overflow only during the height animation to prevent items
-		   from escaping, but restore it so dropdowns can overflow the header. */
-		:global(.site-header.is-animating) {
-			overflow: hidden;
-		}
 		:global(html.is-scrolled) .site-header {
 			height: 60px;
+		}
+		/* Once compact settles, allow dropdowns to overflow */
+		:global(.site-header.dropdowns-enabled) {
+			overflow: visible;
 		}
 		:global(.site-header-inner) {
 			transition: padding 450ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -304,9 +321,34 @@ const isHomePage = currentPath === '/';
 			padding-bottom: 1rem;
 			align-items: center;
 		}
+		:global(html.is-scrolled) .site-header-inner > div:last-of-type {
+			align-items: center;
+		}
+		/* Default: vertical column with small gap */
+		:global(.nav-categories) {
+			flex-direction: column;
+			gap: 0.375rem;
+		}
+		/* Compact mode: horizontal row, hide Roman numerals */
+		:global(html.is-scrolled) .nav-categories {
+			flex-direction: row;
+			align-items: center;
+			gap: 1.75rem;
+		}
+		:global(html.is-scrolled) .nav-categories > li > span:first-child {
+			display: none;
+		}
+		/* In compact mode, dropdowns open downward below their own trigger */
+		:global(html.is-scrolled) [data-dropdown] {
+			right: auto !important;
+			left: 0 !important;
+			top: 100% !important;
+			margin-right: 0 !important;
+			margin-top: 0.5rem !important;
+		}
 	}
 
-	/* Expanded state: right block width anchored to 75% column divider */
+	/* Anchor the expanded nav to the 75% vertical divider */
 	@media (min-width: 1024px) {
 		:global(html:not(.is-scrolled)) .site-header-inner > div:last-child {
 			width: 25%;
@@ -319,9 +361,11 @@ const isHomePage = currentPath === '/';
 <script is:inline>
 	(() => {
 		const root = document.documentElement;
+		const panel = document.querySelector('[data-nav-panel]');
+		const navItems = panel ? Array.from(panel.querySelectorAll(':scope > ol > li')) : [];
 		const headerEl = document.querySelector('.site-header');
 
-		// ── Scroll compact ──────────────────────────────────────────────────
+		// ── Scroll compact (exact original FLIP) ────────────────────────────
 		let isCompact = false;
 		let transitionLock = false;
 		const TRANSITION_MS = 460;
@@ -331,19 +375,71 @@ const isHomePage = currentPath === '/';
 			transitionLock = true;
 			setTimeout(() => { transitionLock = false; }, TRANSITION_MS);
 
+			// FLIP only on lg+
+			if (window.innerWidth < 1024 || navItems.length === 0) {
+				isCompact = next;
+				root.classList.toggle('is-scrolled', next);
+				return;
+			}
+
+			// Disable dropdown overflow during transition
+			if (headerEl) headerEl.classList.remove('dropdowns-enabled');
+
+			// First — read positions BEFORE the layout change.
+			const firstItem = navItems.map((el) => el.getBoundingClientRect());
+			const firstHeader = headerEl?.getBoundingClientRect();
+
+			// Last — apply the new layout.
 			isCompact = next;
 			root.classList.toggle('is-scrolled', next);
 
-			// Temporarily add is-animating so overflow:hidden clips during
-			// the height transition, then remove it so dropdowns can overflow.
-			if (window.innerWidth >= 1024 && headerEl) {
-				headerEl.classList.add('is-animating');
-				setTimeout(() => headerEl.classList.remove('is-animating'), TRANSITION_MS);
-			}
+			// Force the browser to lay out the new state synchronously.
+			void document.body.offsetHeight;
+
+			const lastItem = navItems.map((el) => el.getBoundingClientRect());
+			const lastHeader = headerEl?.getBoundingClientRect();
+
+			// Account for the header container shift.
+			const headerDx = firstHeader && lastHeader ? firstHeader.left - lastHeader.left : 0;
+			const headerDy = firstHeader && lastHeader ? firstHeader.top - lastHeader.top : 0;
+
+			// Invert + Play, with a stagger so items move sequentially.
+			navItems.forEach((el, i) => {
+				const dx = firstItem[i].left - lastItem[i].left - headerDx;
+				const dy = firstItem[i].top - lastItem[i].top - headerDy;
+				if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+
+				// Order the stagger so item closest to the destination
+				// moves first when expanding/collapsing.
+				const delay = next ? i * 60 : (navItems.length - 1 - i) * 60;
+
+				el.style.transition = 'none';
+				el.style.transform = `translate(${dx}px, ${dy}px)`;
+				// Force reflow so the inverse transform is committed.
+				void el.offsetHeight;
+				el.style.transition = `transform 450ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`;
+				el.style.transform = '';
+
+				// Scrub leftover inline styles after transition settles.
+				const cleanup = () => {
+					el.style.transition = '';
+					el.style.transform = '';
+					el.removeEventListener('transitionend', cleanup);
+				};
+				el.addEventListener('transitionend', cleanup);
+			});
+
+			// Re-enable dropdown overflow after animation finishes
+			setTimeout(() => {
+				if (headerEl) headerEl.classList.add('dropdowns-enabled');
+			}, TRANSITION_MS);
 		};
 
 		const updateScroll = () => setCompact(window.scrollY > 8);
 		updateScroll();
+		// Enable dropdowns on initial load (no animation needed)
+		if (headerEl) headerEl.classList.add('dropdowns-enabled');
+
 		window.addEventListener('scroll', updateScroll, { passive: true });
 		window.addEventListener('resize', updateScroll, { passive: true });
 
@@ -368,18 +464,14 @@ const isHomePage = currentPath === '/';
 			openCategoryId = id;
 			const trigger = catEl.querySelector('[data-category-trigger]');
 			const dropdown = catEl.querySelector('[data-dropdown]');
-			const icon = catEl.querySelector('[data-category-icon]');
 			if (trigger) trigger.setAttribute('aria-expanded', 'true');
-			if (icon) icon.classList.add('rotate-180');
 			if (dropdown) dropdown.dataset.open = '';
 		};
 
 		const _closeDropdown = (catEl) => {
 			const trigger = catEl.querySelector('[data-category-trigger]');
 			const dropdown = catEl.querySelector('[data-dropdown]');
-			const icon = catEl.querySelector('[data-category-icon]');
 			if (trigger) trigger.setAttribute('aria-expanded', 'false');
-			if (icon) icon.classList.remove('rotate-180');
 			if (dropdown) delete dropdown.dataset.open;
 		};
 
@@ -449,38 +541,39 @@ const isHomePage = currentPath === '/';
 		});
 
 		// ── Mobile nav ────────────────────────────────────────────────────────
-		const panel = document.querySelector('[data-nav-panel]');
 		const toggle = document.querySelector('[data-nav-toggle]');
 		const navIcon = document.querySelector('[data-nav-icon]');
 		const navLabel = document.querySelector('[data-nav-label]');
 
+		const collapseAllMobile = () => {
+			document.querySelectorAll('[data-mobile-category]').forEach((catEl) => {
+				const p = catEl.querySelector('[data-mobile-panel]');
+				const t = catEl.querySelector('[data-mobile-trigger]');
+				const ic = catEl.querySelector('[data-mobile-icon]');
+				if (p) p.style.maxHeight = '0';
+				if (t) t.setAttribute('aria-expanded', 'false');
+				if (ic) ic.classList.remove('rotate-180');
+			});
+		};
+
 		if (toggle && panel) {
 			const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
-
 			const setOpen = (open) => {
 				toggle.setAttribute('aria-expanded', String(open));
 				panel.dataset.state = open ? 'open' : 'closed';
 				if (navIcon) navIcon.classList.toggle('rotate-180', open);
 				if (navLabel) navLabel.textContent = open ? 'Close' : 'Menu';
-				// Collapse all accordion sections when menu closes
 				if (!open) collapseAllMobile();
 			};
-
 			toggle.addEventListener('click', () => setOpen(!isOpen()));
-
-			// Close menu when a nav link is tapped
 			panel.querySelectorAll('[data-nav-link]').forEach((a) => {
 				a.addEventListener('click', () => setOpen(false));
 			});
-
-			// Close on click outside
 			document.addEventListener('click', (e) => {
 				if (!isOpen()) return;
 				if (panel.contains(e.target) || toggle.contains(e.target)) return;
 				setOpen(false);
 			});
-
-			// Close on Escape
 			document.addEventListener('keydown', (e) => {
 				if (e.key === 'Escape' && isOpen()) {
 					setOpen(false);
@@ -490,47 +583,29 @@ const isHomePage = currentPath === '/';
 		}
 
 		// ── Mobile accordion ─────────────────────────────────────────────────
-		const getMobileCategories = () =>
-			Array.from(document.querySelectorAll('[data-mobile-category]'));
-
-		const collapseAllMobile = () => {
-			getMobileCategories().forEach((catEl) => {
-				const mPanel = catEl.querySelector('[data-mobile-panel]');
-				const mTrigger = catEl.querySelector('[data-mobile-trigger]');
-				const mIcon = catEl.querySelector('[data-mobile-icon]');
-				if (mPanel) mPanel.style.maxHeight = '0';
-				if (mTrigger) mTrigger.setAttribute('aria-expanded', 'false');
-				if (mIcon) mIcon.classList.remove('rotate-180');
-			});
-		};
-
-		getMobileCategories().forEach((catEl) => {
+		document.querySelectorAll('[data-mobile-category]').forEach((catEl) => {
 			const mTrigger = catEl.querySelector('[data-mobile-trigger]');
 			const mPanel = catEl.querySelector('[data-mobile-panel]');
 			const mIcon = catEl.querySelector('[data-mobile-icon]');
-
 			if (!mTrigger || !mPanel) return;
 
 			mTrigger.addEventListener('click', () => {
 				const isExpanded = mTrigger.getAttribute('aria-expanded') === 'true';
-
 				if (isExpanded) {
-					// Collapse this section
 					mPanel.style.maxHeight = '0';
 					mTrigger.setAttribute('aria-expanded', 'false');
 					if (mIcon) mIcon.classList.remove('rotate-180');
 				} else {
-					// Collapse siblings, expand this one
-					getMobileCategories().forEach((sibling) => {
-						if (sibling === catEl) return;
-						const sibPanel = sibling.querySelector('[data-mobile-panel]');
-						const sibTrigger = sibling.querySelector('[data-mobile-trigger]');
-						const sibIcon = sibling.querySelector('[data-mobile-icon]');
-						if (sibPanel) sibPanel.style.maxHeight = '0';
-						if (sibTrigger) sibTrigger.setAttribute('aria-expanded', 'false');
-						if (sibIcon) sibIcon.classList.remove('rotate-180');
+					// Collapse siblings
+					document.querySelectorAll('[data-mobile-category]').forEach((sib) => {
+						if (sib === catEl) return;
+						const sp = sib.querySelector('[data-mobile-panel]');
+						const st = sib.querySelector('[data-mobile-trigger]');
+						const si = sib.querySelector('[data-mobile-icon]');
+						if (sp) sp.style.maxHeight = '0';
+						if (st) st.setAttribute('aria-expanded', 'false');
+						if (si) si.classList.remove('rotate-180');
 					});
-
 					mPanel.style.maxHeight = mPanel.scrollHeight + 'px';
 					mTrigger.setAttribute('aria-expanded', 'true');
 					if (mIcon) mIcon.classList.add('rotate-180');

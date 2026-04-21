@@ -22,15 +22,11 @@ import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 			</div>
 		</div>
 
-		<!-- Zone A — top content row.
-		     4-column grid on lg+ aligned to the page-wide 25/50/75% divider
-		     lines. Col 1 (emblem + mission) spans cols 1-2, the address/
-		     get-in-touch stack sits in col 3, and MENU sits in col 4. On < lg
-		     everything stacks vertically in a single column. -->
-		<div class="relative z-10 grid grid-cols-1 gap-12 lg:grid-cols-4 lg:gap-0">
+		<!-- Zone A — 4-column grid aligned to 25/50/75% dividers -->
+		<div class="relative z-10 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
 
-			<!-- Col 1-2: TRINITY logotype + italic mission paragraph -->
-			<div class="flex flex-col gap-8 lg:col-span-2 lg:pr-8">
+			<!-- Column at 0%: Mission -->
+			<div class="flex flex-col gap-8 lg:pr-8">
 				<a href="/" aria-label="Trinity Classical Academy" class="self-start">
 					<Image
 						src={emblemCream}
@@ -39,20 +35,19 @@ import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 					/>
 				</a>
 
-				<!-- Mission paragraph: only the school name is italic -->
-				<p class="max-w-[560px] font-display text-[28px] leading-[0.95] text-white sm:text-[40px]">
+				<p class="font-display text-[22px] leading-[0.95] text-white sm:text-[28px]">
 					<em class="italic">Trinity Classical Academy</em> partners with
 					families in the joyful discipleship of students through rigorous,
 					Christ-centered classical education.
 				</p>
 			</div>
 
-			<!-- Col 3: OUR SCHOOL + ABOUT + ADMISSIONS stacked. -->
+			<!-- Column at 25%: OUR SCHOOL + ABOUT -->
 			<div class="flex flex-col gap-10 lg:px-8">
 				<!-- OUR SCHOOL -->
 				<div class="flex flex-col gap-4">
 					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						OUR SCHOOL
+						Our School
 					</h2>
 					<address class="font-mono text-sm not-italic leading-snug text-white">
 						7160 Cahaba Valley Rd.<br />
@@ -72,7 +67,7 @@ import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 				<!-- ABOUT -->
 				<div class="flex flex-col gap-4">
 					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						ABOUT
+						About
 					</h2>
 					<nav aria-label="About">
 						<ul class="flex flex-col gap-2">
@@ -94,11 +89,14 @@ import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 						</ul>
 					</nav>
 				</div>
+			</div>
 
+			<!-- Column 2: ADMISSIONS + FAMILIES -->
+			<div class="flex flex-col gap-10 lg:px-8">
 				<!-- ADMISSIONS -->
 				<div class="flex flex-col gap-4">
 					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						ADMISSIONS
+						Admissions
 					</h2>
 					<nav aria-label="Admissions">
 						<ul class="flex flex-col gap-2">
@@ -120,49 +118,11 @@ import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 						</ul>
 					</nav>
 				</div>
-			</div>
-
-			<!-- Col 4: GET IN TOUCH + FAMILIES + GET INVOLVED stacked. -->
-			<div class="flex flex-col gap-10 lg:px-8">
-				<!-- GET IN TOUCH -->
-				<div class="flex flex-col gap-4">
-					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						GET IN TOUCH
-					</h2>
-					<ul class="flex flex-col gap-2">
-						<li>
-							<a
-								href="mailto:info@trinityclassical.academy"
-								class="font-sans text-sm text-white transition hover:opacity-70"
-							>
-								Email
-							</a>
-						</li>
-						<li>
-							<a
-								href="/contact"
-								class="font-sans text-sm text-white transition hover:opacity-70"
-							>
-								Contact Us
-							</a>
-						</li>
-						<li>
-							<a
-								href="https://www.facebook.com/profile.php?id=61582574271980"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="font-sans text-sm text-white transition hover:opacity-70"
-							>
-								Follow Us
-							</a>
-						</li>
-					</ul>
-				</div>
 
 				<!-- FAMILIES -->
 				<div class="flex flex-col gap-4">
 					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						FAMILIES
+						Families
 					</h2>
 					<nav aria-label="Families">
 						<ul class="flex flex-col gap-2">
@@ -199,11 +159,49 @@ import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 						</ul>
 					</nav>
 				</div>
+			</div>
+
+			<!-- Column 3: GET IN TOUCH + GET INVOLVED -->
+			<div class="flex flex-col gap-10 lg:px-8">
+				<!-- GET IN TOUCH -->
+				<div class="flex flex-col gap-4">
+					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
+						Get in Touch
+					</h2>
+					<ul class="flex flex-col gap-2">
+						<li>
+							<a
+								href="mailto:info@trinityclassical.academy"
+								class="font-sans text-sm text-white transition hover:opacity-70"
+							>
+								Email
+							</a>
+						</li>
+						<li>
+							<a
+								href="/contact"
+								class="font-sans text-sm text-white transition hover:opacity-70"
+							>
+								Contact Us
+							</a>
+						</li>
+						<li>
+							<a
+								href="https://www.facebook.com/profile.php?id=61582574271980"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="font-sans text-sm text-white transition hover:opacity-70"
+							>
+								Follow Us
+							</a>
+						</li>
+					</ul>
+				</div>
 
 				<!-- GET INVOLVED -->
 				<div class="flex flex-col gap-4">
 					<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold">
-						GET INVOLVED
+						Get Involved
 					</h2>
 					<nav aria-label="Get involved">
 						<ul class="flex flex-col gap-2">
@@ -220,11 +218,6 @@ import { GIVE_URL, CLASSREACH_URL, INTERVIEW_URL } from '../lib/links';
 							<li>
 								<a href="/careers" class="font-sans text-sm text-white transition hover:opacity-70">
 									Careers
-								</a>
-							</li>
-							<li>
-								<a href="/contact" class="font-sans text-sm text-white transition hover:opacity-70">
-									Contact
 								</a>
 							</li>
 						</ul>

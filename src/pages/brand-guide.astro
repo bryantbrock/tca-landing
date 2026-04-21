@@ -1,0 +1,239 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Brand Guide — Trinity Classical Academy';
+const description = 'Internal brand reference.';
+
+const colorGroups = [
+	{
+		heading: 'Surfaces — Dark',
+		tokens: [
+			{ name: 'racing', hex: '#002A1A', usage: 'Deepest anchor — footer, mobile nav overlay', onDark: true },
+			{ name: 'racing-mid', hex: '#003622', usage: 'Standard dark bg — hero, dark bands, quote bars', onDark: true },
+			{ name: 'forest', hex: '#276D33', usage: 'Primary brand green — CTA sections, nav active', onDark: true },
+		],
+	},
+	{
+		heading: 'Accent',
+		tokens: [
+			{ name: 'gold', hex: '#DEA06D', usage: 'Primary accent — labels on dark, rules, CTA fills', onDark: false },
+			{ name: 'gold-hover', hex: '#E8B483', usage: 'Interactive state for gold elements', onDark: false },
+		],
+	},
+	{
+		heading: 'Surfaces — Light',
+		tokens: [
+			{ name: 'cream', hex: '#F0E9D0', usage: 'Warm secondary surface — cards, alternating sections', onDark: false },
+			{ name: 'white', hex: '#FAFAF7', usage: 'Primary page background', onDark: false },
+		],
+	},
+	{
+		heading: 'Text',
+		tokens: [
+			{ name: 'ink', hex: '#1A1A18', usage: 'Body text on light backgrounds', onDark: true },
+			{ name: 'ink-soft', hex: '#5B5B5B', usage: 'Secondary body text', onDark: true },
+			{ name: 'ink-mute', hex: '#878888', usage: 'Muted captions', onDark: true },
+		],
+	},
+	{
+		heading: 'Lines',
+		tokens: [
+			{ name: 'rule', hex: '#BDC1CB', usage: 'Dividers and hairline borders', onDark: false },
+		],
+	},
+];
+---
+
+<Layout {title} {description} noindex>
+	<Header />
+
+	<main class="mx-auto w-full max-w-canvas px-6 pb-32 pt-40 sm:px-10 sm:pt-48 lg:px-12 lg:pt-56">
+		<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">
+			Internal reference
+		</p>
+		<h1 class="mt-8 font-display italic leading-[0.95] tracking-tight text-ink" style="font-size: clamp(72px, 14vw, 200px);">
+			Brand guide.
+		</h1>
+		<p class="mt-10 max-w-[560px] font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft">
+			Color tokens, typography, and core UI elements. This page is not linked from the site navigation and is excluded from search engines.
+		</p>
+
+		<!-- Colors -->
+		<section class="mt-32">
+			<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">Colors</h2>
+			<div class="mt-8 space-y-14">
+				{colorGroups.map((group) => (
+					<div>
+						<h3 class="font-display text-3xl italic text-ink">{group.heading}</h3>
+						<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+							{group.tokens.map((token) => (
+								<div class="overflow-hidden rounded-card border border-rule/60">
+									<div
+										class="flex h-40 items-end p-4"
+										style={`background-color: ${token.hex};`}
+									>
+										<span
+											class={`font-mono text-[11px] uppercase tracking-eyebrow ${token.onDark ? 'text-white' : 'text-ink'}`}
+										>
+											{token.name}
+										</span>
+									</div>
+									<div class="bg-white p-4">
+										<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink">{token.hex}</p>
+										<p class="mt-2 text-sm text-ink-soft">{token.usage}</p>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- Typography -->
+		<section class="mt-32">
+			<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">Typography</h2>
+
+			<div class="mt-10 space-y-16">
+				<div>
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Display — Martina Plantijn Light Italic</p>
+					<p class="mt-4 font-display italic text-ink" style="font-size: clamp(72px, 14vw, 200px); line-height: 0.95; letter-spacing: -0.02em;">
+						Gradatim ferociter.
+					</p>
+				</div>
+
+				<div>
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Section — Martina Plantijn</p>
+					<p class="mt-4 font-display text-ink" style="font-size: clamp(48px, 8vw, 80px); line-height: 1.05; letter-spacing: -0.01em;">
+						Rigorous, Christ-centered
+					</p>
+				</div>
+
+				<div>
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Wordmark — Martina Plantijn</p>
+					<p class="mt-4 font-display text-ink" style="font-size: clamp(60px, 22vw, 340px); line-height: 0.85; letter-spacing: -0.03em;">
+						TRINITY
+					</p>
+				</div>
+
+				<div>
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Body — Geist Sans</p>
+					<div class="mt-4 space-y-3 text-ink">
+						<p class="text-[18px] font-semibold leading-[1.2] tracking-[-0.01em]">
+							Lead / semibold 18 — Partners with families in the joyful discipleship of students.
+						</p>
+						<p class="text-base leading-relaxed">
+							Regular 16 — Standard body copy. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
+						</p>
+						<p class="text-sm text-ink-soft">
+							Small 14 / ink-soft — Secondary copy and supporting details.
+						</p>
+					</div>
+				</div>
+
+				<div>
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Eyebrow / Label — IBM Plex Mono</p>
+					<p class="mt-4 font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">
+						Eyebrow · tracking 0.12em
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Components -->
+		<section class="mt-32">
+			<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">Components</h2>
+
+			<div class="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-2">
+				<!-- Buttons on light -->
+				<div class="rounded-card border border-rule/60 bg-white p-8">
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Buttons — light bg</p>
+					<div class="mt-6 flex flex-wrap items-center gap-4">
+						<a href="#" class="rounded-pill bg-forest px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-white transition hover:opacity-90">
+							Primary
+						</a>
+						<a href="#" class="rounded-pill bg-gold px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover">
+							Accent
+						</a>
+						<a href="#" class="font-mono text-xs font-medium uppercase tracking-eyebrow text-ink-soft transition hover:text-forest">
+							Tertiary link →
+						</a>
+					</div>
+				</div>
+
+				<!-- Buttons on dark -->
+				<div class="rounded-card bg-racing-mid p-8">
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-gold">Buttons — dark bg</p>
+					<div class="mt-6 flex flex-wrap items-center gap-4">
+						<a href="#" class="rounded-pill bg-gold px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover">
+							Primary
+						</a>
+						<a href="#" class="rounded-pill border border-white/30 px-8 py-3.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-white transition hover:bg-white/10">
+							Secondary
+						</a>
+						<a href="#" class="font-mono text-xs font-medium uppercase tracking-eyebrow text-gold transition hover:opacity-80">
+							Tertiary link →
+						</a>
+					</div>
+				</div>
+
+				<!-- Rule on dark -->
+				<div class="rounded-card bg-racing p-8">
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-gold">Rules — on dark</p>
+					<div class="mt-6 space-y-4">
+						<div class="h-px w-full bg-gold"></div>
+						<div class="h-px w-full bg-white/20"></div>
+					</div>
+				</div>
+
+				<!-- Rule on light -->
+				<div class="rounded-card border border-rule/60 bg-white p-8">
+					<p class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Rules — on light</p>
+					<div class="mt-6 space-y-4">
+						<div class="h-px w-full bg-rule"></div>
+						<div class="h-px w-full bg-ink/10"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Tokens -->
+		<section class="mt-32 rounded-card border border-rule/60 bg-cream p-10">
+			<h2 class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">Design tokens</h2>
+			<dl class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				<div>
+					<dt class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Radius — pill</dt>
+					<dd class="mt-2 font-mono text-sm text-ink">8px</dd>
+				</div>
+				<div>
+					<dt class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Radius — card</dt>
+					<dd class="mt-2 font-mono text-sm text-ink">8px</dd>
+				</div>
+				<div>
+					<dt class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Max width — canvas</dt>
+					<dd class="mt-2 font-mono text-sm text-ink">1440px</dd>
+				</div>
+				<div>
+					<dt class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Letter-spacing — eyebrow</dt>
+					<dd class="mt-2 font-mono text-sm text-ink">0.12em</dd>
+				</div>
+				<div>
+					<dt class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Font — sans</dt>
+					<dd class="mt-2 font-mono text-sm text-ink">Geist Sans</dd>
+				</div>
+				<div>
+					<dt class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Font — display</dt>
+					<dd class="mt-2 font-mono text-sm text-ink">Martina Plantijn</dd>
+				</div>
+				<div>
+					<dt class="font-mono text-[11px] uppercase tracking-eyebrow text-ink-mute">Font — mono</dt>
+					<dd class="mt-2 font-mono text-sm text-ink">IBM Plex Mono</dd>
+				</div>
+			</dl>
+		</section>
+	</main>
+
+	<Footer />
+</Layout>

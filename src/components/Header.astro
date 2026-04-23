@@ -9,8 +9,8 @@ const navCategories = [
 		label: 'About',
 		id: 'about',
 		items: [
-			{ label: 'Our Vision',   href: '/our-vision' },
-			{ label: 'How It Works', href: '/how-it-works' },
+			{ label: 'Our Vision',   href: '/#our-vision' },
+			{ label: 'How It Works', href: '/#how-it-works' },
 			{ label: 'People',       href: '/people' },
 		],
 	},
@@ -53,14 +53,13 @@ const isHomePage = currentPath === '/';
 
 <header
 	class="site-header sticky top-0 z-40 bg-transparent transition-[background-color,backdrop-filter] duration-200 ease-out"
-	data-home={isHomePage ? 'true' : undefined}
 >
 	<div class="site-header-inner mx-auto flex w-full max-w-canvas items-center justify-between px-6 pb-7 pt-7 sm:px-10 sm:pb-8 sm:pt-8 lg:items-start lg:px-12 lg:pb-9 lg:pt-9">
 	<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
 		<a
 			href="/"
 			aria-label="Trinity Classical Academy"
-			class="font-sans text-[13px] font-medium uppercase tracking-eyebrow text-ink sm:text-[14px]"
+			class="font-sans text-[12px] font-medium uppercase tracking-eyebrow text-ink sm:text-[13px]"
 		>
 			Trinity Classical Academy
 		</a>
@@ -129,7 +128,7 @@ const isHomePage = currentPath === '/';
 							aria-expanded="false"
 							aria-controls={`dropdown-${cat.id}`}
 							aria-haspopup="true"
-							class="font-sans text-base leading-none text-ink transition hover:text-forest"
+							class="font-sans text-[15px] leading-none text-ink transition hover:text-forest"
 							data-category-trigger
 						>
 							{cat.label}

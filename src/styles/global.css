@@ -21,8 +21,15 @@
    (192px <-> 60px) doesn't fight with the browser's automatic scroll
    adjustment. Without this, the compact-on-scroll FLIP transition
    oscillates near the scroll threshold because each height change
-   causes the browser to shift scrollY to keep anchored content stable. */
+   causes the browser to shift scrollY to keep anchored content stable.
+
+   `scroll-behavior: smooth` animates in-page anchor jumps (e.g. clicking
+   "Our Vision" from the nav scrolls smoothly to #our-vision). Cross-page
+   navigation (arriving at /#our-vision from another page) still jumps
+   instantly — the browser resolves the fragment before smooth-scroll
+   applies. */
 html {
 	overflow-anchor: none;
+	scroll-behavior: smooth;
 }
 

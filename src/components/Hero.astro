@@ -1,98 +1,57 @@
 ---
-import { Image } from 'astro:assets';
-import emblemInk from '../assets/images/emblem-ink.svg';
 import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 ---
 
-<!-- Full-bleed video hero. Negative top margin equal to the sticky header's
-     initial height pulls the section up so the video fills the viewport
-     from the very top; the transparent header sits over the video at load
-     and transitions to a frosted white bar on scroll (see Header.astro). -->
-<section class="relative -mt-[120px] w-full overflow-hidden sm:-mt-[140px] lg:-mt-[192px]">
-	<video
-		id="hero-video"
-		autoplay
-		muted
-		loop
-		playsinline
-		preload="auto"
-		poster="/videos/header-poster.jpg"
-		aria-hidden="true"
-		class="absolute inset-0 h-full w-full object-cover"
+<!-- Hero content.
+     Headline uses clamp(45px, 10vw, 150px) so type growth tracks the
+     viewport up to ~1500px and then locks at 150px — just past the
+     1440px canvas max. Beyond that, the canvas is centered and the
+     headline stays proportional instead of ballooning on ultrawide
+     monitors.
+
+     Hero parent height uses 28.5vw (≈ 2.85× the 10vw font-size) with a
+     330px floor and a cap of 428px (2.85 × 150) so height locks in
+     lockstep with the headline when the viewport exceeds ~1500px. -->
+<div class="relative mt-12 sm:mt-16 lg:mt-20 lg:h-[clamp(330px,28.5vw,428px)]">
+	<h1
+		class="px-6 font-display uppercase leading-[0.95] tracking-tight text-ink sm:px-10 lg:px-12"
 	>
-		<source src="/videos/header.webm" type="video/webm" />
-		<source src="/videos/header.mp4" type="video/mp4" />
-	</video>
+		<span class="block text-[clamp(45px,10vw,150px)]">Truth.</span>
+		<span class="block text-[clamp(45px,10vw,150px)]">Goodness.</span>
+		<span class="block text-[clamp(45px,10vw,150px)]">Beauty.</span>
+	</h1>
 
-	<!-- Dark overlay for legibility -->
-	<div class="pointer-events-none absolute inset-0 bg-ink/55"></div>
-
-	<div class="relative mx-auto flex min-h-[100vh] w-full max-w-canvas flex-col justify-end px-6 pb-20 pt-[160px] sm:px-10 sm:pt-[180px] lg:px-12 lg:pb-28 lg:pt-[240px]">
-		<div class="max-w-[980px]">
-			<Image
-				src={emblemInk}
-				alt=""
-				class="hero-emblem mb-6 h-14 w-auto sm:h-16 lg:mb-8 lg:h-20"
-			/>
-			<h1
-				class="font-display italic leading-[1.05] tracking-tight text-white"
-				style="font-size: clamp(36px, 5.5vw, 80px);"
+	<!-- Right column: anchored to the 75% vertical divider at all lg+
+	     widths. Uses left + right positioning so the column width scales
+	     automatically (~216px at 1024 → ~320px at 1440). Text steps
+	     down to 16px at lg to fit the narrower column, then back to 18px
+	     at xl where there's more room. -->
+	<div
+		class="mt-10 px-6 sm:px-10 lg:absolute lg:left-[calc(75%-8px)] lg:right-12 lg:top-[clamp(60px,9vw,135px)] lg:mt-0 lg:px-0"
+	>
+		<p
+			class="font-sans text-[18px] font-semibold leading-[1.2] tracking-[-0.01em] text-ink-soft lg:text-base xl:text-[18px]"
+		>
+			<strong class="font-semibold text-ink">Trinity Classical Academy</strong>
+			is an ACCS-mentored classical Christian school in Birmingham, Alabama, under the care of Trinity Presbyterian Church (CREC). Opening Fall 2026 for grades K–8.
+		</p>
+		<div class="mt-6 flex flex-col items-start gap-3 lg:mt-4 xl:mt-6">
+			<a
+				href={INTERVIEW_URL}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="whitespace-nowrap rounded-pill bg-gold px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover"
 			>
-				We believe Christ is Lord over every square inch — including the classroom.
-			</h1>
-			<p class="mt-8 max-w-[640px] font-sans text-[18px] leading-[1.45] text-white/85 sm:text-[20px]">
-				Trinity Classical Academy is a ministry of Trinity Presbyterian Church, forming covenant children to engage culture with wisdom, virtue, and conviction.
-			</p>
-			<div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-				<a
-					href={INTERVIEW_URL}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="whitespace-nowrap rounded-pill bg-gold px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover"
-				>
-					Request an Interview
-				</a>
-				<a
-					href={TEACHER_APP_URL}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="whitespace-nowrap font-mono text-xs font-medium uppercase tracking-eyebrow text-white/80 transition hover:text-white"
-				>
-					Apply to Teach →
-				</a>
-			</div>
+				Request an Interview
+			</a>
+			<a
+				href={TEACHER_APP_URL}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="whitespace-nowrap font-mono text-xs font-medium uppercase tracking-eyebrow text-ink-mute transition hover:text-forest"
+			>
+				Apply to Teach →
+			</a>
 		</div>
 	</div>
-
-	<style>
-		/* Invert the ink emblem to white so it reads on the dark video overlay. */
-		.hero-emblem {
-			filter: brightness(0) invert(1);
-		}
-	</style>
-
-	<script>
-		const video = document.getElementById('hero-video') as HTMLVideoElement | null;
-		if (video) {
-			const tryPlay = () => {
-				video.play().catch(() => {
-					// Autoplay blocked — poster image will show instead.
-				});
-			};
-			if ('IntersectionObserver' in window) {
-				const obs = new IntersectionObserver(
-					(entries) => {
-						if (entries[0].isIntersecting) {
-							tryPlay();
-							obs.disconnect();
-						}
-					},
-					{ threshold: 0.1 },
-				);
-				obs.observe(video);
-			} else {
-				document.addEventListener('DOMContentLoaded', tryPlay, { once: true });
-			}
-		}
-	</script>
-</section>
+</div>

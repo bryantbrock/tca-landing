@@ -259,16 +259,21 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 		form?.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			setError('');
+
+			// Capture payload from the fully-enabled form before disabling anything,
+			// otherwise disabled inputs (including the bot-field honeypot) get
+			// excluded from FormData per the HTML spec.
+			const formData = new FormData(form);
+			const payload = {};
+			for (const [k, v] of formData.entries()) payload[k] = v.toString();
+
+			// Now lock the UI for the duration of the request.
 			const inputs = form.querySelectorAll('input:not([type="hidden"])');
 			if (submitBtn) {
 				submitBtn.disabled = true;
 				submitBtn.textContent = 'Subscribing…';
 			}
 			inputs.forEach((el) => { el.disabled = true; });
-
-			const formData = new FormData(form);
-			const payload = {};
-			for (const [k, v] of formData.entries()) payload[k] = v.toString();
 
 			try {
 				const response = await fetch('/', {

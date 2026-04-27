@@ -1,0 +1,280 @@
+---
+import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
+---
+
+<!--
+	Newsletter signup modal.
+
+	Triggered by:
+	  1. Any element with `data-newsletter-trigger` (Hero CTA, Footer button)
+	  2. Auto-open on the homepage when scroll depth crosses 40% (once per visitor;
+	     remembered in localStorage as 'tca_newsletter_state')
+
+	Submissions go to Netlify Forms (form name: "newsletter"). Mirrors the
+	progressive-enhancement pattern from src/pages/contact.astro.
+
+	Visual styling is intentional placeholder — final treatment lands in a
+	follow-up /ui session.
+-->
+
+<!-- Hidden form duplicate so Netlify's static-build form detection picks it up.
+     The visible form below has the same name + fields; both POST to "/" and
+     Netlify dedupes on form-name. -->
+<form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
+	<input type="text" name="name" />
+	<input type="email" name="email" />
+	<input type="text" name="bot-field" />
+</form>
+
+<div
+	data-newsletter-modal
+	class="fixed inset-0 z-50 hidden items-center justify-center bg-ink/60 px-4"
+	role="dialog"
+	aria-modal="true"
+	aria-labelledby="newsletter-heading"
+	aria-hidden="true"
+>
+	<div
+		data-newsletter-card
+		class="relative w-full max-w-md rounded-card bg-cream p-8 shadow-2xl sm:p-10"
+	>
+		<button
+			type="button"
+			data-newsletter-close
+			aria-label="Close newsletter signup"
+			class="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-ink-mute transition hover:bg-ink/5 hover:text-ink"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+				<line x1="3" y1="3" x2="13" y2="13" />
+				<line x1="13" y1="3" x2="3" y2="13" />
+			</svg>
+		</button>
+
+		<!-- State: form (default) -->
+		<div data-newsletter-state="form">
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">
+				Stay connected
+			</p>
+			<h2 id="newsletter-heading" class="mt-3 font-display text-3xl leading-[1.05] text-ink sm:text-4xl">
+				Join the newsletter
+			</h2>
+			<p class="mt-3 font-sans text-sm text-ink-soft">
+				Updates from Trinity Classical Academy — curriculum, school news, and the rhythms of the academic year. Sent thoughtfully, never spammed.
+			</p>
+
+			<form
+				method="POST"
+				data-netlify="true"
+				netlify-honeypot="bot-field"
+				data-newsletter-form
+				class="mt-6 flex flex-col gap-4"
+			>
+				<input type="hidden" name="form-name" value="newsletter" />
+				<p class="hidden">
+					<label>
+						Don't fill this out if you're human: <input name="bot-field" />
+					</label>
+				</p>
+
+				<label class="flex flex-col gap-1.5">
+					<span class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-mute">First name</span>
+					<input
+						type="text"
+						name="name"
+						required
+						autocomplete="given-name"
+						class="rounded-md border border-ink/15 bg-white px-3 py-2 font-sans text-sm text-ink outline-none transition focus:border-forest focus:ring-2 focus:ring-forest/20"
+					/>
+				</label>
+
+				<label class="flex flex-col gap-1.5">
+					<span class="font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink-mute">Email</span>
+					<input
+						type="email"
+						name="email"
+						required
+						autocomplete="email"
+						class="rounded-md border border-ink/15 bg-white px-3 py-2 font-sans text-sm text-ink outline-none transition focus:border-forest focus:ring-2 focus:ring-forest/20"
+					/>
+				</label>
+
+				<button
+					type="submit"
+					data-newsletter-submit
+					class="mt-2 rounded-pill bg-gold px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover disabled:cursor-not-allowed disabled:opacity-60"
+				>
+					Subscribe
+				</button>
+
+				<p data-newsletter-error class="hidden font-mono text-xs text-[#b91c1c]"></p>
+
+				<p class="font-mono text-[10px] text-ink-mute">
+					Unsubscribe anytime. We never share your email.
+				</p>
+			</form>
+		</div>
+
+		<!-- State: success -->
+		<div data-newsletter-state="success" hidden>
+			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">
+				Thank you
+			</p>
+			<h2 class="mt-3 font-display text-3xl leading-[1.05] text-ink sm:text-4xl">
+				You're on the list.
+			</h2>
+			<p class="mt-3 font-sans text-sm text-ink-soft">
+				While you're here — would you like to take a next step?
+			</p>
+			<div class="mt-6 flex flex-col gap-3">
+				<a
+					href={INTERVIEW_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="rounded-pill bg-gold px-6 py-2.5 text-center font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover"
+				>
+					Request an Interview
+				</a>
+				<a
+					href={TEACHER_APP_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-center font-mono text-xs font-medium uppercase tracking-eyebrow text-ink-mute transition hover:text-forest"
+				>
+					Apply to Teach →
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script is:inline>
+	(() => {
+		const STATE_KEY = 'tca_newsletter_state'; // null | 'dismissed' | 'subscribed'
+		const SCROLL_THRESHOLD = 0.4;
+
+		const modal = document.querySelector('[data-newsletter-modal]');
+		if (!modal) return;
+		const form = modal.querySelector('[data-newsletter-form]');
+		const submitBtn = modal.querySelector('[data-newsletter-submit]');
+		const errorEl = modal.querySelector('[data-newsletter-error]');
+		const formState = modal.querySelector('[data-newsletter-state="form"]');
+		const successState = modal.querySelector('[data-newsletter-state="success"]');
+		const closeBtn = modal.querySelector('[data-newsletter-close]');
+
+		const isSubscribed = () => localStorage.getItem(STATE_KEY) === 'subscribed';
+
+		const showState = (which) => {
+			if (which === 'success') {
+				formState.setAttribute('hidden', '');
+				successState.removeAttribute('hidden');
+			} else {
+				successState.setAttribute('hidden', '');
+				formState.removeAttribute('hidden');
+			}
+		};
+
+		const open = () => {
+			showState(isSubscribed() ? 'success' : 'form');
+			modal.classList.remove('hidden');
+			modal.classList.add('flex');
+			modal.setAttribute('aria-hidden', 'false');
+			document.body.style.overflow = 'hidden';
+			// focus first input or close button
+			const focusTarget = isSubscribed()
+				? closeBtn
+				: modal.querySelector('input[name="name"]');
+			focusTarget?.focus();
+		};
+
+		const close = () => {
+			modal.classList.add('hidden');
+			modal.classList.remove('flex');
+			modal.setAttribute('aria-hidden', 'true');
+			document.body.style.overflow = '';
+			if (localStorage.getItem(STATE_KEY) === null) {
+				localStorage.setItem(STATE_KEY, 'dismissed');
+			}
+		};
+
+		// Manual triggers — event delegation on document
+		document.addEventListener('click', (e) => {
+			const trigger = e.target.closest?.('[data-newsletter-trigger]');
+			if (trigger) {
+				e.preventDefault();
+				open();
+			}
+		});
+
+		// Close interactions
+		closeBtn?.addEventListener('click', close);
+		modal.addEventListener('click', (e) => {
+			if (e.target === modal) close();
+		});
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+		});
+
+		// Auto-trigger: homepage only, only if state is null
+		if (location.pathname === '/' && localStorage.getItem(STATE_KEY) === null) {
+			const onScroll = () => {
+				const docH = document.documentElement.scrollHeight - window.innerHeight;
+				if (docH <= 0) return;
+				const ratio = window.scrollY / docH;
+				if (ratio >= SCROLL_THRESHOLD) {
+					open();
+					window.removeEventListener('scroll', onScroll);
+				}
+			};
+			window.addEventListener('scroll', onScroll, { passive: true });
+		}
+
+		// Form submission — mirrors src/pages/contact.astro pattern
+		const encode = (data) =>
+			Object.keys(data)
+				.map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+				.join('&');
+
+		const setError = (msg) => {
+			if (!errorEl) return;
+			if (!msg) {
+				errorEl.classList.add('hidden');
+				errorEl.textContent = '';
+			} else {
+				errorEl.classList.remove('hidden');
+				errorEl.textContent = msg;
+			}
+		};
+
+		form?.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			setError('');
+			if (submitBtn) {
+				submitBtn.disabled = true;
+				submitBtn.textContent = 'Subscribing…';
+			}
+
+			const formData = new FormData(form);
+			const payload = {};
+			for (const [k, v] of formData.entries()) payload[k] = v.toString();
+
+			try {
+				const response = await fetch('/', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: encode(payload),
+				});
+				if (!response.ok) throw new Error('Netlify returned ' + response.status);
+				localStorage.setItem(STATE_KEY, 'subscribed');
+				form.reset();
+				showState('success');
+			} catch (err) {
+				setError('Something went wrong. Please try again, or contact us at info@trinityclassical.academy if it persists.');
+			} finally {
+				if (submitBtn) {
+					submitBtn.disabled = false;
+					submitBtn.textContent = 'Subscribe';
+				}
+			}
+		});
+	})();
+</script>

@@ -1,5 +1,5 @@
 ---
-import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
+import { INTERVIEW_URL } from '../lib/links';
 ---
 
 <!-- Hero content.
@@ -36,21 +36,20 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 			is an ACCS-mentored classical Christian school in Birmingham, Alabama, under the care of Trinity Presbyterian Church (CREC). Opening Fall 2026 for grades K–8.
 		</p>
 		<div class="mt-6 flex flex-col items-start gap-3 lg:mt-4 xl:mt-6">
+			<button
+				type="button"
+				data-newsletter-trigger
+				class="whitespace-nowrap rounded-pill bg-gold px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover"
+			>
+				Join the Newsletter
+			</button>
 			<a
 				href={INTERVIEW_URL}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="whitespace-nowrap rounded-pill bg-gold px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-eyebrow text-ink transition hover:bg-gold-hover"
-			>
-				Request an Interview
-			</a>
-			<a
-				href={TEACHER_APP_URL}
-				target="_blank"
-				rel="noopener noreferrer"
 				class="whitespace-nowrap font-mono text-xs font-medium uppercase tracking-eyebrow text-ink-mute transition hover:text-forest"
 			>
-				Apply to Teach →
+				Request an Interview →
 			</a>
 		</div>
 	</div>

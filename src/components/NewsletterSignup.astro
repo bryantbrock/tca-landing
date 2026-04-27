@@ -119,7 +119,7 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 			<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">
 				Thank you
 			</p>
-			<h2 class="mt-3 font-display text-3xl leading-[1.05] text-ink sm:text-4xl">
+			<h2 id="newsletter-success-heading" class="mt-3 font-display text-3xl leading-[1.05] text-ink sm:text-4xl">
 				You're on the list.
 			</h2>
 			<p class="mt-3 font-sans text-sm text-ink-soft">
@@ -161,15 +161,19 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 		const successState = modal.querySelector('[data-newsletter-state="success"]');
 		const closeBtn = modal.querySelector('[data-newsletter-close]');
 
+		let lastFocusedElement = null;
+
 		const isSubscribed = () => localStorage.getItem(STATE_KEY) === 'subscribed';
 
 		const showState = (which) => {
 			if (which === 'success') {
 				formState.setAttribute('hidden', '');
 				successState.removeAttribute('hidden');
+				modal.setAttribute('aria-labelledby', 'newsletter-success-heading');
 			} else {
 				successState.setAttribute('hidden', '');
 				formState.removeAttribute('hidden');
+				modal.setAttribute('aria-labelledby', 'newsletter-heading');
 			}
 		};
 
@@ -194,6 +198,8 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 			if (localStorage.getItem(STATE_KEY) === null) {
 				localStorage.setItem(STATE_KEY, 'dismissed');
 			}
+			lastFocusedElement?.focus();
+			lastFocusedElement = null;
 		};
 
 		// Manual triggers — event delegation on document
@@ -201,6 +207,7 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 			const trigger = e.target.closest?.('[data-newsletter-trigger]');
 			if (trigger) {
 				e.preventDefault();
+				lastFocusedElement = trigger;
 				open();
 			}
 		});
@@ -217,6 +224,10 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 		// Auto-trigger: homepage only, only if state is null
 		if (location.pathname === '/' && localStorage.getItem(STATE_KEY) === null) {
 			const onScroll = () => {
+				if (localStorage.getItem(STATE_KEY) !== null) {
+					window.removeEventListener('scroll', onScroll);
+					return;
+				}
 				const docH = document.documentElement.scrollHeight - window.innerHeight;
 				if (docH <= 0) return;
 				const ratio = window.scrollY / docH;
@@ -248,10 +259,12 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 		form?.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			setError('');
+			const inputs = form.querySelectorAll('input:not([type="hidden"])');
 			if (submitBtn) {
 				submitBtn.disabled = true;
 				submitBtn.textContent = 'Subscribing…';
 			}
+			inputs.forEach((el) => { el.disabled = true; });
 
 			const formData = new FormData(form);
 			const payload = {};
@@ -274,6 +287,7 @@ import { INTERVIEW_URL, TEACHER_APP_URL } from '../lib/links';
 					submitBtn.disabled = false;
 					submitBtn.textContent = 'Subscribe';
 				}
+				inputs.forEach((el) => { el.disabled = false; });
 			}
 		});
 	})();

@@ -6,6 +6,7 @@ import { Image } from 'astro:assets';
 import emblemGreen from '../assets/images/emblem-green.svg';
 import ashtonImg from '../assets/images/ashton-moats.png';
 import julieImg from '../assets/images/julie-mcdonald.png';
+import michelleImg from '../assets/images/michelle-taylor.png';
 import { INTERVIEW_URL } from '../lib/links';
 import bryantImg from '../assets/images/bryant-brock.jpeg';
 import davidImg from '../assets/images/david-woods.jpeg';
@@ -137,6 +138,46 @@ const initials = (name: string) =>
 								</div>
 							</article>
 						))}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ====== ADMINISTRATION ====== -->
+		<section
+			id="administration"
+			aria-labelledby="administration-heading"
+			class="relative z-10 px-6 pb-24 pt-0 sm:px-10 sm:pb-32 lg:px-12 lg:pb-40"
+		>
+			<div class="flex flex-col gap-12 lg:flex-row lg:gap-0">
+				<div class="shrink-0 lg:w-1/4 lg:pr-8 lg:pt-1">
+					<p
+						id="administration-heading"
+						class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest"
+					>
+						Administration
+					</p>
+				</div>
+
+				<div class="min-w-0 flex-1 lg:pl-8">
+					<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+						<article class="flex flex-col gap-4">
+							<div class="relative aspect-[4/5] overflow-hidden rounded-card">
+								<Image
+									src={michelleImg}
+									alt="Michelle Taylor"
+									class="h-full w-full object-cover"
+								/>
+							</div>
+							<div class="flex flex-col gap-1">
+								<h2 class="font-display text-[28px] leading-[1.1] text-ink">
+									Michelle Taylor
+								</h2>
+								<p class="font-mono text-xs font-medium uppercase tracking-eyebrow text-forest">
+									School Administrator
+								</p>
+							</div>
+						</article>
 					</div>
 				</div>
 			</div>
